@@ -1,5 +1,4 @@
 import React from 'react'
-import { XMarkIcon } from '@heroicons/react/20/solid'
 
 const Banner = () => {
     return (
@@ -9,11 +8,9 @@ const Banner = () => {
                     <strong className="font-semibold">It's a alpha :)</strong>
                 </a>
             </p>
-            <div className="flex flex-1 justify-end">
-
-            </div>
+            <div className="flex flex-1 justify-end" />
         </div>
-    );
-};
+    )
+}
 
-export default Banner;
+export default Banner

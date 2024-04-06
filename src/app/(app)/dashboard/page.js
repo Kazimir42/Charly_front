@@ -1,27 +1,27 @@
-"use client";
+'use client'
 
-import Header from "@/app/(app)/Header";
-import { useDashboardData } from "@/hooks/dashboard";
-import { useEffect, useState } from "react";
+import Header from '@/app/(app)/Header'
+import { useDashboardData } from '@/hooks/dashboard'
+import { useEffect, useState } from 'react'
 
 function Location({ location }) {
-    return <h2>{location.name}</h2>;
+    return <h2>{location.name}</h2>
 }
 
 const Dashboard = () => {
-    const { getDashboard } = useDashboardData();
+    const { getDashboard } = useDashboardData()
 
-    const [errors, setErrors] = useState([]);
-    const [status, setStatus] = useState(null);
-    const [locations, setLocations] = useState([]);
+    const [, setErrors] = useState([])
+    const [, setStatus] = useState(null)
+    const [locations, setLocations] = useState([])
 
     useEffect(() => {
         getDashboard(setErrors, setStatus).then(data => {
             if (data) {
-                setLocations(data.locations || []);
+                setLocations(data.locations || [])
             }
-        });
-    }, []);
+        })
+    }, [])
 
     return (
         <>
@@ -32,7 +32,7 @@ const Dashboard = () => {
                 ))}
             </div>
         </>
-    );
-};
+    )
+}
 
-export default Dashboard;
+export default Dashboard

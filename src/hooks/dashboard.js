@@ -1,10 +1,6 @@
 import axios from '@/lib/axios'
-import { useParams, useRouter } from 'next/navigation'
 
 export const useDashboardData = () => {
-    const router = useRouter()
-    const params = useParams()
-
     const getDashboard = async (setErrors, setStatus) => {
         setErrors([])
         setStatus(null)

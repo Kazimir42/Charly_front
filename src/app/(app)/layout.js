@@ -5,7 +5,7 @@ import Loading from '@/app/(app)/Loading'
 import LeftNavigation from '@/app/(app)/LeftNavigation'
 import Banner from '@/app/(app)/Banner'
 
-const AppLayout = ({ children, header }) => {
+const AppLayout = ({ children }) => {
     const { user } = useAuth({ middleware: 'auth' })
 
     if (!user) {

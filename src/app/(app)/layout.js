@@ -1,9 +1,9 @@
-
 'use client'
 
 import { useAuth } from '@/hooks/auth'
 import Loading from '@/app/(app)/Loading'
 import LeftNavigation from '@/app/(app)/LeftNavigation'
+import Banner from '@/app/(app)/Banner'
 
 const AppLayout = ({ children, header }) => {
     const { user } = useAuth({ middleware: 'auth' })
@@ -14,6 +14,7 @@ const AppLayout = ({ children, header }) => {
 
     return (
         <div className="min-h-screen bg-gray-100">
+            <Banner />
             <LeftNavigation user={user} />
 
             <main className="py-10 lg:pl-72">

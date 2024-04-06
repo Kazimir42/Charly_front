@@ -1,7 +1,7 @@
-const Header = ({ title }) => {
+const Header = ({ className, title }) => {
     return (
         <header>
-            <h2 className="font-semibold text-3xl">{title}</h2>
+            <h2 className={'font-semibold text-3xl ' + className}>{title}</h2>
         </header>
     )
 }

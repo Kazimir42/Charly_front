@@ -1,0 +1,108 @@
+import React, { useState } from 'react'
+
+const Accordion = ({ header, headerContent, content }) => {
+    const [isOpen, setIsOpen] = useState(false)
+
+    const toggleAccordion = () => {
+        setIsOpen(!isOpen)
+    }
+
+    return (
+        <div id="accordion-collapse" data-accordion="collapse">
+            <h2 id="accordion-collapse-heading-1">
+                <button
+                    type="button"
+                    className={
+                        'flex items-center bg-white justify-between w-full p-5 font-medium rtl:text-right border-gray-200 focus:ring-2 focus:ring-gray-200 gap-3 ' +
+                        (isOpen
+                            ? 'border-t border-l border-r rounded-t-lg'
+                            : 'border rounded-lg')
+                    }
+                    onClick={toggleAccordion}
+                    aria-expanded={isOpen}
+                    aria-controls="accordion-collapse-body-1">
+                    <div className={'w-full text-left'}>
+                        <div className="inline-block w-[3%]">
+                            <svg
+                                className={`w-3 h-3 shrink-0 text-gray-500 ${
+                                    isOpen ? '' : 'rotate-180'
+                                }`}
+                                aria-hidden="true"
+                                fill="none"
+                                viewBox="0 0 10 6">
+                                <path
+                                    stroke="currentColor"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M9 5 5 1 1 5"
+                                />
+                            </svg>
+                        </div>
+                        {header.map(item => (
+                            <div className={'inline-block ' + item.className}>
+                                {item.value}
+                            </div>
+                        ))}
+                    </div>
+                </button>
+            </h2>
+            <div
+                id="accordion-collapse-body-1"
+                className={`${isOpen ? '' : 'hidden'}`}
+                aria-labelledby="accordion-collapse-heading-1">
+                <div className="border rounded-b-lg border-gray-200 bg-white">
+                    <div className="w-full text-left">
+                        <div
+                            className={
+                                'px-5 py-2 border-b border-gray-100 text-xs font-semibold text-gray-500'
+                            }>
+                            <div className="inline-block w-[3%]" />
+                            {headerContent.map(item => (
+                                <div
+                                    className={
+                                        'inline-block ' + item.className
+                                    }>
+                                    {item.value}
+                                </div>
+                            ))}
+                        </div>
+
+                        {content.length ? (
+                            content.map((items, index) => (
+                                <div
+                                    className={
+                                        'px-5 py-2 border-b border-gray-100 text-sm text-gray-700'
+                                    }
+                                    key={index}>
+                                    <div className="inline-block w-[3%]" />
+                                    {items.map((item, itemIndex) => (
+                                        <React.Fragment key={itemIndex}>
+                                            <div
+                                                className={
+                                                    'inline-block ' +
+                                                    item.className
+                                                }>
+                                                {item.value}
+                                            </div>
+                                        </React.Fragment>
+                                    ))}
+                                </div>
+                            ))
+                        ) : (
+                            <div
+                                className={
+                                    'px-5 py-2 border-b border-gray-100 text-sm text-gray-700'
+                                }>
+                                <div className="inline-block w-[3%]" />
+                                <div className={'inline-block'}>Empty :(</div>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export default Accordion

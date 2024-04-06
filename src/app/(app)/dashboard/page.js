@@ -3,10 +3,7 @@
 import Header from '@/app/(app)/Header'
 import { useDashboardData } from '@/hooks/dashboard'
 import { useEffect, useState } from 'react'
-
-function Location({ location }) {
-    return <h2>{location.name}</h2>
-}
+import Location from '@/app/(app)/Location'
 
 const Dashboard = () => {
     const { getDashboard } = useDashboardData()
@@ -26,7 +23,7 @@ const Dashboard = () => {
     return (
         <>
             <Header title="Dashboard" />
-            <div className="py-12">
+            <div className="py-12 flex flex-col gap-2">
                 {locations.map((location, index) => (
                     <Location key={index} location={location} />
                 ))}

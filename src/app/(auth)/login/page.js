@@ -56,6 +56,7 @@ const Login = () => {
                         id="email"
                         type="email"
                         value={email}
+                        label={'Email Address'}
                         className="block mt-1 w-full"
                         onChange={event => setEmail(event.target.value)}
                         required

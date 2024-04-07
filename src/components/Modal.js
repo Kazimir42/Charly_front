@@ -1,7 +1,7 @@
 import React from 'react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 
-const Modal = ({ setIsOpen, isOpen, title }) => {
+const Modal = ({ setIsOpen, isOpen, title, children, className}) => {
     const toggleModal = () => setIsOpen(!isOpen)
 
     return (
@@ -10,7 +10,7 @@ const Modal = ({ setIsOpen, isOpen, title }) => {
                 <div
                     className="overflow-y-auto overflow-x-hidden fixed top-0 bg-black bg-opacity-50 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 max-h-full flex"
                     aria-hidden="true">
-                    <div className="relative p-4 w-full max-w-md max-h-full">
+                    <div className="relative p-4 w-full max-w-2xl max-h-full">
                         <div className="relative bg-white rounded-lg shadow">
                             <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t ">
                                 <h3 className="text-lg font-semibold text-gray-900 ">
@@ -27,7 +27,7 @@ const Modal = ({ setIsOpen, isOpen, title }) => {
                                     />
                                 </button>
                             </div>
-                            <div className={'h-10'}></div>
+                            <div className={' p-4 ' + className}>{children}</div>
                         </div>
                     </div>
                 </div>

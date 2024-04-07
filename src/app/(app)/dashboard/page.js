@@ -5,7 +5,7 @@ import { useDashboardData } from '@/hooks/dashboard'
 import { useEffect, useState } from 'react'
 import Location from '@/app/(app)/Location'
 import SimpleCard from '@/components/SimpleCard'
-import Modal from '@/components/Modal'
+import EditLocationModal from '@/app/modals/EditLocationModal'
 
 const Dashboard = () => {
     const { getDashboard } = useDashboardData()
@@ -14,6 +14,7 @@ const Dashboard = () => {
     const [, setStatus] = useState(null)
     const [locationModalIsOpen, setLocationModalIsOpen] = useState(false)
     const [transactionModalIsOpen, setTransactionModalIsOpen] = useState(false)
+    const [selectedLocation, setSelectedLocation] = useState({})
     const [locations, setLocations] = useState([])
     const [cardStats, setCardStats] = useState([])
 
@@ -41,7 +42,20 @@ const Dashboard = () => {
     }, [])
 
     function openLocationEditModal(locationId) {
-        setLocationModalIsOpen(!locationModalIsOpen)
+        if (locationModalIsOpen) {
+            // It's open, we want to close
+
+            setSelectedLocation({})
+            setLocationModalIsOpen(!locationModalIsOpen)
+        } else {
+            // We want to open
+
+            // Find the selected location
+            setSelectedLocation(
+                locations.find(location => location.id === locationId),
+            )
+            setLocationModalIsOpen(!locationModalIsOpen)
+        }
     }
 
     function openNewTransactionModal(locationId) {
@@ -79,9 +93,10 @@ const Dashboard = () => {
                     ))}
                 </div>
             </div>
-            <Modal
+            <EditLocationModal
                 isOpen={locationModalIsOpen}
-                setIsOpen={setLocationModalIsOpen}
+                setIsOpen={openLocationEditModal}
+                location={selectedLocation}
             />
         </>
     )

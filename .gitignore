@@ -35,4 +35,4 @@ yarn-error.log*
 .vercel
 
 # php storm
-.idea/vcs.xml
+.idea/

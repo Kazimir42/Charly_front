@@ -32,7 +32,12 @@ const LeftNavigation = ({ user }) => {
             current: pathname === '/dashboard',
         },
         { name: 'Locations', href: '#', icon: FolderIcon, current: false },
-        { name: 'Transactions', href: '#', icon: HashtagIcon, current: false },
+        {
+            name: 'Transactions',
+            href: '/transactions',
+            icon: HashtagIcon,
+            current: pathname === '/transactions',
+        },
         { name: 'Stats', href: '#', icon: ChartPieIcon, current: false },
     ]
     const assets = [

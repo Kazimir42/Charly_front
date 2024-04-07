@@ -13,7 +13,7 @@ const Accordion = ({ header, headerContent, content }) => {
                 <button
                     type="button"
                     className={
-                        'flex items-center bg-white justify-between w-full p-5 font-medium rtl:text-right border-gray-200 focus:ring-2 focus:ring-gray-200 gap-3 ' +
+                        'flex items-center bg-white justify-between w-full px-5 py-3 font-medium rtl:text-right border-gray-200 focus:ring-2 focus:ring-gray-200 gap-3 ' +
                         (isOpen
                             ? 'border-t border-l border-r rounded-t-lg'
                             : 'border rounded-lg')
@@ -21,7 +21,7 @@ const Accordion = ({ header, headerContent, content }) => {
                     onClick={toggleAccordion}
                     aria-expanded={isOpen}
                     aria-controls="accordion-collapse-body-1">
-                    <div className={'w-full text-left'}>
+                    <div className={'flex flex-row items-center w-full text-left'}>
                         <div className="inline-block w-[3%]">
                             <svg
                                 className={`w-3 h-3 shrink-0 text-gray-500 ${

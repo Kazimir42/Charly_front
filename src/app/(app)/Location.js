@@ -1,5 +1,8 @@
 import React from 'react'
 import Accordion from '@/components/Accordion'
+import { formatPercentage, formatPrice } from '@/lib/utils'
+import PercentageBubble from '@/components/PercentageBubble'
+import ProfitLossPrice from '@/components/ProfitLossPrice'
 
 const Location = ({ location }) => {
     let formattedAssets = []
@@ -12,23 +15,31 @@ const Location = ({ location }) => {
             },
             {
                 className: 'w-[15%] text-right',
-                value: 'TODO €',
+                value: asset.summary.quantity,
             },
             {
                 className: 'w-[15%] text-right',
-                value: 'TODO €',
+                value: formatPrice(asset.summary.average_buy_price),
             },
             {
                 className: 'w-[15%] text-right',
-                value: 'TODO €',
+                value: formatPrice(asset.summary.current_price),
             },
             {
                 className: 'w-[15%] text-right',
-                value: 'TODO €',
+                value: formatPrice(asset.summary.total_value),
             },
             {
                 className: 'w-[15%] text-right',
-                value: '+ TODO€',
+                value: (
+                    <div>
+                        <ProfitLossPrice value={asset.summary.profit_loss} />
+                        <PercentageBubble
+                            className={'text-xs'}
+                            value={asset.summary.profit_loss_percentage}
+                        />
+                    </div>
+                ),
             },
         ])
     })
@@ -42,11 +53,22 @@ const Location = ({ location }) => {
                 },
                 {
                     className: 'w-[15%] text-right',
-                    value: 'TODO€',
+                    value: formatPrice(location.summary.total_value),
                 },
                 {
                     className: 'w-[15%] text-right',
-                    value: '+ TODO€',
+                    value: (
+                        <div>
+                            <ProfitLossPrice
+                                className={'font-semibold'}
+                                value={location.summary.profit_loss}
+                            />
+                            <PercentageBubble
+                                className={'text-sm'}
+                                value={location.summary.profit_loss_percentage}
+                            />
+                        </div>
+                    ),
                 },
             ]}
             headerContent={[

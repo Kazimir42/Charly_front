@@ -17,8 +17,23 @@ const Transactions = () => {
 
     useEffect(() => {
         getTransactions(setErrors, setStatus).then(data => {
+            console.log(data)
             if (data) {
-                setTransactions(data || [])
+                let formatedData = []
+
+                data.forEach(line => {
+                    formatedData.push([
+                        line.date_transaction,
+                        line.type,
+                        line.asset.currency.name,
+                        line.to_quantity,
+                        line.transaction_price,
+                        line.to_unit_price,
+                        line.location.name,
+                    ])
+                })
+
+                setTransactions(formatedData || [])
             }
         })
     }, [])
@@ -30,7 +45,7 @@ const Transactions = () => {
             <div className={'pb-6'}>
                 <h3 className={'font-semibold text-xl mb-2'}>List</h3>
                 <div className="flex flex-col gap-2">
-                    <Table header={['test', '123']} content={transactions} />
+                    <Table header={['Date', 'Type', 'Asset', 'Quantity', 'Price', 'Unit price', 'Location']} content={transactions} />
                 </div>
             </div>
         </>

@@ -5,12 +5,15 @@ import { useDashboardData } from '@/hooks/dashboard'
 import { useEffect, useState } from 'react'
 import Location from '@/app/(app)/Location'
 import SimpleCard from '@/components/SimpleCard'
+import Modal from '@/components/Modal'
 
 const Dashboard = () => {
     const { getDashboard } = useDashboardData()
 
     const [, setErrors] = useState([])
     const [, setStatus] = useState(null)
+    const [locationModalIsOpen, setLocationModalIsOpen] = useState(false)
+    const [transactionModalIsOpen, setTransactionModalIsOpen] = useState(false)
     const [locations, setLocations] = useState([])
     const [cardStats, setCardStats] = useState([])
 
@@ -37,6 +40,14 @@ const Dashboard = () => {
         })
     }, [])
 
+    function openLocationEditModal(locationId) {
+        setLocationModalIsOpen(!locationModalIsOpen)
+    }
+
+    function openNewTransactionModal(locationId) {
+        setTransactionModalIsOpen(!transactionModalIsOpen)
+    }
+
     return (
         <>
             <Header title="Dashboard" className={'mb-12'} />
@@ -59,10 +70,19 @@ const Dashboard = () => {
                 <h3 className={'font-semibold text-xl mb-2'}>Locations</h3>
                 <div className="flex flex-col gap-2">
                     {locations.map((location, index) => (
-                        <Location key={index} location={location} />
+                        <Location
+                            key={index}
+                            location={location}
+                            openLocationEditModal={openLocationEditModal}
+                            openNewTransactionModal={openNewTransactionModal}
+                        />
                     ))}
                 </div>
             </div>
+            <Modal
+                isOpen={locationModalIsOpen}
+                setIsOpen={setLocationModalIsOpen}
+            />
         </>
     )
 }

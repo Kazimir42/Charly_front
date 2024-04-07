@@ -7,9 +7,12 @@ import { EllipsisHorizontalIcon } from '@heroicons/react/24/outline'
 import { DropdownButton } from '@/components/DropdownLink'
 import Dropdown from '@/components/Dropdown'
 
-const Location = ({ location }) => {
+const Location = ({
+    location,
+    openLocationEditModal,
+    openNewTransactionModal,
+}) => {
     let formattedAssets = []
-
     location.assets.map(asset => {
         formattedAssets.push([
             <div className="inline-block w-[19%]">{asset.currency.name}</div>,
@@ -70,8 +73,18 @@ const Location = ({ location }) => {
                                 </button>
                             }>
                             {/* Authentication */}
-                            <DropdownButton>Edit</DropdownButton>
-                            <DropdownButton>Delete</DropdownButton>
+                            <DropdownButton
+                                onClick={() =>
+                                    openLocationEditModal(location.id)
+                                }>
+                                Edit
+                            </DropdownButton>
+                            <DropdownButton
+                                onClick={() =>
+                                    openNewTransactionModal(location.id)
+                                }>
+                                Add crypto
+                            </DropdownButton>
                         </Dropdown>
                     </div>
                 </div>,

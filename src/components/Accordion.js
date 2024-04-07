@@ -21,7 +21,10 @@ const Accordion = ({ header, headerContent, content }) => {
                     onClick={toggleAccordion}
                     aria-expanded={isOpen}
                     aria-controls="accordion-collapse-body-1">
-                    <div className={'flex flex-row items-center w-full text-left'}>
+                    <div
+                        className={
+                            'flex flex-row items-center w-full text-left'
+                        }>
                         <div className="inline-block w-[3%]">
                             <svg
                                 className={`w-3 h-3 shrink-0 text-gray-500 ${
@@ -39,10 +42,8 @@ const Accordion = ({ header, headerContent, content }) => {
                                 />
                             </svg>
                         </div>
-                        {header.map(item => (
-                            <div className={'inline-block ' + item.className}>
-                                {item.value}
-                            </div>
+                        {header.map((item, index) => (
+                            <React.Fragment key={index}>{item}</React.Fragment>
                         ))}
                     </div>
                 </button>
@@ -53,20 +54,21 @@ const Accordion = ({ header, headerContent, content }) => {
                 aria-labelledby="accordion-collapse-heading-1">
                 <div className="border rounded-b-lg border-gray-200 bg-white">
                     <div className="w-full text-left">
-                        <div
-                            className={
-                                'px-5 py-2 border-b border-gray-100 text-xs font-semibold text-gray-500'
-                            }>
-                            <div className="inline-block w-[3%]" />
-                            {headerContent.map(item => (
-                                <div
-                                    className={
-                                        'inline-block ' + item.className
-                                    }>
-                                    {item.value}
-                                </div>
-                            ))}
-                        </div>
+                        {headerContent ? (
+                            <div
+                                className={
+                                    'px-5 py-2 border-b border-gray-100 bg-gray-50 text-xs font-semibold text-gray-500'
+                                }>
+                                <div className="inline-block w-[3%]" />
+                                {headerContent.map((item, index) => (
+                                    <React.Fragment key={index}>
+                                        {item}
+                                    </React.Fragment>
+                                ))}
+                            </div>
+                        ) : (
+                            ''
+                        )}
 
                         {content.length ? (
                             content.map((items, index) => (
@@ -78,13 +80,7 @@ const Accordion = ({ header, headerContent, content }) => {
                                     <div className="inline-block w-[3%]" />
                                     {items.map((item, itemIndex) => (
                                         <React.Fragment key={itemIndex}>
-                                            <div
-                                                className={
-                                                    'inline-block ' +
-                                                    item.className
-                                                }>
-                                                {item.value}
-                                            </div>
+                                            {item}
                                         </React.Fragment>
                                     ))}
                                 </div>

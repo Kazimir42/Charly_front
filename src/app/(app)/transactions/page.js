@@ -17,7 +17,6 @@ const Transactions = () => {
 
     useEffect(() => {
         getTransactions(setErrors, setStatus).then(data => {
-            console.log(data)
             if (data) {
                 let formatedData = []
 
@@ -45,7 +44,18 @@ const Transactions = () => {
             <div className={'pb-6'}>
                 <h3 className={'font-semibold text-xl mb-2'}>List</h3>
                 <div className="flex flex-col gap-2">
-                    <Table header={['Date', 'Type', 'Asset', 'Quantity', 'Price', 'Unit price', 'Location']} content={transactions} />
+                    <Table
+                        header={[
+                            'Date',
+                            'Type',
+                            'Asset',
+                            'Quantity',
+                            'Price',
+                            'Unit price',
+                            'Location',
+                        ]}
+                        content={transactions}
+                    />
                 </div>
             </div>
         </>

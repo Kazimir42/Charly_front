@@ -74,7 +74,7 @@ const Accordion = ({ header, headerContent, content }) => {
                             content.map((items, index) => (
                                 <div
                                     className={
-                                        'px-5 py-2 border-b border-gray-100 text-sm text-gray-700'
+                                        'flex flex-row items-center px-5 py-2 border-b border-gray-100 text-sm text-gray-700'
                                     }
                                     key={index}>
                                     <div className="inline-block w-[3%]" />
@@ -88,7 +88,7 @@ const Accordion = ({ header, headerContent, content }) => {
                         ) : (
                             <div
                                 className={
-                                    'px-5 py-2 border-b border-gray-100 text-sm text-gray-700'
+                                    'flex flex-row items-center px-5 py-2 border-b border-gray-100 text-sm text-gray-700'
                                 }>
                                 <div className="inline-block w-[3%]" />
                                 <div className={'inline-block'}>Empty :(</div>

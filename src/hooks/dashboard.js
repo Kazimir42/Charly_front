@@ -1,19 +1,16 @@
 import axios from '@/lib/axios'
+import { toast } from 'react-toastify'
 
 export const useDashboardData = () => {
-    const getDashboard = async (setErrors, setStatus) => {
-        setErrors([])
-        setStatus(null)
-
+    const getDashboard = async () => {
         return axios
             .get('/api/dashboard')
             .then(response => {
                 return response.data
             })
             .catch(error => {
-                if (error.response.status !== 422) throw error
-
-                setErrors(error.response.data.errors)
+                toast.error(error.response.data.message)
+                throw error
             })
     }
 

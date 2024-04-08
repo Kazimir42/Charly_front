@@ -9,7 +9,7 @@ import Dropdown from '@/components/Dropdown'
 
 const Location = ({
     location,
-    openLocationEditModal,
+    openOrCloseLocationEditModal,
     openNewTransactionModal,
 }) => {
     let formattedAssets = []
@@ -75,7 +75,7 @@ const Location = ({
                             {/* Authentication */}
                             <DropdownButton
                                 onClick={() =>
-                                    openLocationEditModal(location.id)
+                                    openOrCloseLocationEditModal(location.id)
                                 }>
                                 Edit
                             </DropdownButton>

@@ -2,6 +2,7 @@ import useSWR from 'swr'
 import axios from '@/lib/axios'
 import { useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation'
+import { toast } from 'react-toastify'
 
 export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
     const router = useRouter()
@@ -20,58 +21,50 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
 
     const csrf = () => axios.get('/sanctum/csrf-cookie')
 
-    const register = async ({ setErrors, ...props }) => {
+    const register = async ({ ...props }) => {
         await csrf()
-
-        setErrors([])
 
         axios
             .post('/register', props)
             .then(() => mutate())
             .catch(error => {
-                if (error.response.status !== 422) throw error
-
-                setErrors(error.response.data.errors)
+                toast.error(error.response.data.message)
+                throw error
             })
     }
 
-    const login = async ({ setErrors, setStatus, ...props }) => {
+    const login = async ({ ...props }) => {
         await csrf()
-
-        setErrors([])
-        setStatus(null)
 
         axios
             .post('/login', props)
-            .then(() => mutate())
+            .then(() => {
+                toast.success('gm')
+                mutate()
+            })
             .catch(error => {
-                if (error.response.status !== 422) throw error
-
-                setErrors(error.response.data.errors)
+                toast.error(error.response.data.message)
+                throw error
             })
     }
 
-    const forgotPassword = async ({ setErrors, setStatus, email }) => {
+    const forgotPassword = async ({ email }) => {
         await csrf()
-
-        setErrors([])
-        setStatus(null)
 
         axios
             .post('/forgot-password', { email })
-            .then(response => setStatus(response.data.status))
+            .then(response => {
+                toast.success(response.data.status)
+                return response.data
+            })
             .catch(error => {
-                if (error.response.status !== 422) throw error
-
-                setErrors(error.response.data.errors)
+                toast.error(error.response.data.message)
+                throw error
             })
     }
 
-    const resetPassword = async ({ setErrors, setStatus, ...props }) => {
+    const resetPassword = async ({ ...props }) => {
         await csrf()
-
-        setErrors([])
-        setStatus(null)
 
         axios
             .post('/reset-password', { token: params.token, ...props })
@@ -79,16 +72,16 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
                 router.push('/login?reset=' + btoa(response.data.status)),
             )
             .catch(error => {
-                if (error.response.status !== 422) throw error
-
-                setErrors(error.response.data.errors)
+                toast.error(error.response.data.message)
+                throw error
             })
     }
 
-    const resendEmailVerification = ({ setStatus }) => {
-        axios
-            .post('/email/verification-notification')
-            .then(response => setStatus(response.data.status))
+    const resendEmailVerification = () => {
+        axios.post('/email/verification-notification').then(response => {
+            toast.success(response.data.status)
+            return response.data
+        })
     }
 
     const logout = async () => {

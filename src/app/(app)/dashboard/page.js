@@ -6,12 +6,12 @@ import { useEffect, useState } from 'react'
 import Location from '@/app/(app)/Location'
 import SimpleCard from '@/components/SimpleCard'
 import EditLocationModal from '@/app/modals/EditLocationModal'
+import { useLocationData } from '@/hooks/locations'
 
 const Dashboard = () => {
     const { getDashboard } = useDashboardData()
+    const { updateLocation } = useLocationData({})
 
-    const [, setErrors] = useState([])
-    const [, setStatus] = useState(null)
     const [locationModalIsOpen, setLocationModalIsOpen] = useState(false)
     const [transactionModalIsOpen, setTransactionModalIsOpen] = useState(false)
     const [selectedLocation, setSelectedLocation] = useState({})
@@ -19,7 +19,11 @@ const Dashboard = () => {
     const [cardStats, setCardStats] = useState([])
 
     useEffect(() => {
-        getDashboard(setErrors, setStatus).then(data => {
+        refreshDashboard()
+    }, [])
+
+    function refreshDashboard() {
+        getDashboard().then(data => {
             if (data) {
                 setLocations(data.locations || [])
                 // TODO
@@ -39,17 +43,13 @@ const Dashboard = () => {
                 ])
             }
         })
-    }, [])
+    }
 
-    function openLocationEditModal(locationId) {
+    function openOrCloseLocationEditModal(locationId = null) {
         if (locationModalIsOpen) {
-            // It's open, we want to close
-
             setSelectedLocation({})
             setLocationModalIsOpen(!locationModalIsOpen)
         } else {
-            // We want to open
-
             // Find the selected location
             setSelectedLocation(
                 locations.find(location => location.id === locationId),
@@ -60,6 +60,15 @@ const Dashboard = () => {
 
     function openNewTransactionModal(locationId) {
         setTransactionModalIsOpen(!transactionModalIsOpen)
+    }
+
+    function _updateLocation(id, data) {
+        updateLocation(id, data)
+            .then(() => {
+                refreshDashboard()
+                openOrCloseLocationEditModal()
+            })
+            .catch(() => {})
     }
 
     return (
@@ -87,15 +96,18 @@ const Dashboard = () => {
                         <Location
                             key={index}
                             location={location}
-                            openLocationEditModal={openLocationEditModal}
+                            openOrCloseLocationEditModal={
+                                openOrCloseLocationEditModal
+                            }
                             openNewTransactionModal={openNewTransactionModal}
                         />
                     ))}
                 </div>
             </div>
             <EditLocationModal
+                updateLocation={_updateLocation}
                 isOpen={locationModalIsOpen}
-                setIsOpen={openLocationEditModal}
+                setIsOpen={openOrCloseLocationEditModal}
                 location={selectedLocation}
             />
         </>

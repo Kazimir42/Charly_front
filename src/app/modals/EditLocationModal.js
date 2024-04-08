@@ -24,15 +24,21 @@ const EditLocationModal = ({ location, setIsOpen, isOpen }) => {
     const submitForm = async event => {
         event.preventDefault()
 
-        await updateLocation({
+        updateLocation(
             id,
-            data: {
+            {
                 name,
                 note,
             },
             setErrors,
             setStatus,
-        })
+        )
+            .then(() => {
+                console.log('ok')
+            })
+            .catch(() => {
+                console.log('pas ok')
+            })
     }
 
     return (

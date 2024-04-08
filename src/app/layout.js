@@ -1,7 +1,7 @@
 import '@/app/global.css'
 
 export const metadata = {
-    title: 'Laravel',
+    title: 'Charly',
 }
 const RootLayout = ({ children }) => {
     return (

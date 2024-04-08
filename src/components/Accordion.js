@@ -10,10 +10,9 @@ const Accordion = ({ header, headerContent, content }) => {
     return (
         <div id="accordion-collapse" data-accordion="collapse">
             <h2 id="accordion-collapse-heading-1">
-                <button
-                    type="button"
+                <div
                     className={
-                        'flex items-center bg-white justify-between w-full px-5 py-3 font-medium rtl:text-right border-gray-200 focus:ring-2 focus:ring-gray-200 gap-3 ' +
+                        'flex items-center hover:cursor-pointer bg-white justify-between w-full px-5 py-3 font-medium rtl:text-right border-gray-200 focus:ring-2 focus:ring-gray-200 gap-3 ' +
                         (isOpen
                             ? 'border-t border-l border-r rounded-t-lg'
                             : 'border rounded-lg')
@@ -46,7 +45,7 @@ const Accordion = ({ header, headerContent, content }) => {
                             <React.Fragment key={index}>{item}</React.Fragment>
                         ))}
                     </div>
-                </button>
+                </div>
             </h2>
             <div
                 id="accordion-collapse-body-1"

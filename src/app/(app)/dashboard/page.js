@@ -8,11 +8,18 @@ import SimpleCard from '@/components/SimpleCard'
 import EditLocationModal from '@/app/modals/EditLocationModal'
 import { useLocationData } from '@/hooks/locations'
 import DeleteModal from '@/components/DeleteModal'
+import Button from '@/components/Button'
+import CreateLocationModal from '@/app/modals/CreateLocationModal'
 
 const Dashboard = () => {
     const { getDashboard } = useDashboardData()
-    const { updateLocation, deleteLocation } = useLocationData({})
+    const { updateLocation, deleteLocation, createLocation } = useLocationData(
+        {},
+    )
 
+    const [locationCreateModalIsOpen, setLocationCreateModalIsOpen] = useState(
+        false,
+    )
     const [locationEditModalIsOpen, setLocationEditModalIsOpen] = useState(
         false,
     )
@@ -49,6 +56,14 @@ const Dashboard = () => {
                 ])
             }
         })
+    }
+
+    function openOrCloseLocationCreateModal() {
+        if (locationCreateModalIsOpen) {
+            setLocationCreateModalIsOpen(!locationCreateModalIsOpen)
+        } else {
+            setLocationCreateModalIsOpen(!locationCreateModalIsOpen)
+        }
     }
 
     function openOrCloseLocationEditModal(locationId = null) {
@@ -99,6 +114,15 @@ const Dashboard = () => {
             .catch(() => {})
     }
 
+    function _createLocation(data) {
+        createLocation(data)
+            .then(() => {
+                refreshDashboard()
+                openOrCloseLocationCreateModal()
+            })
+            .catch(() => {})
+    }
+
     return (
         <>
             <Header title="Dashboard" className={'mb-12'} />
@@ -118,7 +142,15 @@ const Dashboard = () => {
             </div>
 
             <div className={'pb-6'}>
-                <h3 className={'font-semibold text-xl mb-2'}>Locations</h3>
+                <div
+                    className={
+                        'flex flex-row items-center mb-2 justify-between'
+                    }>
+                    <h3 className={'font-semibold text-xl'}>Locations</h3>
+                    <Button onClick={openOrCloseLocationCreateModal}>
+                        + Add new
+                    </Button>
+                </div>
                 <div className="flex flex-col gap-2">
                     {locations.map((location, index) => (
                         <Location
@@ -135,18 +167,23 @@ const Dashboard = () => {
                     ))}
                 </div>
             </div>
+            <CreateLocationModal
+                createLocation={_createLocation}
+                isOpen={locationCreateModalIsOpen}
+                setIsOpen={openOrCloseLocationCreateModal}
+            />
             <EditLocationModal
                 updateLocation={_updateLocation}
                 isOpen={locationEditModalIsOpen}
                 setIsOpen={openOrCloseLocationEditModal}
-                location={selectedLocation}
+                location={selectedLocation ?? null}
             />
             <DeleteModal
-                id={selectedLocation.id}
+                id={selectedLocation?.id ?? null}
                 deleteObject={_deleteLocation}
                 isOpen={locationDeleteModalIsOpen}
                 setIsOpen={openOrCloseLocationDeleteModal}
-                title={'Delete location: ' + selectedLocation.name}
+                title={'Delete location: ' + selectedLocation?.name}
                 content={
                     'By deleted a location it will delete the child assets and remove the location from the transactions (but the transactions will not be deleted)'
                 }

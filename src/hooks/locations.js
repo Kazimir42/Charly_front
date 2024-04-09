@@ -14,6 +14,19 @@ export const useLocationData = () => {
             })
     }
 
+    const createLocation = async data => {
+        return axios
+            .post('/api/locations', data)
+            .then(response => {
+                toast.success('Location created successfully!')
+                return response.data
+            })
+            .catch(error => {
+                toast.error(error.response.data.message)
+                throw error
+            })
+    }
+
     const updateLocation = async (id, data) => {
         return axios
             .put('/api/locations/' + id, data)
@@ -27,7 +40,7 @@ export const useLocationData = () => {
             })
     }
 
-    const deleteLocation = async (id) => {
+    const deleteLocation = async id => {
         return axios
             .delete('/api/locations/' + id)
             .then(response => {
@@ -40,5 +53,5 @@ export const useLocationData = () => {
             })
     }
 
-    return { getLocations, updateLocation, deleteLocation }
+    return { getLocations, updateLocation, deleteLocation, createLocation }
 }

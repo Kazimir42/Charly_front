@@ -1,25 +1,18 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Modal from '@/components/Modal'
 import Input from '@/components/Input'
 import Label from '@/components/Label'
 import Textarea from '@/components/Textarea'
 import Button from '@/components/Button'
 
-const EditLocationModal = ({ location, setIsOpen, isOpen, updateLocation }) => {
-    const [id, setId] = useState('')
+const CreateLocationModal = ({ setIsOpen, isOpen, createLocation }) => {
     const [name, setName] = useState('')
     const [note, setNote] = useState('')
-
-    useEffect(() => {
-        setId(location?.id ?? '')
-        setName(location?.name ?? '')
-        setNote(location?.note ?? '')
-    }, [location])
 
     const submitForm = async event => {
         event.preventDefault()
 
-        updateLocation(id, {
+        createLocation({
             name,
             note,
         })
@@ -53,8 +46,7 @@ const EditLocationModal = ({ location, setIsOpen, isOpen, updateLocation }) => {
                         label={'Note'}
                         className="block mt-1 w-full h-32"
                         onChange={event => setNote(event.target.value)}
-                        defaultValue={note}
-                    />
+                        defaultValue={note} />
                 </div>
                 <div className={'flex flex-row justify-end'}>
                     <Button type="submit">Save</Button>
@@ -64,4 +56,4 @@ const EditLocationModal = ({ location, setIsOpen, isOpen, updateLocation }) => {
     )
 }
 
-export default EditLocationModal
+export default CreateLocationModal

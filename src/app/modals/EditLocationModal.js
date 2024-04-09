@@ -57,7 +57,7 @@ const EditLocationModal = ({ location, setIsOpen, isOpen, updateLocation }) => {
                         defaultValue={note}></Textarea>
                 </div>
                 <div className={'flex flex-row justify-end'}>
-                    <Button type='submit'>Save</Button>
+                    <Button type="submit">Save</Button>
                 </div>
             </form>
         </Modal>

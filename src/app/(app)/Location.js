@@ -11,24 +11,37 @@ const Location = ({
     location,
     openOrCloseLocationEditModal,
     openNewTransactionModal,
+    openOrCloseLocationDeleteModal,
 }) => {
     let formattedAssets = []
     location.assets.map(asset => {
         formattedAssets.push([
-            <div className="inline-block w-[19%]">{asset.currency.name}</div>,
-            <div className="inline-block w-[15%] text-right">
+            <div key={asset.currency.name} className="inline-block w-[19%]">
+                {asset.currency.name}
+            </div>,
+            <div
+                key={asset.summary.quantity}
+                className="inline-block w-[15%] text-right">
                 {asset.summary.quantity}
             </div>,
-            <div className="inline-block w-[15%] text-right">
+            <div
+                key={asset.summary.average_buy_price}
+                className="inline-block w-[15%] text-right">
                 {formatPrice(asset.summary.average_buy_price)}
             </div>,
-            <div className="inline-block w-[15%] text-right">
+            <div
+                key={asset.summary.current_price}
+                className="inline-block w-[15%] text-right">
                 {formatPrice(asset.summary.current_price)}
             </div>,
-            <div className="inline-block w-[15%] text-right">
+            <div
+                key={asset.summary.total_value}
+                className="inline-block w-[15%] text-right">
                 {formatPrice(asset.summary.total_value)}
             </div>,
-            <div className="inline-block w-[15%] text-right">
+            <div
+                key={asset.summary.profit_loss}
+                className="inline-block w-[15%] text-right">
                 <div>
                     <ProfitLossPrice value={asset.summary.profit_loss} />
                     <PercentageBubble
@@ -43,11 +56,17 @@ const Location = ({
     return (
         <Accordion
             header={[
-                <div className="inline-block w-[64%]">{location.name}</div>,
-                <div className="inline-block w-[15%] text-right">
+                <div key={location.name} className="inline-block w-[64%]">
+                    {location.name}
+                </div>,
+                <div
+                    key={location.summary.total_value}
+                    className="inline-block w-[15%] text-right">
                     {formatPrice(location.summary.total_value)}
                 </div>,
-                <div className="inline-block w-[15%] text-right">
+                <div
+                    key={location.summary.profit_loss}
+                    className="inline-block w-[15%] text-right">
                     <div>
                         <ProfitLossPrice
                             className={'font-semibold'}
@@ -59,7 +78,9 @@ const Location = ({
                         />
                     </div>
                 </div>,
-                <div className="inline-block w-[3%] text-right">
+                <div
+                    key={'dropdown'}
+                    className="inline-block w-[3%] text-right">
                     <div className={'flex justify-end'}>
                         <Dropdown
                             align="right"
@@ -72,7 +93,12 @@ const Location = ({
                                     />
                                 </button>
                             }>
-                            {/* Authentication */}
+                            <DropdownButton
+                                onClick={() =>
+                                    openOrCloseLocationDeleteModal(location.id)
+                                }>
+                                Delete
+                            </DropdownButton>
                             <DropdownButton
                                 onClick={() =>
                                     openOrCloseLocationEditModal(location.id)
@@ -90,18 +116,32 @@ const Location = ({
                 </div>,
             ]}
             headerContent={[
-                <div className="inline-block w-[19%]">Name</div>,
-                <div className="inline-block w-[15%] text-right">Quantity</div>,
-                <div className="inline-block w-[15%] text-right">
+                <div key={'Name'} className="inline-block w-[19%]">
+                    Name
+                </div>,
+                <div
+                    key={'Quantity'}
+                    className="inline-block w-[15%] text-right">
+                    Quantity
+                </div>,
+                <div
+                    key={'Buy unit price'}
+                    className="inline-block w-[15%] text-right">
                     Buy unit price
                 </div>,
-                <div className="inline-block w-[15%] text-right">
+                <div
+                    key={'Current price'}
+                    className="inline-block w-[15%] text-right">
                     Current price
                 </div>,
-                <div className="inline-block w-[15%] text-right">
+                <div
+                    key={'Total value'}
+                    className="inline-block w-[15%] text-right">
                     Total value
                 </div>,
-                <div className="inline-block w-[15%] text-right">
+                <div
+                    key={'+/- value'}
+                    className="inline-block w-[15%] text-right">
                     +/- value
                 </div>,
             ]}

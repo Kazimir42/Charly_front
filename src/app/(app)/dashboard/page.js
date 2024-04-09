@@ -12,7 +12,10 @@ const Dashboard = () => {
     const { getDashboard } = useDashboardData()
     const { updateLocation } = useLocationData({})
 
-    const [locationModalIsOpen, setLocationModalIsOpen] = useState(false)
+    const [locationEditModalIsOpen, setLocationEditModalIsOpen] = useState(
+        false,
+    )
+    const [locationDeleteModalIsOpen, setLocationDeleteModalIsOpen] = useState(false)
     const [transactionModalIsOpen, setTransactionModalIsOpen] = useState(false)
     const [selectedLocation, setSelectedLocation] = useState({})
     const [locations, setLocations] = useState([])
@@ -46,15 +49,28 @@ const Dashboard = () => {
     }
 
     function openOrCloseLocationEditModal(locationId = null) {
-        if (locationModalIsOpen) {
+        if (locationEditModalIsOpen) {
             setSelectedLocation({})
-            setLocationModalIsOpen(!locationModalIsOpen)
+            setLocationEditModalIsOpen(!locationEditModalIsOpen)
         } else {
             // Find the selected location
             setSelectedLocation(
                 locations.find(location => location.id === locationId),
             )
-            setLocationModalIsOpen(!locationModalIsOpen)
+            setLocationEditModalIsOpen(!locationEditModalIsOpen)
+        }
+    }
+
+    function openOrCloseLocationDeleteModal(locationId = null) {
+        if (locationDeleteModalIsOpen) {
+            setSelectedLocation({})
+            setLocationDeleteModalIsOpen(!locationDeleteModalIsOpen)
+        } else {
+            // Find the selected location
+            setSelectedLocation(
+                locations.find(location => location.id === locationId),
+            )
+            setLocationDeleteModalIsOpen(!locationDeleteModalIsOpen)
         }
     }
 
@@ -100,13 +116,16 @@ const Dashboard = () => {
                                 openOrCloseLocationEditModal
                             }
                             openNewTransactionModal={openNewTransactionModal}
+                            openOrCloseLocationDeleteModal={
+                                openOrCloseLocationDeleteModal
+                            }
                         />
                     ))}
                 </div>
             </div>
             <EditLocationModal
                 updateLocation={_updateLocation}
-                isOpen={locationModalIsOpen}
+                isOpen={locationEditModalIsOpen}
                 setIsOpen={openOrCloseLocationEditModal}
                 location={selectedLocation}
             />

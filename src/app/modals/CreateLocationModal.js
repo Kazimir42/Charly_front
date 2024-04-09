@@ -16,12 +16,21 @@ const CreateLocationModal = ({ setIsOpen, isOpen, createLocation }) => {
             name,
             note,
         })
+
+        setName('')
+        setNote('')
+    }
+
+    function openOrClose() {
+        setName('')
+        setNote('')
+        setIsOpen(!isOpen)
     }
 
     return (
         <Modal
-            title={'Edit Location'}
-            setIsOpen={setIsOpen}
+            title={'New Location'}
+            setIsOpen={openOrClose}
             isOpen={isOpen}
             className={''}>
             <form className={'flex flex-col gap-4'} onSubmit={submitForm}>
@@ -46,7 +55,8 @@ const CreateLocationModal = ({ setIsOpen, isOpen, createLocation }) => {
                         label={'Note'}
                         className="block mt-1 w-full h-32"
                         onChange={event => setNote(event.target.value)}
-                        defaultValue={note} />
+                        defaultValue={note}
+                    />
                 </div>
                 <div className={'flex flex-row justify-end'}>
                     <Button type="submit">Save</Button>

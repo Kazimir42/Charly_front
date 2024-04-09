@@ -7,15 +7,18 @@ import Location from '@/app/(app)/Location'
 import SimpleCard from '@/components/SimpleCard'
 import EditLocationModal from '@/app/modals/EditLocationModal'
 import { useLocationData } from '@/hooks/locations'
+import DeleteModal from '@/components/DeleteModal'
 
 const Dashboard = () => {
     const { getDashboard } = useDashboardData()
-    const { updateLocation } = useLocationData({})
+    const { updateLocation, deleteLocation } = useLocationData({})
 
     const [locationEditModalIsOpen, setLocationEditModalIsOpen] = useState(
         false,
     )
-    const [locationDeleteModalIsOpen, setLocationDeleteModalIsOpen] = useState(false)
+    const [locationDeleteModalIsOpen, setLocationDeleteModalIsOpen] = useState(
+        false,
+    )
     const [transactionModalIsOpen, setTransactionModalIsOpen] = useState(false)
     const [selectedLocation, setSelectedLocation] = useState({})
     const [locations, setLocations] = useState([])
@@ -87,6 +90,15 @@ const Dashboard = () => {
             .catch(() => {})
     }
 
+    function _deleteLocation(id) {
+        deleteLocation(id)
+            .then(() => {
+                refreshDashboard()
+                openOrCloseLocationDeleteModal()
+            })
+            .catch(() => {})
+    }
+
     return (
         <>
             <Header title="Dashboard" className={'mb-12'} />
@@ -128,6 +140,16 @@ const Dashboard = () => {
                 isOpen={locationEditModalIsOpen}
                 setIsOpen={openOrCloseLocationEditModal}
                 location={selectedLocation}
+            />
+            <DeleteModal
+                id={selectedLocation.id}
+                deleteObject={_deleteLocation}
+                isOpen={locationDeleteModalIsOpen}
+                setIsOpen={openOrCloseLocationDeleteModal}
+                title={'Delete location: ' + selectedLocation.name}
+                content={
+                    'By deleted a location it will delete the child assets and remove the location from the transactions (but the transactions will not be deleted)'
+                }
             />
         </>
     )

@@ -27,5 +27,18 @@ export const useLocationData = () => {
             })
     }
 
-    return { getLocations, updateLocation }
+    const deleteLocation = async (id) => {
+        return axios
+            .delete('/api/locations/' + id)
+            .then(response => {
+                toast.success('Location deleted successfully!')
+                return response.data
+            })
+            .catch(error => {
+                toast.error(error.response.data.message)
+                throw error
+            })
+    }
+
+    return { getLocations, updateLocation, deleteLocation }
 }

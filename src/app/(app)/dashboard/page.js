@@ -7,7 +7,7 @@ import Location from '@/app/(app)/Location'
 import SimpleCard from '@/components/SimpleCard'
 import EditLocationModal from '@/app/modals/EditLocationModal'
 import { useLocationData } from '@/hooks/locations'
-import DeleteModal from '@/components/DeleteModal'
+import DeleteModal from '@/app/modals/DeleteModal'
 import Button from '@/components/Button'
 import CreateLocationModal from '@/app/modals/CreateLocationModal'
 

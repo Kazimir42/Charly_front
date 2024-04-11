@@ -1,22 +1,44 @@
 'use client'
 
 import Header from '@/app/(app)/Header'
-import { useDashboardData } from '@/hooks/dashboard'
 import { useEffect, useState } from 'react'
-import Location from '@/app/(app)/Location'
-import SimpleCard from '@/components/SimpleCard'
 import { useTransactionData } from '@/hooks/transactions'
 import Table from '@/components/Table'
+import Button from '@/components/Button'
+import CreateTransactionModal from '@/app/modals/CreateTransactionModal'
+import DeleteModal from '@/app/modals/DeleteModal'
+import editTransactionModal from '@/app/modals/EditTransactionModal'
+import EditTransactionModal from '@/app/modals/EditTransactionModal'
 
 const Transactions = () => {
-    const { getTransactions } = useTransactionData()
+    const {
+        getTransactions,
+        createTransaction,
+        updateTransaction,
+        deleteTransaction,
+    } = useTransactionData()
 
-    const [, setErrors] = useState([])
-    const [, setStatus] = useState(null)
+    const [
+        transactionCreateModalIsOpen,
+        setTransactionCreateModalIsOpen,
+    ] = useState(false)
+    const [
+        transactionEditModalIsOpen,
+        setTransactionEditModalIsOpen,
+    ] = useState(false)
+    const [
+        transactionDeleteModalIsOpen,
+        setTransactionDeleteModalIsOpen,
+    ] = useState(false)
     const [transactions, setTransactions] = useState([])
+    const [selectedTransaction, setSelectedTransaction] = useState({})
 
     useEffect(() => {
-        getTransactions(setErrors, setStatus).then(data => {
+        refreshTransactions()
+    }, [])
+
+    function refreshTransactions() {
+        getTransactions().then(data => {
             if (data) {
                 let formatedData = []
 
@@ -35,14 +57,94 @@ const Transactions = () => {
                 setTransactions(formatedData || [])
             }
         })
-    }, [])
+    }
+
+    function openOrCloseTransactionCreateModal(transactionId = null) {
+        if (transactionCreateModalIsOpen) {
+            setSelectedTransaction({})
+            setTransactionCreateModalIsOpen(!transactionCreateModalIsOpen)
+        } else {
+            // Find the selected transaction
+            setSelectedTransaction(
+                transactions.find(
+                    transaction => transaction.id === transactionId,
+                ),
+            )
+            setTransactionCreateModalIsOpen(!transactionCreateModalIsOpen)
+        }
+    }
+
+    function openOrCloseTransactionEditModal(transactionId = null) {
+        if (transactionEditModalIsOpen) {
+            setSelectedTransaction({})
+            setTransactionEditModalIsOpen(!transactionEditModalIsOpen)
+        } else {
+            // Find the selected transaction
+            setSelectedTransaction(
+                transactions.find(
+                    transaction => transaction.id === transactionId,
+                ),
+            )
+            setTransactionEditModalIsOpen(!transactionEditModalIsOpen)
+        }
+    }
+
+    function openOrCloseTransactionDeleteModal(transactionId = null) {
+        if (transactionDeleteModalIsOpen) {
+            setSelectedTransaction({})
+            setTransactionDeleteModalIsOpen(!transactionDeleteModalIsOpen)
+        } else {
+            // Find the selected transaction
+            setSelectedTransaction(
+                transactions.find(
+                    transaction => transaction.id === transactionId,
+                ),
+            )
+            setTransactionDeleteModalIsOpen(!transactionDeleteModalIsOpen)
+        }
+    }
+
+    function _updateTransaction(id, data) {
+        updateTransaction(id, data)
+            .then(() => {
+                refreshTransactions()
+                openOrCloseTransactionEditModal()
+            })
+            .catch(() => {})
+    }
+
+    function _deleteTransaction(id) {
+        deleteTransaction(id)
+            .then(() => {
+                refreshTransactions()
+                openOrCloseTransactionDeleteModal()
+            })
+            .catch(() => {})
+    }
+
+    function _createTransaction(data) {
+        createTransaction(data)
+            .then(() => {
+                refreshTransactions()
+                openOrCloseTransactionCreateModal()
+            })
+            .catch(() => {})
+    }
 
     return (
         <>
             <Header title="Transactions" className={'mb-12'} />
 
             <div className={'pb-6'}>
-                <h3 className={'font-semibold text-xl mb-2'}>List</h3>
+                <div
+                    className={
+                        'flex flex-row items-center mb-2 justify-between'
+                    }>
+                    <h3 className={'font-semibold text-xl'}>List</h3>
+                    <Button onClick={openOrCloseTransactionCreateModal}>
+                        + Add new
+                    </Button>
+                </div>
                 <div className="flex flex-col gap-2">
                     <Table
                         header={[
@@ -58,6 +160,27 @@ const Transactions = () => {
                     />
                 </div>
             </div>
+
+            <CreateTransactionModal
+                createTransaction={_createTransaction}
+                isOpen={transactionCreateModalIsOpen}
+                setIsOpen={openOrCloseTransactionCreateModal}
+            />
+
+            <EditTransactionModal
+                updateTransaction={_updateTransaction}
+                isOpen={transactionEditModalIsOpen}
+                setIsOpen={setTransactionEditModalIsOpen}
+                transaction={selectedTransaction ?? null}
+            />
+            <DeleteModal
+                id={selectedTransaction?.id ?? null}
+                deleteObject={_deleteTransaction}
+                isOpen={transactionDeleteModalIsOpen}
+                setIsOpen={openOrCloseTransactionDeleteModal}
+                title={'Delete transaction: ' + selectedTransaction?.name}
+                content={'Care : you cannot restore it'}
+            />
         </>
     )
 }

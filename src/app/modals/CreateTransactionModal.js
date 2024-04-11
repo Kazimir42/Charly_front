@@ -4,26 +4,23 @@ import Input from '@/components/Input'
 import Label from '@/components/Label'
 import Textarea from '@/components/Textarea'
 import Button from '@/components/Button'
+import Buy from '@/app/modals/TransactionParts/Buy'
 
 const CreateTransactionModal = ({ setIsOpen, isOpen, createTransaction }) => {
-    const [name, setName] = useState('')
-    const [note, setNote] = useState('')
+    const [type, setType] = useState(null)
 
     const submitForm = async event => {
         event.preventDefault()
 
         createTransaction({
             name,
-            note,
         })
 
-        setName('')
-        setNote('')
+        setType('')
     }
 
     function openOrClose() {
-        setName('')
-        setNote('')
+        setType('')
         setIsOpen(!isOpen)
     }
 
@@ -35,29 +32,85 @@ const CreateTransactionModal = ({ setIsOpen, isOpen, createTransaction }) => {
             className={''}>
             <form className={'flex flex-col gap-4'} onSubmit={submitForm}>
                 <div>
-                    <Label htmlFor="name">Name*</Label>
-                    <Input
-                        id="name"
-                        type="text"
-                        value={name}
-                        label={'Name'}
-                        className="block mt-1 w-full"
-                        onChange={event => setName(event.target.value)}
-                        required
-                        autoFocus
-                    />
+                    <h4 className={'mb-2'}>Type of transaction*</h4>
+                    <div className={'flex flex-row gap-4 justify-between'}>
+                        <div className={'flex flex-row gap-2'}>
+                            <Label htmlFor="buy">Buy</Label>
+                            <Input
+                                id="buy"
+                                type="radio"
+                                name={'type'}
+                                value={'buy'}
+                                className=""
+                                onChange={event => setType(event.target.value)}
+                                required
+                                autoFocus
+                            />
+                        </div>
+
+                        <div className={'flex flex-row gap-2'}>
+                            <Label htmlFor="sell">Sell</Label>
+                            <Input
+                                id="sell"
+                                type="radio"
+                                name={'type'}
+                                value={'sell'}
+                                className=""
+                                onChange={event => setType(event.target.value)}
+                                required
+                                autoFocus
+                            />
+                        </div>
+
+                        <div className={'flex flex-row gap-2'}>
+                            <Label htmlFor="receive">Receive</Label>
+                            <Input
+                                id="receive"
+                                type="radio"
+                                name={'type'}
+                                value={'receive'}
+                                className=""
+                                onChange={event => setType(event.target.value)}
+                                required
+                                autoFocus
+                            />
+                        </div>
+
+                        <div className={'flex flex-row gap-2'}>
+                            <Label htmlFor="withdraw">Withdraw</Label>
+                            <Input
+                                id="withdraw"
+                                type="radio"
+                                name={'type'}
+                                value={'withdraw'}
+                                className=""
+                                onChange={event => setType(event.target.value)}
+                                required
+                                autoFocus
+                            />
+                        </div>
+
+                        <div className={'flex flex-row gap-2'}>
+                            <Label htmlFor="swap">Swap</Label>
+                            <Input
+                                id="swap"
+                                type="radio"
+                                name={'type'}
+                                value={'swap'}
+                                label={'Swap'}
+                                className=""
+                                onChange={event => setType(event.target.value)}
+                                required
+                                autoFocus
+                            />
+                        </div>
+                    </div>
                 </div>
 
-                <div>
-                    <Label htmlFor="note">Note</Label>
-                    <Textarea
-                        id={'note'}
-                        label={'Note'}
-                        className="block mt-1 w-full h-32"
-                        onChange={event => setNote(event.target.value)}
-                        defaultValue={note}
-                    />
-                </div>
+                <h4 className={'mb-2'}>Informations</h4>
+
+                {type === 'buy' ? <Buy /> : null}
+
                 <div className={'flex flex-row justify-end'}>
                     <Button type="submit">Save</Button>
                 </div>

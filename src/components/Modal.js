@@ -1,7 +1,7 @@
 import React from 'react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 
-const Modal = ({ setIsOpen, isOpen, title, children, className}) => {
+const Modal = ({ setIsOpen, isOpen, title, children, className }) => {
     const toggleModal = () => setIsOpen(!isOpen)
 
     return (
@@ -27,7 +27,9 @@ const Modal = ({ setIsOpen, isOpen, title, children, className}) => {
                                     />
                                 </button>
                             </div>
-                            <div className={' p-4 ' + className}>{children}</div>
+                            <div className={' p-4 ' + className}>
+                                {children}
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -38,7 +38,6 @@ const EditTransactionModal = ({ transaction, setIsOpen, isOpen, updateTransactio
                         id="name"
                         type="text"
                         value={name}
-                        label={'Name'}
                         className="block mt-1 w-full"
                         onChange={event => setName(event.target.value)}
                         required
@@ -50,7 +49,6 @@ const EditTransactionModal = ({ transaction, setIsOpen, isOpen, updateTransactio
                     <Label htmlFor="note">Note</Label>
                     <Textarea
                         id={'note'}
-                        label={'Note'}
                         className="block mt-1 w-full h-32"
                         onChange={event => setNote(event.target.value)}
                         defaultValue={note}

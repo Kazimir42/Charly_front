@@ -8,6 +8,7 @@ import Button from '@/components/Button'
 import CreateTransactionModal from '@/app/modals/CreateTransactionModal'
 import DeleteModal from '@/app/modals/DeleteModal'
 import EditTransactionModal from '@/app/modals/EditTransactionModal'
+import TransactionTypeBubble from '@/components/TransactionTypeBubble'
 
 const Transactions = () => {
     const {
@@ -43,12 +44,12 @@ const Transactions = () => {
 
                 data.forEach(line => {
                     formatedData.push([
-                        line.date_transaction,
-                        line.type,
+                        line.date,
+                        <TransactionTypeBubble type={line.type} />,
                         line.asset.currency.name,
                         line.to_quantity,
-                        line.transaction_price,
-                        line.to_unit_price,
+                        line.total_price,
+                        line.unit_price,
                         line.location.name,
                     ])
                 })

@@ -6,6 +6,8 @@ import Button from '@/components/Button'
 import Buy from '@/app/modals/TransactionParts/Buy'
 import { useLocationData } from '@/hooks/locations'
 import { useCurrencyData } from '@/hooks/currencies'
+import { CurrencyType } from '@/enums/CurrencyType'
+import { TransactionType } from '@/enums/TransactionType'
 
 const CreateTransactionModal = ({ setIsOpen, isOpen, createTransaction }) => {
     const { getLocations } = useLocationData()
@@ -29,15 +31,15 @@ const CreateTransactionModal = ({ setIsOpen, isOpen, createTransaction }) => {
     useEffect(() => {
         if (isOpen) {
             getLocations().then(setLocations)
-            getCurrencies({ type: 'FIAT' }).then(setFiatCurrencies)
-            getCurrencies({ type: 'CRYPTO' }).then(setCryptoCurrencies)
+            getCurrencies({ type: CurrencyType.FIAT }).then(setFiatCurrencies)
+            getCurrencies({ type: CurrencyType.CRYPTO }).then(
+                setCryptoCurrencies,
+            )
         }
     }, [isOpen])
 
     const submitForm = async event => {
         event.preventDefault()
-
-        console.log(boughtAsset)
 
         createTransaction({
             type,
@@ -83,7 +85,7 @@ const CreateTransactionModal = ({ setIsOpen, isOpen, createTransaction }) => {
                                 id="buy"
                                 type="radio"
                                 name={'type'}
-                                value={'BUY'}
+                                value={TransactionType.BUY}
                                 className=""
                                 onChange={event => setType(event.target.value)}
                                 required
@@ -97,7 +99,7 @@ const CreateTransactionModal = ({ setIsOpen, isOpen, createTransaction }) => {
                                 id="sell"
                                 type="radio"
                                 name={'type'}
-                                value={'SELL'}
+                                value={TransactionType.SELL}
                                 className=""
                                 onChange={event => setType(event.target.value)}
                                 required
@@ -111,7 +113,7 @@ const CreateTransactionModal = ({ setIsOpen, isOpen, createTransaction }) => {
                                 id="receive"
                                 type="radio"
                                 name={'type'}
-                                value={'RECEIVE'}
+                                value={TransactionType.RECEIVE}
                                 className=""
                                 onChange={event => setType(event.target.value)}
                                 required
@@ -125,7 +127,7 @@ const CreateTransactionModal = ({ setIsOpen, isOpen, createTransaction }) => {
                                 id="withdraw"
                                 type="radio"
                                 name={'type'}
-                                value={'WITHDRAW'}
+                                value={TransactionType.WITHDRAW}
                                 className=""
                                 onChange={event => setType(event.target.value)}
                                 required
@@ -139,7 +141,7 @@ const CreateTransactionModal = ({ setIsOpen, isOpen, createTransaction }) => {
                                 id="swap"
                                 type="radio"
                                 name={'type'}
-                                value={'SWAP'}
+                                value={TransactionType.SWAP}
                                 className=""
                                 onChange={event => setType(event.target.value)}
                                 required

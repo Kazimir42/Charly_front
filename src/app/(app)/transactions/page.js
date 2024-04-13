@@ -8,8 +8,6 @@ import Button from '@/components/Button'
 import CreateTransactionModal from '@/app/modals/CreateTransactionModal'
 import DeleteModal from '@/app/modals/DeleteModal'
 import EditTransactionModal from '@/app/modals/EditTransactionModal'
-import { useLocationData } from '@/hooks/locations'
-import { useCurrencyData } from '@/hooks/currencies'
 
 const Transactions = () => {
     const {
@@ -18,10 +16,6 @@ const Transactions = () => {
         updateTransaction,
         deleteTransaction,
     } = useTransactionData()
-
-    const { getLocations } = useLocationData()
-
-    const { getCurrencies } = useCurrencyData()
 
     const [
         transactionCreateModalIsOpen,
@@ -37,15 +31,9 @@ const Transactions = () => {
     ] = useState(false)
     const [transactions, setTransactions] = useState([])
     const [selectedTransaction, setSelectedTransaction] = useState({})
-    const [locations, setLocations] = useState([])
-    const [fiatCurrencies, setFiatCurrencies] = useState([])
-    const [cryptoCurrencies, setCryptoCurrencies] = useState([])
 
     useEffect(() => {
         refreshTransactions()
-        getLocations().then(setLocations)
-        getCurrencies({ type: 'FIAT' }).then(setFiatCurrencies)
-        getCurrencies({ type: 'CRYPTO' }).then(setCryptoCurrencies)
     }, [])
 
     function refreshTransactions() {
@@ -176,9 +164,6 @@ const Transactions = () => {
                 createTransaction={_createTransaction}
                 isOpen={transactionCreateModalIsOpen}
                 setIsOpen={openOrCloseTransactionCreateModal}
-                locations={locations}
-                fiatCurrencies={fiatCurrencies}
-                cryptoCurrencies={cryptoCurrencies}
             />
 
             <EditTransactionModal

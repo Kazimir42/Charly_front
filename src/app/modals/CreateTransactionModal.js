@@ -1,18 +1,16 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Modal from '@/components/Modal'
 import Input from '@/components/Input'
 import Label from '@/components/Label'
 import Button from '@/components/Button'
 import Buy from '@/app/modals/TransactionParts/Buy'
+import { useLocationData } from '@/hooks/locations'
+import { useCurrencyData } from '@/hooks/currencies'
 
-const CreateTransactionModal = ({
-    setIsOpen,
-    isOpen,
-    createTransaction,
-    locations,
-    fiatCurrencies,
-    cryptoCurrencies,
-}) => {
+const CreateTransactionModal = ({ setIsOpen, isOpen, createTransaction }) => {
+    const { getLocations } = useLocationData()
+    const { getCurrencies } = useCurrencyData()
+
     const [type, setType] = useState(null)
     const [date, setDate] = useState('')
     const [boughtAsset, setBoughtAsset] = useState(0)
@@ -20,26 +18,52 @@ const CreateTransactionModal = ({
     const [spentAsset, setSpentAsset] = useState(0)
     const [spentQuantity, setSpentQuantity] = useState(0)
     const [location, setLocation] = useState(0)
+    const [hash, setHash] = useState('')
+    const [receptionAddress, setReceptionAddress] = useState('')
+    const [note, setNote] = useState('')
+
+    const [locations, setLocations] = useState([])
+    const [fiatCurrencies, setFiatCurrencies] = useState([])
+    const [cryptoCurrencies, setCryptoCurrencies] = useState([])
+
+    useEffect(() => {
+        if (isOpen) {
+            getLocations().then(setLocations)
+            getCurrencies({ type: 'FIAT' }).then(setFiatCurrencies)
+            getCurrencies({ type: 'CRYPTO' }).then(setCryptoCurrencies)
+        }
+    }, [isOpen])
 
     const submitForm = async event => {
         event.preventDefault()
 
+        console.log(boughtAsset)
+
         createTransaction({
             type,
             date,
+            from_currency_id: spentAsset,
+            from_quantity: spentQuantity,
+            to_currency_id: boughtAsset,
+            to_quantity: boughtQuantity,
+            location_id: location,
+            hash,
+            to_address: receptionAddress,
+            note,
         })
-
-        setType('')
     }
 
     function openOrClose() {
         setType(null)
-        setDate(null)
-        setBoughtAsset(null)
-        setBoughtQuantity(null)
-        setSpentAsset(null)
-        setSpentQuantity(null)
-        setLocation(null)
+        setDate('')
+        setBoughtAsset(0)
+        setBoughtQuantity(0)
+        setSpentAsset(0)
+        setSpentQuantity(0)
+        setLocation(0)
+        setHash('')
+        setReceptionAddress('')
+        setNote('')
         setIsOpen(!isOpen)
     }
 
@@ -59,7 +83,7 @@ const CreateTransactionModal = ({
                                 id="buy"
                                 type="radio"
                                 name={'type'}
-                                value={'buy'}
+                                value={'BUY'}
                                 className=""
                                 onChange={event => setType(event.target.value)}
                                 required
@@ -73,7 +97,7 @@ const CreateTransactionModal = ({
                                 id="sell"
                                 type="radio"
                                 name={'type'}
-                                value={'sell'}
+                                value={'SELL'}
                                 className=""
                                 onChange={event => setType(event.target.value)}
                                 required
@@ -87,7 +111,7 @@ const CreateTransactionModal = ({
                                 id="receive"
                                 type="radio"
                                 name={'type'}
-                                value={'receive'}
+                                value={'RECEIVE'}
                                 className=""
                                 onChange={event => setType(event.target.value)}
                                 required
@@ -101,7 +125,7 @@ const CreateTransactionModal = ({
                                 id="withdraw"
                                 type="radio"
                                 name={'type'}
-                                value={'withdraw'}
+                                value={'WITHDRAW'}
                                 className=""
                                 onChange={event => setType(event.target.value)}
                                 required
@@ -115,8 +139,7 @@ const CreateTransactionModal = ({
                                 id="swap"
                                 type="radio"
                                 name={'type'}
-                                value={'swap'}
-                                label={'Swap'}
+                                value={'SWAP'}
                                 className=""
                                 onChange={event => setType(event.target.value)}
                                 required
@@ -128,7 +151,7 @@ const CreateTransactionModal = ({
 
                 <div>
                     <h4 className={'mb-2'}>Informations</h4>
-                    {type === 'buy' ? (
+                    {type === 'BUY' ? (
                         <Buy
                             date={date}
                             setDate={setDate}
@@ -142,6 +165,12 @@ const CreateTransactionModal = ({
                             setSpentQuantity={setSpentQuantity}
                             location={location}
                             setLocation={setLocation}
+                            hash={hash}
+                            setHash={setHash}
+                            receptionAddress={receptionAddress}
+                            setReceptionAddress={setReceptionAddress}
+                            note={note}
+                            setNote={setNote}
                             locations={locations}
                             fiatCurrencies={fiatCurrencies}
                             cryptoCurrencies={cryptoCurrencies}

@@ -16,7 +16,7 @@ export const useTransactionData = () => {
 
     const createTransaction = async data => {
         return axios
-            .post('/api/transaction', data)
+            .post('/api/transactions', data)
             .then(response => {
                 toast.success('Transaction created successfully!')
                 return response.data

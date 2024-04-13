@@ -3,6 +3,7 @@ import Input from '@/components/Input'
 import Label from '@/components/Label'
 import { Select } from '@/components/Select'
 import { ArrowDownIcon } from '@heroicons/react/24/outline'
+import Textarea from '@/components/Textarea'
 
 const Buy = ({
     date,
@@ -17,6 +18,12 @@ const Buy = ({
     setSpentQuantity,
     location,
     setLocation,
+    hash,
+    setHash,
+    receptionAddress,
+    setReceptionAddress,
+    note,
+    setNote,
     locations,
     fiatCurrencies,
     cryptoCurrencies,
@@ -24,7 +31,7 @@ const Buy = ({
     return (
         <div className={'flex flex-col gap-2'}>
             <div>
-                <Label htmlFor="date">Date</Label>
+                <Label htmlFor="date">Date*</Label>
                 <Input
                     id="date"
                     name="date"
@@ -38,14 +45,17 @@ const Buy = ({
             </div>
             <div className={'grid grid-cols-2 gap-2'}>
                 <div>
-                    <Label htmlFor="spent_asset">Asset Spent</Label>
+                    <Label htmlFor="spent_asset">Asset Spent*</Label>
                     <Select
-                        id="spent_asset" // TODO : Call API to get FIAT currencies
+                        id="spent_asset"
                         name="spent_asset"
-                        items={fiatCurrencies.reduce((acc, fiatCurrency) => {
-                            acc[fiatCurrency.id] = fiatCurrency.name
-                            return acc
-                        }, {})}
+                        items={{
+                            0: 'Choose an asset',
+                            ...fiatCurrencies.reduce((acc, fiatCurrency) => {
+                                acc[fiatCurrency.id] = fiatCurrency.name
+                                return acc
+                            }, {}),
+                        }}
                         className="block w-full"
                         value={spentAsset}
                         onChange={event => setSpentAsset(event.target.value)}
@@ -54,7 +64,7 @@ const Buy = ({
                     />
                 </div>
                 <div>
-                    <Label htmlFor="spent_quantity">Quantity Spent</Label>
+                    <Label htmlFor="spent_quantity">Quantity Spent*</Label>
                     <Input
                         id="spent_quantity"
                         name="spent_quantity"
@@ -73,17 +83,20 @@ const Buy = ({
             />
             <div className={'grid grid-cols-2 gap-2'}>
                 <div>
-                    <Label htmlFor="bought_asset">Asset Bought</Label>
+                    <Label htmlFor="bought_asset">Asset Bought*</Label>
                     <Select
-                        id="bought_asset" // TODO : Call API to get currencies
+                        id="bought_asset"
                         name="bought_asset"
-                        items={cryptoCurrencies.reduce(
-                            (acc, cryptoCurrency) => {
-                                acc[cryptoCurrency.id] = cryptoCurrency.name
-                                return acc
-                            },
-                            {},
-                        )}
+                        items={{
+                            0: 'Choose an asset',
+                            ...cryptoCurrencies.reduce(
+                                (acc, cryptoCurrency) => {
+                                    acc[cryptoCurrency.id] = cryptoCurrency.name
+                                    return acc
+                                },
+                                {},
+                            ),
+                        }}
                         className="block w-full"
                         value={boughtAsset}
                         onChange={event => setBoughtAsset(event.target.value)}
@@ -92,7 +105,7 @@ const Buy = ({
                     />
                 </div>
                 <div>
-                    <Label htmlFor="bought_quantity">Quantity Bought</Label>
+                    <Label htmlFor="bought_quantity">Quantity Bought*</Label>
                     <Input
                         id="bought_quantity"
                         name="bought_quantity"
@@ -108,19 +121,59 @@ const Buy = ({
                 </div>
             </div>
             <div>
-                <Label htmlFor="location">Location</Label>
+                <Label htmlFor="location">Location*</Label>
                 <Select
-                    id="location" // TODO : Call API to get location
+                    id="location"
                     name="location"
-                    items={locations.reduce((acc, location) => {
-                        acc[location.id] = location.name
-                        return acc
-                    }, {})}
+                    items={{
+                        0: 'Choose a location',
+                        ...locations.reduce((acc, location) => {
+                            acc[location.id] = location.name
+                            return acc
+                        }, {}),
+                    }}
                     className="block w-full"
                     value={location}
                     onChange={event => setLocation(event.target.value)}
                     required
                     autoFocus
+                />
+            </div>
+            <div className={'grid grid-cols-2 gap-2'}>
+                <div>
+                    <Label htmlFor="hash">Hash</Label>
+                    <Input
+                        id="hash"
+                        name="hash"
+                        type="text"
+                        value={hash}
+                        className="block w-full"
+                        onChange={event => setHash(event.target.value)}
+                        autoFocus
+                    />
+                </div>
+                <div>
+                    <Label htmlFor="reception_address">Reception address</Label>
+                    <Input
+                        id="reception_address"
+                        name="reception_address"
+                        type="text"
+                        value={receptionAddress}
+                        className="block w-full"
+                        onChange={event =>
+                            setReceptionAddress(event.target.value)
+                        }
+                        autoFocus
+                    />
+                </div>
+            </div>
+            <div>
+                <Label htmlFor="note">Note</Label>
+                <Textarea
+                    id={'note'}
+                    className="block mt-1 w-full h-32"
+                    onChange={event => setNote(event.target.value)}
+                    defaultValue={note}
                 />
             </div>
         </div>

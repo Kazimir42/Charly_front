@@ -2,25 +2,42 @@ import React, { useState } from 'react'
 import Modal from '@/components/Modal'
 import Input from '@/components/Input'
 import Label from '@/components/Label'
-import Textarea from '@/components/Textarea'
 import Button from '@/components/Button'
 import Buy from '@/app/modals/TransactionParts/Buy'
 
-const CreateTransactionModal = ({ setIsOpen, isOpen, createTransaction }) => {
+const CreateTransactionModal = ({
+    setIsOpen,
+    isOpen,
+    createTransaction,
+    locations,
+}) => {
     const [type, setType] = useState(null)
+    const [date, setDate] = useState('')
+    const [boughtAsset, setBoughtAsset] = useState(0)
+    const [boughtQuantity, setBoughtQuantity] = useState(0)
+    const [spentAsset, setSpentAsset] = useState(0)
+    const [spentQuantity, setSpentQuantity] = useState(0)
+    const [location, setLocation] = useState(0)
 
     const submitForm = async event => {
         event.preventDefault()
 
         createTransaction({
-            name,
+            type,
+            date,
         })
 
         setType('')
     }
 
     function openOrClose() {
-        setType('')
+        setType(null)
+        setDate(null)
+        setBoughtAsset(null)
+        setBoughtQuantity(null)
+        setSpentAsset(null)
+        setSpentQuantity(null)
+        setLocation(null)
         setIsOpen(!isOpen)
     }
 
@@ -107,9 +124,26 @@ const CreateTransactionModal = ({ setIsOpen, isOpen, createTransaction }) => {
                     </div>
                 </div>
 
-                <h4 className={'mb-2'}>Informations</h4>
-
-                {type === 'buy' ? <Buy /> : null}
+                <div>
+                    <h4 className={'mb-2'}>Informations</h4>
+                    {type === 'buy' ? (
+                        <Buy
+                            date={date}
+                            setDate={setDate}
+                            boughtAsset={boughtAsset}
+                            setBoughtAsset={setBoughtAsset}
+                            boughtQuantity={boughtQuantity}
+                            setBoughtQuantity={setBoughtQuantity}
+                            spentAsset={spentAsset}
+                            setSpentAsset={setSpentAsset}
+                            spentQuantity={spentQuantity}
+                            setSpentQuantity={setSpentQuantity}
+                            location={location}
+                            setLocation={setLocation}
+                            locations={locations}
+                        />
+                    ) : null}
+                </div>
 
                 <div className={'flex flex-row justify-end'}>
                     <Button type="submit">Save</Button>

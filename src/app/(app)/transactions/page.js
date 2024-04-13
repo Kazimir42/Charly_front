@@ -7,8 +7,8 @@ import Table from '@/components/Table'
 import Button from '@/components/Button'
 import CreateTransactionModal from '@/app/modals/CreateTransactionModal'
 import DeleteModal from '@/app/modals/DeleteModal'
-import editTransactionModal from '@/app/modals/EditTransactionModal'
 import EditTransactionModal from '@/app/modals/EditTransactionModal'
+import { useLocationData } from '@/hooks/locations'
 
 const Transactions = () => {
     const {
@@ -17,6 +17,8 @@ const Transactions = () => {
         updateTransaction,
         deleteTransaction,
     } = useTransactionData()
+
+    const { getLocations } = useLocationData()
 
     const [
         transactionCreateModalIsOpen,
@@ -32,9 +34,13 @@ const Transactions = () => {
     ] = useState(false)
     const [transactions, setTransactions] = useState([])
     const [selectedTransaction, setSelectedTransaction] = useState({})
+    const [locations, setLocations] = useState([])
+    const [fiatCurrencies, setFiatCurrencies] = useState([])
+    const [cryptoCurrencies, setCryptoCurrencies] = useState([])
 
     useEffect(() => {
         refreshTransactions()
+        getLocations().then(setLocations)
     }, [])
 
     function refreshTransactions() {
@@ -165,6 +171,7 @@ const Transactions = () => {
                 createTransaction={_createTransaction}
                 isOpen={transactionCreateModalIsOpen}
                 setIsOpen={openOrCloseTransactionCreateModal}
+                locations={locations}
             />
 
             <EditTransactionModal

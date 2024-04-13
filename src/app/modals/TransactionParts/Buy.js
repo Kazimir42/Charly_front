@@ -18,8 +18,9 @@ const Buy = ({
     location,
     setLocation,
     locations,
+    fiatCurrencies,
+    cryptoCurrencies,
 }) => {
-
     return (
         <div className={'flex flex-col gap-2'}>
             <div>
@@ -41,10 +42,10 @@ const Buy = ({
                     <Select
                         id="spent_asset" // TODO : Call API to get FIAT currencies
                         name="spent_asset"
-                        items={{
-                            1: 'Dollar',
-                            2: 'Euro',
-                        }}
+                        items={fiatCurrencies.reduce((acc, fiatCurrency) => {
+                            acc[fiatCurrency.id] = fiatCurrency.name
+                            return acc
+                        }, {})}
                         className="block w-full"
                         value={spentAsset}
                         onChange={event => setSpentAsset(event.target.value)}
@@ -76,11 +77,13 @@ const Buy = ({
                     <Select
                         id="bought_asset" // TODO : Call API to get currencies
                         name="bought_asset"
-                        items={{
-                            3: 'Bitcoin',
-                            4: 'Ethereum',
-                            5: 'Cosmos',
-                        }}
+                        items={cryptoCurrencies.reduce(
+                            (acc, cryptoCurrency) => {
+                                acc[cryptoCurrency.id] = cryptoCurrency.name
+                                return acc
+                            },
+                            {},
+                        )}
                         className="block w-full"
                         value={boughtAsset}
                         onChange={event => setBoughtAsset(event.target.value)}

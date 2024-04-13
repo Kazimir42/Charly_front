@@ -10,6 +10,8 @@ const CreateTransactionModal = ({
     isOpen,
     createTransaction,
     locations,
+    fiatCurrencies,
+    cryptoCurrencies,
 }) => {
     const [type, setType] = useState(null)
     const [date, setDate] = useState('')
@@ -141,6 +143,8 @@ const CreateTransactionModal = ({
                             location={location}
                             setLocation={setLocation}
                             locations={locations}
+                            fiatCurrencies={fiatCurrencies}
+                            cryptoCurrencies={cryptoCurrencies}
                         />
                     ) : null}
                 </div>

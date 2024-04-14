@@ -4,6 +4,7 @@ import Input from '@/components/Input'
 import Label from '@/components/Label'
 import Button from '@/components/Button'
 import Buy from '@/app/modals/TransactionParts/Buy'
+import Sell from '@/app/modals/TransactionParts/Sell'
 import { useLocationData } from '@/hooks/locations'
 import { useCurrencyData } from '@/hooks/currencies'
 import { CurrencyType } from '@/enums/CurrencyType'
@@ -52,6 +53,7 @@ const CreateTransactionModal = ({ setIsOpen, isOpen, createTransaction }) => {
             location_id: location,
             hash,
             to_address: toAddress,
+            from_address: fromAddress,
             note,
         })
     }
@@ -65,6 +67,7 @@ const CreateTransactionModal = ({ setIsOpen, isOpen, createTransaction }) => {
         setFromQuantity(0)
         setLocation(0)
         setHash('')
+        setFromAddress('')
         setToAddress('')
         setNote('')
         setIsOpen(!isOpen)
@@ -154,7 +157,7 @@ const CreateTransactionModal = ({ setIsOpen, isOpen, createTransaction }) => {
 
                 <div>
                     <h4 className={'mb-2'}>Informations</h4>
-                    {type === 'BUY' ? (
+                    {type === TransactionType.BUY ? (
                         <Buy
                             date={date}
                             setDate={setDate}
@@ -172,6 +175,32 @@ const CreateTransactionModal = ({ setIsOpen, isOpen, createTransaction }) => {
                             setHash={setHash}
                             toAddress={toAddress}
                             setToAddress={setToAddress}
+                            note={note}
+                            setNote={setNote}
+                            locations={locations}
+                            fiatCurrencies={fiatCurrencies}
+                            cryptoCurrencies={cryptoCurrencies}
+                        />
+                    ) : null}
+
+                    {type === TransactionType.SELL ? (
+                        <Sell
+                            date={date}
+                            setDate={setDate}
+                            toCurrency={toCurrency}
+                            setToCurrency={setToCurrency}
+                            toQuantity={toQuantity}
+                            setToQuantity={setToQuantity}
+                            fromCurrency={fromCurrency}
+                            setFromCurrency={setFromCurrency}
+                            fromQuantity={fromQuantity}
+                            setFromQuantity={setFromQuantity}
+                            location={location}
+                            setLocation={setLocation}
+                            hash={hash}
+                            setHash={setHash}
+                            fromAddress={fromAddress}
+                            setFromAddress={setFromAddress}
                             note={note}
                             setNote={setNote}
                             locations={locations}

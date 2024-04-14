@@ -10,6 +10,7 @@ import DeleteModal from '@/app/modals/DeleteModal'
 import EditTransactionModal from '@/app/modals/EditTransactionModal'
 import TransactionTypeBubble from '@/components/TransactionTypeBubble'
 import { formatPrice } from '@/lib/utils'
+import { TransactionType } from '@/enums/TransactionType'
 
 const Transactions = () => {
     const {
@@ -44,11 +45,19 @@ const Transactions = () => {
                 let formatedData = []
 
                 data.forEach(line => {
+                    let quantity = 0
+                    if (line.type === TransactionType.BUY) {
+                        quantity = line.to_quantity
+                    } else if (line.type === TransactionType.SELL) {
+                        quantity = line.from_quantity
+                    }
+
                     formatedData.push([
                         line.date,
+                        // eslint-disable-next-line react/jsx-key
                         <TransactionTypeBubble type={line.type} />,
                         line.asset.currency.name,
-                        line.to_quantity,
+                        quantity,
                         formatPrice(line.total_price),
                         formatPrice(line.unit_price),
                         line.location.name,

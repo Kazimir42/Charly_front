@@ -1,6 +1,6 @@
 import React from 'react'
 
-const SimpleCard = ({ className, name, value }) => {
+const SimpleCard = ({ className, name, children, childrenClass }) => {
     return (
         <div
             className={
@@ -10,8 +10,12 @@ const SimpleCard = ({ className, name, value }) => {
             <dt className="truncate text-sm font-medium text-gray-500">
                 {name}
             </dt>
-            <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900">
-                {value}
+            <dd
+                className={
+                    'mt-1 text-3xl font-semibold tracking-tight text-gray-900 ' +
+                    childrenClass
+                }>
+                {children}
             </dd>
         </div>
     )

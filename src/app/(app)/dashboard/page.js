@@ -10,6 +10,7 @@ import { useLocationData } from '@/hooks/locations'
 import DeleteModal from '@/app/modals/DeleteModal'
 import Button from '@/components/Button'
 import CreateLocationModal from '@/app/modals/CreateLocationModal'
+import TreemapAllocation from '@/app/stats/TreemapAllocation'
 
 const Dashboard = () => {
     const { getDashboard } = useDashboardData()
@@ -30,6 +31,7 @@ const Dashboard = () => {
     const [selectedLocation, setSelectedLocation] = useState({})
     const [locations, setLocations] = useState([])
     const [cardStats, setCardStats] = useState([])
+    const [allocationStats, setAllocationStats] = useState([])
 
     useEffect(() => {
         refreshDashboard()
@@ -53,7 +55,12 @@ const Dashboard = () => {
                         name: 'name',
                         value: 'TODO €',
                     },
+                    {
+                        name: 'name',
+                        value: 'TODO €',
+                    },
                 ])
+                setAllocationStats(data.stats.allocation)
             }
         })
     }
@@ -134,10 +141,21 @@ const Dashboard = () => {
                         <SimpleCard
                             key={index}
                             className={'grow'}
-                            name={cardStat.name}
-                            value={cardStat.value}
-                        />
+                            name={cardStat.name}>
+                            {cardStat.value}
+                        </SimpleCard>
                     ))}
+                </div>
+                <div className={'grid grid-cols-3 gap-4 mb-4'}>
+                    <SimpleCard
+                        className={'col-span-2'}
+                        name={'Total value history'}></SimpleCard>
+                    <SimpleCard
+                        className={'col-span-1'}
+                        name={'Allocation'}
+                        childrenClass={'h-[200px]'}>
+                        <TreemapAllocation allocations={allocationStats} />
+                    </SimpleCard>
                 </div>
             </div>
 

@@ -1,6 +1,6 @@
 import React, { PureComponent, useEffect, useState } from 'react'
 import { ResponsiveContainer, Treemap } from 'recharts'
-import { formatPrice } from '@/lib/utils'
+import { formatPercentage, formatPrice } from '@/lib/utils'
 
 const COLORS = [
     '#8889DD',
@@ -28,6 +28,24 @@ class CustomizedContent extends PureComponent {
             description,
         } = this.props
 
+        const nameStyle = {
+            textAnchor: 'middle',
+            fill: '#fff',
+            fontWeight: 'normal',
+            fontSize: '14px',
+            fontFamily:
+                'Nunito, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
+        }
+
+        const descriptionStyle = {
+            textAnchor: 'middle',
+            fill: '#ddd',
+            fontWeight: 'lighter',
+            fontSize: '13px',
+            fontFamily:
+                'Nunito, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
+        }
+
         return (
             <g>
                 <rect
@@ -54,18 +72,13 @@ class CustomizedContent extends PureComponent {
                         <text
                             x={x + width / 2}
                             y={y + height / 2 + 7}
-                            textAnchor="middle"
-                            fill="#fff"
-                            fontWeight={'lighter'}
-                            fontSize={14}>
+                            style={nameStyle}>
                             {name}
                         </text>
                         <text
                             x={x + width / 2}
                             y={y + height / 2 + 7 + 20}
-                            textAnchor="middle"
-                            fill="#fff"
-                            fontSize={12}>
+                            style={descriptionStyle}>
                             {description}
                         </text>
                     </>
@@ -96,10 +109,13 @@ const TreemapAllocation = ({ allocations }) => {
 
                 data.push({
                     name: formatPrice(location.total_value),
-                    description: location.name,
+                    description:
+                        location.name +
+                        ' | ' +
+                        formatPercentage(location.portfolio_percentage),
                     children: [
                         {
-                            name: <div>{location.name}</div>,
+                            name: location.name,
                             size: location.total_value,
                         },
                     ],
@@ -120,6 +136,7 @@ const TreemapAllocation = ({ allocations }) => {
                     dataKey="size"
                     stroke="#fff"
                     fill="#8884d8"
+                    animationDuration={0}
                     content={<CustomizedContent colors={COLORS} />}
                 />
             ) : null}

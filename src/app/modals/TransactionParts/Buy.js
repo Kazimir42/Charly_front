@@ -8,20 +8,20 @@ import Textarea from '@/components/Textarea'
 const Buy = ({
     date,
     setDate,
-    boughtAsset,
-    setBoughtAsset,
-    boughtQuantity,
-    setBoughtQuantity,
-    spentAsset,
-    setSpentAsset,
-    spentQuantity,
-    setSpentQuantity,
+    toCurrency,
+    setToCurrency,
+    toQuantity,
+    setToQuantity,
+    fromCurrency,
+    setFromCurrency,
+    fromQuantity,
+    setFromQuantity,
     location,
     setLocation,
     hash,
     setHash,
-    receptionAddress,
-    setReceptionAddress,
+    toAddress,
+    setToAddress,
     note,
     setNote,
     locations,
@@ -45,10 +45,10 @@ const Buy = ({
             </div>
             <div className={'grid grid-cols-2 gap-2'}>
                 <div>
-                    <Label htmlFor="spent_asset">Asset Spent*</Label>
+                    <Label htmlFor="from_currency">Asset Spent*</Label>
                     <Select
-                        id="spent_asset"
-                        name="spent_asset"
+                        id="from_currency"
+                        name="from_currency"
                         items={{
                             0: 'Choose an asset',
                             ...fiatCurrencies.reduce((acc, fiatCurrency) => {
@@ -57,21 +57,23 @@ const Buy = ({
                             }, {}),
                         }}
                         className="block w-full"
-                        value={spentAsset}
-                        onChange={event => setSpentAsset(event.target.value)}
+                        value={fromCurrency}
+                        onChange={event => setFromCurrency(event.target.value)}
                         required
                         autoFocus
                     />
                 </div>
                 <div>
-                    <Label htmlFor="spent_quantity">Quantity Spent*</Label>
+                    <Label htmlFor="from_quantity">Quantity Spent*</Label>
                     <Input
-                        id="spent_quantity"
-                        name="spent_quantity"
+                        id="from_quantity"
+                        name="from_quantity"
                         type="number"
-                        value={spentQuantity}
+                        step={'0.01'}
+                        min={'0'}
+                        value={fromQuantity}
                         className="block w-full"
-                        onChange={event => setSpentQuantity(event.target.value)}
+                        onChange={event => setFromQuantity(event.target.value)}
                         required
                         autoFocus
                     />
@@ -83,10 +85,10 @@ const Buy = ({
             />
             <div className={'grid grid-cols-2 gap-2'}>
                 <div>
-                    <Label htmlFor="bought_asset">Asset Bought*</Label>
+                    <Label htmlFor="to_currency">Asset Bought*</Label>
                     <Select
-                        id="bought_asset"
-                        name="bought_asset"
+                        id="to_currency"
+                        name="to_currency"
                         items={{
                             0: 'Choose an asset',
                             ...cryptoCurrencies.reduce(
@@ -98,23 +100,23 @@ const Buy = ({
                             ),
                         }}
                         className="block w-full"
-                        value={boughtAsset}
-                        onChange={event => setBoughtAsset(event.target.value)}
+                        value={toCurrency}
+                        onChange={event => setToCurrency(event.target.value)}
                         required
                         autoFocus
                     />
                 </div>
                 <div>
-                    <Label htmlFor="bought_quantity">Quantity Bought*</Label>
+                    <Label htmlFor="to_quantity">Quantity Bought*</Label>
                     <Input
-                        id="bought_quantity"
-                        name="bought_quantity"
+                        id="to_quantity"
+                        name="to_quantity"
                         type="number"
-                        value={boughtQuantity}
+                        step={'0.01'}
+                        min={'0'}
+                        value={toQuantity}
                         className="block w-full"
-                        onChange={event =>
-                            setBoughtQuantity(event.target.value)
-                        }
+                        onChange={event => setToQuantity(event.target.value)}
                         required
                         autoFocus
                     />
@@ -153,16 +155,14 @@ const Buy = ({
                     />
                 </div>
                 <div>
-                    <Label htmlFor="reception_address">Reception address</Label>
+                    <Label htmlFor="to_address">Reception address</Label>
                     <Input
-                        id="reception_address"
-                        name="reception_address"
+                        id="to_address"
+                        name="to_address"
                         type="text"
-                        value={receptionAddress}
+                        value={toAddress}
                         className="block w-full"
-                        onChange={event =>
-                            setReceptionAddress(event.target.value)
-                        }
+                        onChange={event => setToAddress(event.target.value)}
                         autoFocus
                     />
                 </div>

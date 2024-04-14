@@ -15,13 +15,14 @@ const CreateTransactionModal = ({ setIsOpen, isOpen, createTransaction }) => {
 
     const [type, setType] = useState(null)
     const [date, setDate] = useState('')
-    const [boughtAsset, setBoughtAsset] = useState(0)
-    const [boughtQuantity, setBoughtQuantity] = useState(0)
-    const [spentAsset, setSpentAsset] = useState(0)
-    const [spentQuantity, setSpentQuantity] = useState(0)
+    const [toCurrency, setToCurrency] = useState(0)
+    const [toQuantity, setToQuantity] = useState(0)
+    const [fromCurrency, setFromCurrency] = useState(0)
+    const [fromQuantity, setFromQuantity] = useState(0)
     const [location, setLocation] = useState(0)
     const [hash, setHash] = useState('')
-    const [receptionAddress, setReceptionAddress] = useState('')
+    const [fromAddress, setFromAddress] = useState('')
+    const [toAddress, setToAddress] = useState('')
     const [note, setNote] = useState('')
 
     const [locations, setLocations] = useState([])
@@ -44,13 +45,13 @@ const CreateTransactionModal = ({ setIsOpen, isOpen, createTransaction }) => {
         createTransaction({
             type,
             date,
-            from_currency_id: spentAsset,
-            from_quantity: spentQuantity,
-            to_currency_id: boughtAsset,
-            to_quantity: boughtQuantity,
+            from_currency_id: fromCurrency,
+            from_quantity: fromQuantity,
+            to_currency_id: toCurrency,
+            to_quantity: toQuantity,
             location_id: location,
             hash,
-            to_address: receptionAddress,
+            to_address: toAddress,
             note,
         })
     }
@@ -58,13 +59,13 @@ const CreateTransactionModal = ({ setIsOpen, isOpen, createTransaction }) => {
     function openOrClose() {
         setType(null)
         setDate('')
-        setBoughtAsset(0)
-        setBoughtQuantity(0)
-        setSpentAsset(0)
-        setSpentQuantity(0)
+        setToCurrency(0)
+        setToQuantity(0)
+        setFromCurrency(0)
+        setFromQuantity(0)
         setLocation(0)
         setHash('')
-        setReceptionAddress('')
+        setToAddress('')
         setNote('')
         setIsOpen(!isOpen)
     }
@@ -157,20 +158,20 @@ const CreateTransactionModal = ({ setIsOpen, isOpen, createTransaction }) => {
                         <Buy
                             date={date}
                             setDate={setDate}
-                            boughtAsset={boughtAsset}
-                            setBoughtAsset={setBoughtAsset}
-                            boughtQuantity={boughtQuantity}
-                            setBoughtQuantity={setBoughtQuantity}
-                            spentAsset={spentAsset}
-                            setSpentAsset={setSpentAsset}
-                            spentQuantity={spentQuantity}
-                            setSpentQuantity={setSpentQuantity}
+                            toCurrency={toCurrency}
+                            setToCurrency={setToCurrency}
+                            toQuantity={toQuantity}
+                            setToQuantity={setToQuantity}
+                            fromCurrency={fromCurrency}
+                            setFromCurrency={setFromCurrency}
+                            fromQuantity={fromQuantity}
+                            setFromQuantity={setFromQuantity}
                             location={location}
                             setLocation={setLocation}
                             hash={hash}
                             setHash={setHash}
-                            receptionAddress={receptionAddress}
-                            setReceptionAddress={setReceptionAddress}
+                            toAddress={toAddress}
+                            setToAddress={setToAddress}
                             note={note}
                             setNote={setNote}
                             locations={locations}

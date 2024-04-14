@@ -9,6 +9,7 @@ import CreateTransactionModal from '@/app/modals/CreateTransactionModal'
 import DeleteModal from '@/app/modals/DeleteModal'
 import EditTransactionModal from '@/app/modals/EditTransactionModal'
 import TransactionTypeBubble from '@/components/TransactionTypeBubble'
+import { formatPrice } from '@/lib/utils'
 
 const Transactions = () => {
     const {
@@ -48,8 +49,8 @@ const Transactions = () => {
                         <TransactionTypeBubble type={line.type} />,
                         line.asset.currency.name,
                         line.to_quantity,
-                        line.total_price,
-                        line.unit_price,
+                        formatPrice(line.total_price),
+                        formatPrice(line.unit_price),
                         line.location.name,
                     ])
                 })

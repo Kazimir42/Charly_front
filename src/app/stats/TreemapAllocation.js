@@ -71,25 +71,17 @@ class CustomizedContent extends PureComponent {
                     <>
                         <text
                             x={x + width / 2}
-                            y={y + height / 2 + 7}
+                            y={y + height / 2 + 7 - 10}
                             style={nameStyle}>
                             {name}
                         </text>
                         <text
                             x={x + width / 2}
-                            y={y + height / 2 + 7 + 20}
+                            y={y + height / 2 + 7 + 10}
                             style={descriptionStyle}>
                             {description}
                         </text>
                     </>
-                ) : null}
-                {depth === 1 ? (
-                    <text
-                        x={x + 4}
-                        y={y + 18}
-                        fill="#fff"
-                        fontSize={16}
-                        fillOpacity={0.9}></text>
                 ) : null}
             </g>
         )

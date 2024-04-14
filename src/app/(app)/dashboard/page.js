@@ -11,6 +11,7 @@ import DeleteModal from '@/app/modals/DeleteModal'
 import Button from '@/components/Button'
 import CreateLocationModal from '@/app/modals/CreateLocationModal'
 import TreemapAllocation from '@/app/stats/TreemapAllocation'
+import TotalValueHistory from '@/app/stats/TotalValueHistory'
 
 const Dashboard = () => {
     const { getDashboard } = useDashboardData()
@@ -32,6 +33,7 @@ const Dashboard = () => {
     const [locations, setLocations] = useState([])
     const [cardStats, setCardStats] = useState([])
     const [allocationStats, setAllocationStats] = useState([])
+    const [totalValueHistoryStats, setTotalValueHistoryStats] = useState([])
 
     useEffect(() => {
         refreshDashboard()
@@ -61,6 +63,7 @@ const Dashboard = () => {
                     },
                 ])
                 setAllocationStats(data.stats.allocation)
+                setTotalValueHistoryStats(data.stats.total_value_history)
             }
         })
     }
@@ -149,7 +152,12 @@ const Dashboard = () => {
                 <div className={'grid grid-cols-3 gap-4 mb-4'}>
                     <SimpleCard
                         className={'col-span-2'}
-                        name={'Total value history'}></SimpleCard>
+                        childrenClass={'h-[200px]'}
+                        name={'Total value history'}>
+                        <TotalValueHistory
+                            totalValues={totalValueHistoryStats}
+                        />
+                    </SimpleCard>
                     <SimpleCard
                         className={'col-span-1'}
                         name={'Allocation'}

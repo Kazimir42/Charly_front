@@ -11,6 +11,7 @@ import EditTransactionModal from '@/app/modals/EditTransactionModal'
 import TransactionTypeBubble from '@/components/TransactionTypeBubble'
 import { formatPrice } from '@/lib/utils'
 import { TransactionType } from '@/enums/TransactionType'
+import CurrencyBubble from '@/components/CurrencyBubble'
 
 const Transactions = () => {
     const {
@@ -56,7 +57,10 @@ const Transactions = () => {
                         line.date,
                         // eslint-disable-next-line react/jsx-key
                         <TransactionTypeBubble type={line.type} />,
-                        line.asset.currency.name,
+                        <CurrencyBubble
+                            symbol={line.asset.currency.symbol}
+                            name={line.asset.currency.name}
+                        />,
                         quantity,
                         formatPrice(line.total_price),
                         formatPrice(line.unit_price),

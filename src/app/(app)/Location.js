@@ -6,6 +6,7 @@ import ProfitLossPrice from '@/components/ProfitLossPrice'
 import { EllipsisHorizontalIcon } from '@heroicons/react/24/outline'
 import { DropdownButton } from '@/components/DropdownLink'
 import Dropdown from '@/components/Dropdown'
+import CurrencyBubble from '@/components/CurrencyBubble'
 
 const Location = ({
     location,
@@ -17,7 +18,10 @@ const Location = ({
     location.assets.map(asset => {
         formattedAssets.push([
             <div key={asset.currency.name} className="inline-block w-[19%]">
-                {asset.currency.name}
+                <CurrencyBubble
+                    symbol={asset.currency.symbol}
+                    name={asset.currency.name}
+                />
             </div>,
             <div
                 key={asset.summary.quantity}

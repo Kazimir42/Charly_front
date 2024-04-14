@@ -31,7 +31,6 @@ const LeftNavigation = ({ user }) => {
             icon: HomeIcon,
             current: pathname === '/dashboard',
         },
-        { name: 'Locations', href: '#', icon: FolderIcon, current: false },
         {
             name: 'Transactions',
             href: '/transactions',

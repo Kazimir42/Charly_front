@@ -11,20 +11,20 @@ const LoginLinks = () => {
             {user ? (
                 <Link
                     href="/dashboard"
-                    className="ml-4 text-sm text-gray-700 underline">
+                    className="ml-4 text-sm font-semibold leading-6 text-gray-900">
                     Dashboard
                 </Link>
             ) : (
                 <>
                     <Link
                         href="/login"
-                        className="text-sm text-gray-700 underline">
+                        className="text-sm font-semibold leading-6 text-gray-90">
                         Login
                     </Link>
 
                     <Link
                         href="/register"
-                        className="ml-4 text-sm text-gray-700 underline">
+                        className="ml-4 text-sm font-semibold leading-6 text-gray-90">
                         Register
                     </Link>
                 </>

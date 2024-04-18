@@ -12,6 +12,7 @@ import TransactionTypeBubble from '@/components/TransactionTypeBubble'
 import { formatPrice } from '@/lib/utils'
 import { TransactionType } from '@/enums/TransactionType'
 import CurrencyBubble from '@/components/CurrencyBubble'
+import { PencilIcon } from '@heroicons/react/24/outline'
 
 const Transactions = () => {
     const {
@@ -55,7 +56,6 @@ const Transactions = () => {
 
                     formatedData.push([
                         line.date,
-                        // eslint-disable-next-line react/jsx-key
                         <TransactionTypeBubble type={line.type} />,
                         <CurrencyBubble
                             symbol={line.asset.currency.symbol}
@@ -65,6 +65,9 @@ const Transactions = () => {
                         formatPrice(line.total_price),
                         formatPrice(line.unit_price),
                         line.location.name,
+                        <button>
+                            <PencilIcon className={'h-5 w-5'} />
+                        </button>,
                     ])
                 })
 

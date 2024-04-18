@@ -3,7 +3,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import {
     Bars3Icon,
     ChartPieIcon,
-    FolderIcon,
+    MagnifyingGlassIcon,
     HashtagIcon,
     HomeIcon,
     XMarkIcon,
@@ -36,6 +36,12 @@ const LeftNavigation = ({ user }) => {
             href: '/transactions',
             icon: HashtagIcon,
             current: pathname === '/transactions',
+        },
+        {
+            name: 'History',
+            href: '/history',
+            icon: MagnifyingGlassIcon,
+            current: pathname === '/history',
         },
         { name: 'Stats', href: '#', icon: ChartPieIcon, current: false },
     ]

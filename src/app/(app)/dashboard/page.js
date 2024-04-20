@@ -102,7 +102,7 @@ const Dashboard = () => {
         }
     }
 
-    function openNewTransactionModal(locationId) {
+    function openNewTransactionModal() {
         setTransactionModalIsOpen(!transactionModalIsOpen)
     }
 

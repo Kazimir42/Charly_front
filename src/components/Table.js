@@ -12,7 +12,14 @@ const Table = ({ header, content }) => {
                                     <th
                                         key={index}
                                         scope="col"
-                                        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                        className={
+                                            'px-3 py-3.5 text-left text-sm font-semibold text-gray-900 ' +
+                                            (index === 0
+                                                ? ' pl-5 '
+                                                : index === header.length - 1
+                                                ? 'pr-5'
+                                                : '')
+                                        }>
                                         {item}
                                     </th>
                                 ))}
@@ -24,7 +31,14 @@ const Table = ({ header, content }) => {
                                     {lines.map((line, index) => (
                                         <td
                                             key={index}
-                                            className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                            className={
+                                                'whitespace-nowrap px-3 py-4 text-sm text-gray-500 ' +
+                                                (index === 0
+                                                    ? ' pl-5 '
+                                                    : index === lines.length - 1
+                                                    ? 'pr-5'
+                                                    : '')
+                                            }>
                                             {line}
                                         </td>
                                     ))}

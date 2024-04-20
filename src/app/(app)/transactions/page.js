@@ -12,7 +12,7 @@ import TransactionTypeBubble from '@/components/TransactionTypeBubble'
 import { formatPrice } from '@/lib/utils'
 import { TransactionType } from '@/enums/TransactionType'
 import CurrencyBubble from '@/components/CurrencyBubble'
-import { PencilIcon } from '@heroicons/react/24/outline'
+import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline'
 
 const Transactions = () => {
     const {
@@ -35,7 +35,8 @@ const Transactions = () => {
         setTransactionDeleteModalIsOpen,
     ] = useState(false)
     const [transactions, setTransactions] = useState([])
-    const [selectedTransaction, setSelectedTransaction] = useState({})
+    const [formattedTransactions, setFormattedTransactions] = useState([])
+    const [selectedTransaction, setSelectedTransaction] = useState(null)
 
     useEffect(() => {
         refreshTransactions()
@@ -44,81 +45,79 @@ const Transactions = () => {
     function refreshTransactions() {
         getTransactions().then(data => {
             if (data) {
-                let formatedData = []
-
-                data.forEach(line => {
-                    let quantity = 0
-                    if (line.type === TransactionType.BUY) {
-                        quantity = line.to_quantity
-                    } else if (line.type === TransactionType.SELL) {
-                        quantity = line.from_quantity
-                    }
-
-                    formatedData.push([
-                        line.date,
-                        <TransactionTypeBubble type={line.type} />,
-                        <CurrencyBubble
-                            symbol={line.asset.currency.symbol}
-                            name={line.asset.currency.name}
-                        />,
-                        quantity,
-                        formatPrice(line.total_price),
-                        formatPrice(line.unit_price),
-                        line.location.name,
-                        <button>
-                            <PencilIcon className={'h-5 w-5'} />
-                        </button>,
-                    ])
-                })
-
-                setTransactions(formatedData || [])
+                setTransactions(data)
             }
         })
     }
 
-    function openOrCloseTransactionCreateModal(transactionId = null) {
-        if (transactionCreateModalIsOpen) {
-            setSelectedTransaction({})
-            setTransactionCreateModalIsOpen(!transactionCreateModalIsOpen)
-        } else {
-            // Find the selected transaction
-            setSelectedTransaction(
-                transactions.find(
-                    transaction => transaction.id === transactionId,
-                ),
-            )
-            setTransactionCreateModalIsOpen(!transactionCreateModalIsOpen)
+    useEffect(() => {
+        if (transactions) {
+            formatTransactionData()
         }
+    }, [transactions])
+
+    function formatTransactionData() {
+        console.log(transactions)
+        const formattedData = transactions.map(line => {
+            const quantity =
+                line.type === TransactionType.BUY
+                    ? line.to_quantity
+                    : line.from_quantity
+            return [
+                line.date,
+                <TransactionTypeBubble type={line.type} />,
+                <CurrencyBubble
+                    symbol={line.asset.currency.symbol}
+                    name={line.asset.currency.name}
+                />,
+                quantity,
+                formatPrice(line.total_price),
+                formatPrice(line.unit_price),
+                line.location.name,
+                <div className="flex flex-row gap-2 justify-end">
+                    <button
+                        onClick={() => openOrCloseTransactionEditModal(line.id)}
+                        className="hover:text-gray-700 p-1 duration-100 transition">
+                        <PencilIcon className="h-5 w-5" />
+                    </button>
+                    <button
+                        onClick={() =>
+                            openOrCloseTransactionDeleteModal(line.id)
+                        }
+                        className="hover:text-gray-700 p-1 duration-100 transition">
+                        <TrashIcon className="h-5 w-5" />
+                    </button>
+                </div>,
+            ]
+        })
+        setFormattedTransactions(formattedData)
     }
 
-    function openOrCloseTransactionEditModal(transactionId = null) {
-        if (transactionEditModalIsOpen) {
-            setSelectedTransaction({})
-            setTransactionEditModalIsOpen(!transactionEditModalIsOpen)
-        } else {
-            // Find the selected transaction
-            setSelectedTransaction(
-                transactions.find(
-                    transaction => transaction.id === transactionId,
-                ),
-            )
-            setTransactionEditModalIsOpen(!transactionEditModalIsOpen)
-        }
+    const openOrCloseTransactionCreateModal = (transactionId = null) => {
+        setSelectedTransaction(
+            transactions.find(
+                transaction => transaction.id === transactionId,
+            ) || null,
+        )
+        setTransactionCreateModalIsOpen(!transactionCreateModalIsOpen)
     }
 
-    function openOrCloseTransactionDeleteModal(transactionId = null) {
-        if (transactionDeleteModalIsOpen) {
-            setSelectedTransaction({})
-            setTransactionDeleteModalIsOpen(!transactionDeleteModalIsOpen)
-        } else {
-            // Find the selected transaction
-            setSelectedTransaction(
-                transactions.find(
-                    transaction => transaction.id === transactionId,
-                ),
-            )
-            setTransactionDeleteModalIsOpen(!transactionDeleteModalIsOpen)
-        }
+    const openOrCloseTransactionEditModal = (transactionId = null) => {
+        setSelectedTransaction(
+            transactions.find(
+                transaction => transaction.id === transactionId,
+            ) || null,
+        )
+        setTransactionEditModalIsOpen(!transactionEditModalIsOpen)
+    }
+
+    const openOrCloseTransactionDeleteModal = transactionId => {
+        setSelectedTransaction(
+            transactions.find(
+                transaction => transaction.id === transactionId,
+            ) || null,
+        )
+        setTransactionDeleteModalIsOpen(!transactionDeleteModalIsOpen)
     }
 
     function _updateTransaction(id, data) {
@@ -172,8 +171,9 @@ const Transactions = () => {
                             'Price',
                             'Unit price',
                             'Location',
+                            '',
                         ]}
-                        content={transactions}
+                        content={formattedTransactions}
                     />
                 </div>
             </div>
@@ -195,8 +195,8 @@ const Transactions = () => {
                 deleteObject={_deleteTransaction}
                 isOpen={transactionDeleteModalIsOpen}
                 setIsOpen={openOrCloseTransactionDeleteModal}
-                title={'Delete transaction: ' + selectedTransaction?.name}
-                content={'Care : you cannot restore it'}
+                title={'Delete transaction'}
+                content={'Care, you cannot restore it'}
             />
         </>
     )

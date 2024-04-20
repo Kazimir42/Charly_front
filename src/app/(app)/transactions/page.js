@@ -57,7 +57,6 @@ const Transactions = () => {
     }, [transactions])
 
     function formatTransactionData() {
-        console.log(transactions)
         const formattedData = transactions.map(line => {
             const quantity =
                 line.type === TransactionType.BUY

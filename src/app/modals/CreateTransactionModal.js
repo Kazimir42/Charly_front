@@ -14,7 +14,7 @@ const CreateTransactionModal = ({ setIsOpen, isOpen, createTransaction }) => {
     const { getLocations } = useLocationData()
     const { getCurrencies } = useCurrencyData()
 
-    const [type, setType] = useState(null)
+    const [type, setType] = useState('')
     const [date, setDate] = useState('')
     const [toCurrency, setToCurrency] = useState(0)
     const [toQuantity, setToQuantity] = useState(0)
@@ -56,6 +56,8 @@ const CreateTransactionModal = ({ setIsOpen, isOpen, createTransaction }) => {
             from_address: fromAddress,
             note,
         })
+
+        openOrClose()
     }
 
     function openOrClose() {

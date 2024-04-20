@@ -123,7 +123,7 @@ const Buy = ({
                 </div>
             </div>
             <div>
-                <Label htmlFor="location">Location*</Label>
+                <Label htmlFor="location">Location</Label>
                 <Select
                     id="location"
                     name="location"

@@ -58,21 +58,31 @@ const Transactions = () => {
 
     function formatTransactionData() {
         const formattedData = transactions.map(line => {
+            let currency = {}
+            if (line.type === TransactionType.BUY) {
+                currency.name = line.to_currency.name
+                currency.symbol = line.to_currency.symbol
+            } else {
+                currency.name = line.from_currency.name
+                currency.symbol = line.from_currency.symbol
+            }
+
             const quantity =
                 line.type === TransactionType.BUY
                     ? line.to_quantity
                     : line.from_quantity
+
             return [
                 line.date,
                 <TransactionTypeBubble type={line.type} />,
                 <CurrencyBubble
-                    symbol={line.asset.currency.symbol}
-                    name={line.asset.currency.name}
+                    symbol={currency.symbol}
+                    name={currency.name}
                 />,
                 quantity,
                 formatPrice(line.total_price),
                 formatPrice(line.unit_price),
-                line.location.name,
+                line.location?.name ?? '',
                 <div className="flex flex-row gap-2 justify-end">
                     <button
                         onClick={() => openOrCloseTransactionEditModal(line.id)}

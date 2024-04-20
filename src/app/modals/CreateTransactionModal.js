@@ -61,7 +61,7 @@ const CreateTransactionModal = ({
             from_quantity: fromQuantity,
             to_currency_id: toCurrency,
             to_quantity: toQuantity,
-            location_id: location,
+            location_id: location ? location : null,
             hash,
             to_address: toAddress,
             from_address: fromAddress,

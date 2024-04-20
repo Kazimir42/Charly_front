@@ -92,12 +92,7 @@ const Transactions = () => {
         setFormattedTransactions(formattedData)
     }
 
-    const openOrCloseTransactionCreateModal = (transactionId = null) => {
-        setSelectedTransaction(
-            transactions.find(
-                transaction => transaction.id === transactionId,
-            ) || null,
-        )
+    const openOrCloseTransactionCreateModal = () => {
         setTransactionCreateModalIsOpen(!transactionCreateModalIsOpen)
     }
 

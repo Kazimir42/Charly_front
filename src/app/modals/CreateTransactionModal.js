@@ -10,7 +10,12 @@ import { useCurrencyData } from '@/hooks/currencies'
 import { CurrencyType } from '@/enums/CurrencyType'
 import { TransactionType } from '@/enums/TransactionType'
 
-const CreateTransactionModal = ({ setIsOpen, isOpen, createTransaction }) => {
+const CreateTransactionModal = ({
+    setIsOpen,
+    isOpen,
+    createTransaction,
+    defaultLocation,
+}) => {
     const { getLocations } = useLocationData()
     const { getCurrencies } = useCurrencyData()
 
@@ -39,6 +44,12 @@ const CreateTransactionModal = ({ setIsOpen, isOpen, createTransaction }) => {
             )
         }
     }, [isOpen])
+
+    useEffect(() => {
+        if (defaultLocation) {
+            setLocation(defaultLocation.id)
+        }
+    }, [defaultLocation])
 
     const submitForm = async event => {
         event.preventDefault()

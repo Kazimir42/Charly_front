@@ -113,7 +113,7 @@ const Location = ({
                                 onClick={() =>
                                     openNewTransactionModal(location.id)
                                 }>
-                                Add crypto
+                                New transaction
                             </DropdownButton>
                         </Dropdown>
                     </div>

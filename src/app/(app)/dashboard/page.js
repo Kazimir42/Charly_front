@@ -12,12 +12,13 @@ import Button from '@/components/Button'
 import CreateLocationModal from '@/app/modals/CreateLocationModal'
 import TreemapAllocation from '@/app/stats/TreemapAllocation'
 import TotalValueHistory from '@/app/stats/TotalValueHistory'
+import CreateTransactionModal from '@/app/modals/CreateTransactionModal'
+import { useTransactionData } from '@/hooks/transactions'
 
 const Dashboard = () => {
     const { getDashboard } = useDashboardData()
-    const { updateLocation, deleteLocation, createLocation } = useLocationData(
-        {},
-    )
+    const { updateLocation, deleteLocation, createLocation } = useLocationData()
+    const { createTransaction } = useTransactionData()
 
     const [locationCreateModalIsOpen, setLocationCreateModalIsOpen] = useState(
         false,
@@ -28,7 +29,10 @@ const Dashboard = () => {
     const [locationDeleteModalIsOpen, setLocationDeleteModalIsOpen] = useState(
         false,
     )
-    const [transactionModalIsOpen, setTransactionModalIsOpen] = useState(false)
+    const [
+        transactionCreateModalIsOpen,
+        setTransactionCreateModalIsOpen,
+    ] = useState(false)
     const [selectedLocation, setSelectedLocation] = useState({})
     const [locations, setLocations] = useState([])
     const [cardStats, setCardStats] = useState([])
@@ -69,11 +73,7 @@ const Dashboard = () => {
     }
 
     function openOrCloseLocationCreateModal() {
-        if (locationCreateModalIsOpen) {
-            setLocationCreateModalIsOpen(!locationCreateModalIsOpen)
-        } else {
-            setLocationCreateModalIsOpen(!locationCreateModalIsOpen)
-        }
+        setLocationCreateModalIsOpen(!locationCreateModalIsOpen)
     }
 
     function openOrCloseLocationEditModal(locationId = null) {
@@ -102,8 +102,17 @@ const Dashboard = () => {
         }
     }
 
-    function openNewTransactionModal() {
-        setTransactionModalIsOpen(!transactionModalIsOpen)
+    const openOrCloseTransactionCreateModal = (locationId = null) => {
+        if (transactionCreateModalIsOpen) {
+            setSelectedLocation({})
+            setTransactionCreateModalIsOpen(!transactionCreateModalIsOpen)
+        } else {
+            // Find the selected location
+            setSelectedLocation(
+                locations.find(location => location.id === locationId),
+            )
+            setTransactionCreateModalIsOpen(!transactionCreateModalIsOpen)
+        }
     }
 
     function _updateLocation(id, data) {
@@ -129,6 +138,15 @@ const Dashboard = () => {
             .then(() => {
                 refreshDashboard()
                 openOrCloseLocationCreateModal()
+            })
+            .catch(() => {})
+    }
+
+    function _createTransaction(data) {
+        createTransaction(data)
+            .then(() => {
+                refreshDashboard()
+                openOrCloseTransactionCreateModal()
             })
             .catch(() => {})
     }
@@ -185,9 +203,11 @@ const Dashboard = () => {
                             openOrCloseLocationEditModal={
                                 openOrCloseLocationEditModal
                             }
-                            openNewTransactionModal={openNewTransactionModal}
                             openOrCloseLocationDeleteModal={
                                 openOrCloseLocationDeleteModal
+                            }
+                            openNewTransactionModal={
+                                openOrCloseTransactionCreateModal
                             }
                         />
                     ))}
@@ -213,6 +233,12 @@ const Dashboard = () => {
                 content={
                     'By deleted a location it will delete the child assets and remove the location from the transactions (but the transactions will not be deleted)'
                 }
+            />
+            <CreateTransactionModal
+                createTransaction={_createTransaction}
+                isOpen={transactionCreateModalIsOpen}
+                setIsOpen={openOrCloseTransactionCreateModal}
+                defaultLocation={selectedLocation}
             />
         </>
     )

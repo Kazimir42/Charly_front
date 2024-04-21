@@ -9,7 +9,7 @@ import CreateTransactionModal from '@/app/modals/CreateTransactionModal'
 import DeleteModal from '@/app/modals/DeleteModal'
 import EditTransactionModal from '@/app/modals/EditTransactionModal'
 import TransactionTypeBubble from '@/components/TransactionTypeBubble'
-import { formatPrice } from '@/lib/utils'
+import { formatDate, formatPrice } from '@/lib/utils'
 import { TransactionType } from '@/enums/TransactionType'
 import CurrencyBubble from '@/components/CurrencyBubble'
 import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline'
@@ -76,7 +76,7 @@ const Transactions = () => {
                     : line.from_quantity
 
             return [
-                line.date,
+                formatDate(line.date, true, 'fr-FR'),
                 <TransactionTypeBubble type={line.type} />,
                 <CurrencyBubble
                     symbol={currency.symbol}

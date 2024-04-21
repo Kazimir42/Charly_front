@@ -9,7 +9,7 @@ import {
     XAxis,
     YAxis,
 } from 'recharts'
-import { formatPrice } from '@/lib/utils'
+import { formatDate, formatPrice } from '@/lib/utils'
 import { useAuth } from '@/hooks/auth'
 
 const TotalValueHistory = ({ totalValues }) => {
@@ -22,7 +22,7 @@ const TotalValueHistory = ({ totalValues }) => {
             let values = []
             totalValues.yearly.forEach(item => {
                 values.push({
-                    date: item.date,
+                    date: formatDate(item.date, false, 'fr-FR'),
                     value: item.value_per_fiat_currencies[user.currency_symbol],
                 })
             })

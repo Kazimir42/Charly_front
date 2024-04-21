@@ -113,7 +113,7 @@ const MyAccount = () => {
                                     {},
                                 ),
                             }}
-                            className="block w-full"
+                            className="block w-full mt-1"
                             value={currency}
                             onChange={event => setCurrency(event.target.value)}
                             required

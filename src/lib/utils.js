@@ -34,3 +34,15 @@ export function formatPrice(value, currency = 'USD', withSymbol = true) {
 
     return new Intl.NumberFormat(locale, options).format(value)
 }
+
+export function formatDate(date, withTime = true, lang = 'en-US') {
+    let parsedDate = new Date(date)
+
+    if (withTime) {
+        parsedDate = parsedDate.toLocaleString(lang)
+    }else {
+        parsedDate = parsedDate.toLocaleDateString(lang)
+    }
+
+    return parsedDate
+}

@@ -7,6 +7,7 @@ import { EllipsisHorizontalIcon } from '@heroicons/react/24/outline'
 import { DropdownButton } from '@/components/DropdownLink'
 import Dropdown from '@/components/Dropdown'
 import CurrencyBubble from '@/components/CurrencyBubble'
+import { useAuth } from '@/hooks/auth'
 
 const Location = ({
     location,
@@ -14,6 +15,8 @@ const Location = ({
     openNewTransactionModal,
     openOrCloseLocationDeleteModal,
 }) => {
+    const { user } = useAuth({ middleware: 'auth' })
+
     let formattedAssets = []
     location.assets.map(asset => {
         formattedAssets.push([
@@ -31,23 +34,44 @@ const Location = ({
             <div
                 key={asset.summary.average_buy_price}
                 className="inline-block w-[15%] text-right">
-                {formatPrice(asset.summary.average_buy_price)}
+                {formatPrice(
+                    asset.summary.average_buy_price_per_fiat_currencies[
+                        user.currency_symbol
+                    ],
+                    user.currency_symbol,
+                )}
             </div>,
             <div
                 key={asset.summary.current_price}
                 className="inline-block w-[15%] text-right">
-                {formatPrice(asset.summary.current_price)}
+                {formatPrice(
+                    asset.summary.current_price_per_fiat_currencies[
+                        user.currency_symbol
+                    ],
+                    user.currency_symbol,
+                )}
             </div>,
             <div
                 key={asset.summary.total_value}
                 className="inline-block w-[15%] text-right">
-                {formatPrice(asset.summary.total_value)}
+                {formatPrice(
+                    asset.summary.total_value_per_fiat_currencies[
+                        user.currency_symbol
+                    ],
+                    user.currency_symbol,
+                )}
             </div>,
             <div
                 key={asset.summary.profit_loss}
                 className="inline-block w-[15%] text-right">
                 <div>
-                    <ProfitLossPrice value={asset.summary.profit_loss} />
+                    <ProfitLossPrice
+                        value={
+                            asset.summary.profit_loss_per_fiat_currencies[
+                                user.currency_symbol
+                            ]
+                        }
+                    />
                     <PercentageBubble
                         className={'text-xs'}
                         value={asset.summary.profit_loss_percentage}
@@ -64,17 +88,36 @@ const Location = ({
                     {location.name}
                 </div>,
                 <div
-                    key={location.summary.total_value}
+                    key={
+                        location.summary.total_value_per_fiat_currencies[
+                            user.currency_symbol
+                        ]
+                    }
                     className="inline-block w-[15%] text-right">
-                    {formatPrice(location.summary.total_value)}
+                    {formatPrice(
+                        location.summary.total_value_per_fiat_currencies[
+                            user.currency_symbol
+                        ],
+                        user.currency_symbol,
+                    )}
                 </div>,
                 <div
-                    key={location.summary.profit_loss}
+                    key={
+                        location.summary.profit_loss_per_fiat_currencies[
+                            user.currency_symbol
+                        ]
+                    }
                     className="inline-block w-[15%] text-right">
                     <div>
                         <ProfitLossPrice
                             className={'font-semibold'}
-                            value={location.summary.profit_loss}
+                            value={
+                                location.summary
+                                    .profit_loss_per_fiat_currencies[
+                                    user.currency_symbol
+                                ]
+                            }
+                            symbol={user.currency_symbol}
                         />
                         <PercentageBubble
                             className={'text-sm'}

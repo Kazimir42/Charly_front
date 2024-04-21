@@ -13,8 +13,11 @@ import { formatPrice } from '@/lib/utils'
 import { TransactionType } from '@/enums/TransactionType'
 import CurrencyBubble from '@/components/CurrencyBubble'
 import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline'
+import { useAuth } from '@/hooks/auth'
 
 const Transactions = () => {
+    const { user } = useAuth({ middleware: 'auth' })
+
     const {
         getTransactions,
         createTransaction,
@@ -80,8 +83,14 @@ const Transactions = () => {
                     name={currency.name}
                 />,
                 quantity,
-                formatPrice(line.total_price),
-                formatPrice(line.unit_price),
+                formatPrice(
+                    line.total_price_per_fiat_currencies[user.currency_symbol],
+                    user.currency_symbol,
+                ),
+                formatPrice(
+                    line.unit_price_per_fiat_currencies[user.currency_symbol],
+                    user.currency_symbol,
+                ),
                 line.location?.name ?? '',
                 <div className="flex flex-row gap-2 justify-end">
                     <button

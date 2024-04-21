@@ -1,7 +1,7 @@
 import React from 'react'
 import { formatPrice } from '@/lib/utils'
 
-const ProfitLossPrice = ({ className, value }) => {
+const ProfitLossPrice = ({ className, value, symbol }) => {
     return (
         <div
             className={
@@ -13,7 +13,7 @@ const ProfitLossPrice = ({ className, value }) => {
                     ? 'text-gray-600'
                     : 'text-red-600')
             }>
-            <span>{formatPrice(value)}</span>
+            <span>{formatPrice(value, symbol)}</span>
         </div>
     )
 }

@@ -43,7 +43,12 @@ const LeftNavigation = ({ user }) => {
             icon: MagnifyingGlassIcon,
             current: pathname === '/history',
         },
-        { name: 'Stats', href: '#', icon: ChartPieIcon, current: false },
+        {
+            name: 'Stats',
+            href: '/stats',
+            icon: ChartPieIcon,
+            current: pathname === '/stats',
+        },
     ]
     const assets = [
         { id: 1, name: 'Bitcoin', href: '#', initial: 'BTC', current: false },
@@ -301,8 +306,9 @@ const LeftNavigation = ({ user }) => {
                                             </div>
                                         </button>
                                     }>
-                                    <DropdownButton>Profile</DropdownButton>
-                                    <DropdownButton>Settings</DropdownButton>
+                                    <DropdownButton>
+                                        <a href={'/my-account'}>My account</a>
+                                    </DropdownButton>
                                     <DropdownButton onClick={logout}>
                                         Logout
                                     </DropdownButton>
@@ -345,9 +351,9 @@ const LeftNavigation = ({ user }) => {
                             </div>
                         </button>
                     }>
-                    {/* Authentication */}
-                    <DropdownButton>Profile</DropdownButton>
-                    <DropdownButton>Settings</DropdownButton>
+                    <DropdownButton>
+                        <a href={'/my-account'}>My account</a>
+                    </DropdownButton>
                     <DropdownButton onClick={logout}>Logout</DropdownButton>
                 </Dropdown>
             </div>

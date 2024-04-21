@@ -2,8 +2,7 @@ import axios from '@/lib/axios'
 import { toast } from 'react-toastify'
 
 export const useCurrencyData = () => {
-    const getCurrencies = async (params) => {
-
+    const getCurrencies = async params => {
         let stringedParams = Object.entries(params).reduce((acc, param) => {
             acc += (acc.length ? '&' : '?') + param[0] + '=' + param[1]
             return acc

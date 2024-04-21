@@ -10,17 +10,27 @@ import {
     YAxis,
 } from 'recharts'
 import { formatPrice } from '@/lib/utils'
+import { useAuth } from '@/hooks/auth'
 
 const TotalValueHistory = ({ totalValues }) => {
     const [totalValuesYearly, setTotalValuesYearly] = useState([])
 
+    const { user } = useAuth({ middleware: 'auth' })
+
     useEffect(() => {
         if (totalValues.yearly) {
-            setTotalValuesYearly(totalValues.yearly)
+            let values = []
+            totalValues.yearly.forEach(item => {
+                values.push({
+                    date: item.date,
+                    value: item.value_per_fiat_currencies[user.currency_symbol],
+                })
+            })
+            setTotalValuesYearly(values)
         }
     }, [totalValues])
 
-    const currencyFormatter = value => formatPrice(value)
+    const currencyFormatter = value => formatPrice(value, user.currency_symbol)
 
     return (
         <ResponsiveContainer width="100%" height="100%">

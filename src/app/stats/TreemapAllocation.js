@@ -1,6 +1,7 @@
 import React, { PureComponent, useEffect, useState } from 'react'
 import { ResponsiveContainer, Treemap } from 'recharts'
 import { formatPercentage, formatPrice } from '@/lib/utils'
+import { useAuth } from '@/hooks/auth'
 
 const COLORS = [
     '#8889DD',
@@ -92,6 +93,8 @@ const TreemapAllocation = ({ allocations }) => {
     const [allocationByAsset, setAllocationByAsset] = useState({})
     const [allocationByLocation, setAllocationByLocation] = useState([])
 
+    const { user } = useAuth({ middleware: 'auth' })
+
     useEffect(() => {
         if (allocations.locations) {
             let data = []
@@ -100,7 +103,12 @@ const TreemapAllocation = ({ allocations }) => {
                 let location = allocations.locations[locationId]
 
                 data.push({
-                    name: formatPrice(location.total_value),
+                    name: formatPrice(
+                        location.total_value_per_fiat_currencies[
+                            user.currency_symbol
+                        ],
+                        user.currency_symbol,
+                    ),
                     description:
                         location.name +
                         ' | ' +

@@ -9,6 +9,7 @@ import { useLocationData } from '@/hooks/locations'
 import { useCurrencyData } from '@/hooks/currencies'
 import { CurrencyType } from '@/enums/CurrencyType'
 import { TransactionType } from '@/enums/TransactionType'
+import { useAuth } from '@/hooks/auth'
 
 const CreateTransactionModal = ({
     setIsOpen,
@@ -18,6 +19,9 @@ const CreateTransactionModal = ({
 }) => {
     const { getLocations } = useLocationData()
     const { getCurrencies } = useCurrencyData()
+    const { user } = useAuth({
+        middleware: 'auth',
+    })
 
     const [type, setType] = useState('')
     const [date, setDate] = useState('')
@@ -178,7 +182,9 @@ const CreateTransactionModal = ({
                             setToCurrency={setToCurrency}
                             toQuantity={toQuantity}
                             setToQuantity={setToQuantity}
-                            fromCurrency={fromCurrency}
+                            fromCurrency={
+                                fromCurrency ? fromCurrency : user.currency_id
+                            }
                             setFromCurrency={setFromCurrency}
                             fromQuantity={fromQuantity}
                             setFromQuantity={setFromQuantity}
@@ -200,7 +206,9 @@ const CreateTransactionModal = ({
                         <Sell
                             date={date}
                             setDate={setDate}
-                            toCurrency={toCurrency}
+                            toCurrency={
+                                toCurrency ? toCurrency : user.currency_id
+                            }
                             setToCurrency={setToCurrency}
                             toQuantity={toQuantity}
                             setToQuantity={setToQuantity}

@@ -55,6 +55,16 @@ const CreateTransactionModal = ({
         }
     }, [defaultLocation])
 
+    useEffect(() => {
+        if (type === TransactionType.BUY) {
+            setFromCurrency(user.currency_id ?? 0)
+            setToCurrency(0)
+        } else if (type === TransactionType.SELL) {
+            setToCurrency(user.currency_id ?? 0)
+            setFromCurrency(0)
+        }
+    }, [type])
+
     const submitForm = async event => {
         event.preventDefault()
 
@@ -182,9 +192,7 @@ const CreateTransactionModal = ({
                             setToCurrency={setToCurrency}
                             toQuantity={toQuantity}
                             setToQuantity={setToQuantity}
-                            fromCurrency={
-                                fromCurrency ? fromCurrency : user.currency_id
-                            }
+                            fromCurrency={fromCurrency}
                             setFromCurrency={setFromCurrency}
                             fromQuantity={fromQuantity}
                             setFromQuantity={setFromQuantity}
@@ -206,9 +214,7 @@ const CreateTransactionModal = ({
                         <Sell
                             date={date}
                             setDate={setDate}
-                            toCurrency={
-                                toCurrency ? toCurrency : user.currency_id
-                            }
+                            toCurrency={toCurrency}
                             setToCurrency={setToCurrency}
                             toQuantity={toQuantity}
                             setToQuantity={setToQuantity}

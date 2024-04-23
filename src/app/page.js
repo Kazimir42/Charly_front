@@ -1,4 +1,5 @@
 import LoginLinks from '@/app/LoginLinks'
+import { WalletIcon } from '@heroicons/react/24/solid'
 
 export default function Home() {
     return (
@@ -9,11 +10,9 @@ export default function Home() {
                     aria-label="Global">
                     <div className="flex lg:flex-1">
                         <a href="#" className="-m-1.5 p-1.5">
-                            <span className="sr-only">Your Company</span>
-                            <img
-                                className="h-8 w-auto"
-                                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                                alt=""
+                            <span className="sr-only">Charly</span>
+                            <WalletIcon
+                                className={'h-8 w-8 text-default-primary'}
                             />
                         </a>
                     </div>
@@ -39,35 +38,32 @@ export default function Home() {
                     <div className="mx-auto max-w-7xl px-6 lg:px-8">
                         <div className="mx-auto max-w-2xl text-center">
                             <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-                                Data to enrich your online business
+                                Master your cryptos, maximize your future.
                             </h1>
                             <p className="mt-6 text-lg leading-8 text-gray-600">
-                                Anim aute id magna aliqua ad ad non deserunt
-                                sunt. Qui irure qui lorem cupidatat commodo.
-                                Elit sunt amet fugiat veniam occaecat fugiat
-                                aliqua.
+                                Manage your cryptos securely and simply. Our
+                                platform also simplifies your tax filings.
                             </p>
                             <div className="mt-10 flex items-center justify-center gap-x-6">
                                 <a
-                                    href="#"
+                                    href="/dashboard"
                                     className="rounded-md bg-default-primary px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-default-primary_light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-default-primary">
                                     Get started
                                 </a>
                                 <a
-                                    href="#"
+                                    href="https://www.remi-champlon.fr/"
+                                    target={'_blank'}
                                     className="text-sm font-semibold leading-6 text-gray-900">
                                     Learn more <span aria-hidden="true">→</span>
                                 </a>
                             </div>
                         </div>
                         <div className="mt-16 flow-root sm:mt-24">
-                            <div className="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
+                            <div className="-m-2  ">
                                 <img
-                                    src="https://tailwindui.com/img/component-images/project-app-screenshot.png"
+                                    src="/preview.png"
                                     alt="App screenshot"
-                                    width={2432}
-                                    height={1442}
-                                    className="rounded-md shadow-2xl ring-1 ring-gray-900/10"
+                                    className="rounded-xl shadow-2xl border border-gray-300"
                                 />
                             </div>
                         </div>

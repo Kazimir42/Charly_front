@@ -4,7 +4,7 @@ const Banner = ({ className }) => {
     return (
         <div
             className={
-                'flex items-center gap-x-6 bg-indigo-600 px-6 py-2.5 sm:px-3.5 sm:before:flex-1 ' +
+                'flex items-center gap-x-6 bg-default-primary px-6 py-2.5 sm:px-3.5 sm:before:flex-1 ' +
                 className
             }>
             <p className="text-sm leading-6 text-white">

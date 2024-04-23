@@ -18,7 +18,7 @@ const Modal = ({ setIsOpen, isOpen, title, children, className }) => {
                                 </h3>
                                 <button
                                     type="button"
-                                    className="  hover:bg-gray-50 hover:text-indigo-600 rounded-lg p-1 "
+                                    className="  hover:bg-gray-50 hover:text-default-primary rounded-lg p-1 "
                                     onClick={toggleModal}>
                                     <span className="sr-only">Close modal</span>
                                     <XMarkIcon

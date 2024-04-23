@@ -131,15 +131,15 @@ const LeftNavigation = ({ user }) => {
                                                                 href={item.href}
                                                                 className={classNames(
                                                                     item.current
-                                                                        ? 'bg-gray-50 text-indigo-600'
-                                                                        : 'text-gray-700 hover:text-indigo-600 hover:bg-gray-50',
+                                                                        ? 'bg-gray-50 text-default-primary'
+                                                                        : 'text-gray-700 hover:text-default-primary hover:bg-gray-50',
                                                                     'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold',
                                                                 )}>
                                                                 <item.icon
                                                                     className={classNames(
                                                                         item.current
-                                                                            ? 'text-indigo-600'
-                                                                            : 'text-gray-400 group-hover:text-indigo-600',
+                                                                            ? 'text-default-primary'
+                                                                            : 'text-gray-400 group-hover:text-default-primary',
                                                                         'h-6 w-6 shrink-0',
                                                                     )}
                                                                     aria-hidden="true"
@@ -165,15 +165,15 @@ const LeftNavigation = ({ user }) => {
                                                                 }
                                                                 className={classNames(
                                                                     asset.current
-                                                                        ? 'bg-gray-50 text-indigo-600'
-                                                                        : 'text-gray-700 hover:text-indigo-600 hover:bg-gray-50',
+                                                                        ? 'bg-gray-50 text-default-primary'
+                                                                        : 'text-gray-700 hover:text-default-primary hover:bg-gray-50',
                                                                     'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold',
                                                                 )}>
                                                                 <span
                                                                     className={classNames(
                                                                         asset.current
-                                                                            ? 'text-indigo-600 border-indigo-600'
-                                                                            : 'text-gray-400 border-gray-200 group-hover:border-indigo-600 group-hover:text-indigo-600',
+                                                                            ? 'text-default-primary border-default-primary'
+                                                                            : 'text-gray-400 border-gray-200 group-hover:border-default-primary group-hover:text-default-primary',
                                                                         'flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border text-[0.625rem] font-medium bg-white',
                                                                     )}>
                                                                     {
@@ -218,15 +218,15 @@ const LeftNavigation = ({ user }) => {
                                                 href={item.href}
                                                 className={classNames(
                                                     item.current
-                                                        ? 'bg-gray-50 text-indigo-600'
-                                                        : 'text-gray-700 hover:text-indigo-600 hover:bg-gray-50',
+                                                        ? 'bg-gray-50 text-default-primary'
+                                                        : 'text-gray-700 hover:text-default-primary hover:bg-gray-50',
                                                     'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold',
                                                 )}>
                                                 <item.icon
                                                     className={classNames(
                                                         item.current
-                                                            ? 'text-indigo-600'
-                                                            : 'text-gray-400 group-hover:text-indigo-600',
+                                                            ? 'text-default-primary'
+                                                            : 'text-gray-400 group-hover:text-default-primary',
                                                         'h-6 w-6 shrink-0',
                                                     )}
                                                     aria-hidden="true"
@@ -252,15 +252,15 @@ const LeftNavigation = ({ user }) => {
                                                 href={asset.href}
                                                 className={classNames(
                                                     asset.current
-                                                        ? 'bg-gray-50 text-indigo-600'
-                                                        : 'text-gray-700 hover:text-indigo-600 hover:bg-gray-50',
+                                                        ? 'bg-gray-50 text-default-primary'
+                                                        : 'text-gray-700 hover:text-default-primary hover:bg-gray-50',
                                                     'group grow flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold',
                                                 )}>
                                                 <span
                                                     className={classNames(
                                                         asset.current
-                                                            ? 'text-indigo-600 border-indigo-600'
-                                                            : 'text-gray-400 border-gray-200 group-hover:border-indigo-600 group-hover:text-indigo-600',
+                                                            ? 'text-default-primary border-default-primary'
+                                                            : 'text-gray-400 border-gray-200 group-hover:border-default-primary group-hover:text-default-primary',
                                                         'flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border text-[0.625rem] font-medium bg-white',
                                                     )}>
                                                     {asset.initial}

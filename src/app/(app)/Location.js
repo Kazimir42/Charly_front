@@ -135,7 +135,7 @@ const Location = ({
                             trigger={
                                 <button onClick={e => e.stopPropagation()}>
                                     <EllipsisHorizontalIcon
-                                        className="h-6 w-6 hover:text-indigo-600 hover:bg-gray-50 rounded-lg"
+                                        className="h-6 w-6 hover:text-default-primary hover:bg-gray-50 rounded-lg"
                                         aria-hidden="true"
                                     />
                                 </button>

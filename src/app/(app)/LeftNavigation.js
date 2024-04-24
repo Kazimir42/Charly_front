@@ -6,7 +6,7 @@ import {
     MagnifyingGlassIcon,
     HashtagIcon,
     HomeIcon,
-    XMarkIcon,
+    XMarkIcon, DocumentTextIcon,
 } from '@heroicons/react/24/outline'
 
 import { useAuth } from '@/hooks/auth'
@@ -42,6 +42,12 @@ const LeftNavigation = ({ user }) => {
             name: 'History',
             href: '/history',
             icon: MagnifyingGlassIcon,
+            current: pathname === '/history',
+        },
+        {
+            name: 'Tax report',
+            href: '/tax-report',
+            icon: DocumentTextIcon,
             current: pathname === '/history',
         },
         {

@@ -27,7 +27,6 @@ const Buy = ({
     note,
     setNote,
     locations,
-    fiatCurrencies,
     cryptoCurrencies,
 }) => {
     return (
@@ -53,7 +52,7 @@ const Buy = ({
                         name="from_currency"
                         items={{
                             0: 'Choose an asset',
-                            ...fiatCurrencies.reduce((acc, fiatCurrency) => {
+                            ...cryptoCurrencies.reduce((acc, fiatCurrency) => {
                                 acc[fiatCurrency.id] = fiatCurrency.name
                                 return acc
                             }, {}),

@@ -277,7 +277,6 @@ const CreateTransactionModal = ({
                             note={note}
                             setNote={setNote}
                             locations={locations}
-                            fiatCurrencies={fiatCurrencies}
                             cryptoCurrencies={cryptoCurrencies}
                         />
                     ) : null}

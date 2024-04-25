@@ -153,10 +153,9 @@ const Dashboard = () => {
 
     return (
         <>
-            <Header title="Dashboard" className={'mb-12'} />
+            <Header title="Dashboard" className={'mb-6'} />
 
             <div className={'pb-6'}>
-                <h3 className={'font-semibold text-xl mb-2'}>Stats</h3>
                 <div className={'flex flex-row gap-4 mb-4'}>
                     {cardStats.map((cardStat, index) => (
                         <SimpleCard

@@ -5,7 +5,7 @@ import Header from '@/app/(app)/Header'
 const Stats = () => {
     return (
         <>
-            <Header title="Stats" className={'mb-12'} />
+            <Header title="Stats" className={'mb-6'} />
         </>
     )
 }

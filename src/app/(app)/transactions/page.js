@@ -158,18 +158,14 @@ const Transactions = () => {
 
     return (
         <>
-            <Header title="Transactions" className={'mb-12'} />
+            <div className={'flex flex-row items-center justify-between mb-4'}>
+                <Header title="Transactions" />
+                <Button onClick={openOrCloseTransactionCreateModal}>
+                    + Add new
+                </Button>
+            </div>
 
             <div className={'pb-6'}>
-                <div
-                    className={
-                        'flex flex-row items-center mb-2 justify-between'
-                    }>
-                    <h3 className={'font-semibold text-xl'}>List</h3>
-                    <Button onClick={openOrCloseTransactionCreateModal}>
-                        + Add new
-                    </Button>
-                </div>
                 <div className="flex flex-col gap-2">
                     <Table
                         header={[

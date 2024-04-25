@@ -55,7 +55,7 @@ const MyAccount = () => {
 
     return (
         <>
-            <Header title="My account" className={'mb-12'} />
+            <Header title="My account" className={'mb-6'} />
 
             <div className={'pb-6 max-w-3xl'}>
                 <h3 className={'font-semibold text-xl mb-2'}>Profile</h3>

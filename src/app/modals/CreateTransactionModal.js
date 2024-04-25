@@ -10,6 +10,7 @@ import { useCurrencyData } from '@/hooks/currencies'
 import { CurrencyType } from '@/enums/CurrencyType'
 import { TransactionType } from '@/enums/TransactionType'
 import { useAuth } from '@/hooks/auth'
+import Swap from '@/app/modals/TransactionParts/Swap'
 
 const CreateTransactionModal = ({
     setIsOpen,
@@ -62,6 +63,9 @@ const CreateTransactionModal = ({
         } else if (type === TransactionType.SELL) {
             setToCurrency(user.currency_id ?? 0)
             setFromCurrency(0)
+        } else if (type === TransactionType.SWAP) {
+            setToCurrency(0)
+            setFromCurrency(0)
         }
     }, [type])
 
@@ -111,13 +115,15 @@ const CreateTransactionModal = ({
                     <h4 className={'mb-2'}>Type of transaction*</h4>
                     <div className={'flex flex-row gap-4 justify-between'}>
                         <div className={'flex flex-row gap-2'}>
-                            <Label htmlFor="buy">Buy</Label>
+                            <Label htmlFor="buy" className={'cursor-pointer'}>
+                                Buy
+                            </Label>
                             <Input
                                 id="buy"
                                 type="radio"
                                 name={'type'}
                                 value={TransactionType.BUY}
-                                className=""
+                                className="cursor-pointer"
                                 onChange={event => setType(event.target.value)}
                                 required
                                 autoFocus
@@ -125,13 +131,15 @@ const CreateTransactionModal = ({
                         </div>
 
                         <div className={'flex flex-row gap-2'}>
-                            <Label htmlFor="sell">Sell</Label>
+                            <Label htmlFor="sell" className={'cursor-pointer'}>
+                                Sell
+                            </Label>
                             <Input
                                 id="sell"
                                 type="radio"
                                 name={'type'}
                                 value={TransactionType.SELL}
-                                className=""
+                                className="cursor-pointer"
                                 onChange={event => setType(event.target.value)}
                                 required
                                 autoFocus
@@ -139,13 +147,17 @@ const CreateTransactionModal = ({
                         </div>
 
                         <div className={'flex flex-row gap-2'}>
-                            <Label htmlFor="receive">Receive</Label>
+                            <Label
+                                htmlFor="receive"
+                                className={'cursor-pointer'}>
+                                Receive
+                            </Label>
                             <Input
                                 id="receive"
                                 type="radio"
                                 name={'type'}
                                 value={TransactionType.RECEIVE}
-                                className=""
+                                className="cursor-pointer"
                                 onChange={event => setType(event.target.value)}
                                 required
                                 autoFocus
@@ -153,13 +165,17 @@ const CreateTransactionModal = ({
                         </div>
 
                         <div className={'flex flex-row gap-2'}>
-                            <Label htmlFor="withdraw">Withdraw</Label>
+                            <Label
+                                htmlFor="withdraw"
+                                className={'cursor-pointer'}>
+                                Withdraw
+                            </Label>
                             <Input
                                 id="withdraw"
                                 type="radio"
                                 name={'type'}
                                 value={TransactionType.WITHDRAW}
-                                className=""
+                                className="cursor-pointer"
                                 onChange={event => setType(event.target.value)}
                                 required
                                 autoFocus
@@ -167,13 +183,15 @@ const CreateTransactionModal = ({
                         </div>
 
                         <div className={'flex flex-row gap-2'}>
-                            <Label htmlFor="swap">Swap</Label>
+                            <Label htmlFor="swap" className={'cursor-pointer'}>
+                                Swap
+                            </Label>
                             <Input
                                 id="swap"
                                 type="radio"
                                 name={'type'}
                                 value={TransactionType.SWAP}
-                                className=""
+                                className="cursor-pointer"
                                 onChange={event => setType(event.target.value)}
                                 required
                                 autoFocus
@@ -226,6 +244,34 @@ const CreateTransactionModal = ({
                             setLocation={setLocation}
                             hash={hash}
                             setHash={setHash}
+                            fromAddress={fromAddress}
+                            setFromAddress={setFromAddress}
+                            note={note}
+                            setNote={setNote}
+                            locations={locations}
+                            fiatCurrencies={fiatCurrencies}
+                            cryptoCurrencies={cryptoCurrencies}
+                        />
+                    ) : null}
+
+                    {type === TransactionType.SWAP ? (
+                        <Swap
+                            date={date}
+                            setDate={setDate}
+                            toCurrency={toCurrency}
+                            setToCurrency={setToCurrency}
+                            toQuantity={toQuantity}
+                            setToQuantity={setToQuantity}
+                            fromCurrency={fromCurrency}
+                            setFromCurrency={setFromCurrency}
+                            fromQuantity={fromQuantity}
+                            setFromQuantity={setFromQuantity}
+                            location={location}
+                            setLocation={setLocation}
+                            hash={hash}
+                            setHash={setHash}
+                            toAddress={toAddress}
+                            setToAddress={setToAddress}
                             fromAddress={fromAddress}
                             setFromAddress={setFromAddress}
                             note={note}

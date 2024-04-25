@@ -6,7 +6,8 @@ import {
     MagnifyingGlassIcon,
     HashtagIcon,
     HomeIcon,
-    XMarkIcon, DocumentTextIcon,
+    XMarkIcon,
+    DocumentTextIcon,
 } from '@heroicons/react/24/outline'
 
 import { useAuth } from '@/hooks/auth'
@@ -14,6 +15,7 @@ import Dropdown from '@/components/Dropdown'
 import { DropdownButton } from '@/components/DropdownLink'
 import { usePathname } from 'next/navigation'
 import { WalletIcon } from '@heroicons/react/24/solid'
+import Link from 'next/link'
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -46,7 +48,7 @@ const LeftNavigation = ({ user }) => {
         },
         {
             name: 'Tax report',
-            href: '/tax-report',
+            href: '/tax-report/' + (new Date().getFullYear() - 1),
             icon: DocumentTextIcon,
             current: pathname === '/history',
         },
@@ -134,25 +136,29 @@ const LeftNavigation = ({ user }) => {
                                                     className="-mx-2 space-y-1">
                                                     {navigation.map(item => (
                                                         <li key={item.name}>
-                                                            <a
-                                                                href={item.href}
-                                                                className={classNames(
-                                                                    item.current
-                                                                        ? 'bg-gray-50 text-default-primary'
-                                                                        : 'text-gray-700 hover:text-default-primary hover:bg-gray-50',
-                                                                    'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold',
-                                                                )}>
-                                                                <item.icon
+                                                            <Link
+                                                                href={
+                                                                    item.href
+                                                                }>
+                                                                <a
                                                                     className={classNames(
                                                                         item.current
-                                                                            ? 'text-default-primary'
-                                                                            : 'text-gray-400 group-hover:text-default-primary',
-                                                                        'h-6 w-6 shrink-0',
-                                                                    )}
-                                                                    aria-hidden="true"
-                                                                />
-                                                                {item.name}
-                                                            </a>
+                                                                            ? 'bg-gray-50 text-default-primary'
+                                                                            : 'text-gray-700 hover:text-default-primary hover:bg-gray-50',
+                                                                        'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold',
+                                                                    )}>
+                                                                    <item.icon
+                                                                        className={classNames(
+                                                                            item.current
+                                                                                ? 'text-default-primary'
+                                                                                : 'text-gray-400 group-hover:text-default-primary',
+                                                                            'h-6 w-6 shrink-0',
+                                                                        )}
+                                                                        aria-hidden="true"
+                                                                    />
+                                                                    {item.name}
+                                                                </a>
+                                                            </Link>
                                                         </li>
                                                     ))}
                                                 </ul>

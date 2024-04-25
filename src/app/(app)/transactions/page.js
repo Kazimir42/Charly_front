@@ -14,6 +14,8 @@ import { TransactionType } from '@/enums/TransactionType'
 import CurrencyBubble from '@/components/CurrencyBubble'
 import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline'
 import { useAuth } from '@/hooks/auth'
+import CurrencyIn from '@/components/CurrencyIn'
+import CurrencyOut from '@/components/CurrencyOut'
 
 const Transactions = () => {
     const { user } = useAuth({ middleware: 'auth' })
@@ -61,28 +63,24 @@ const Transactions = () => {
 
     function formatTransactionData() {
         const formattedData = transactions.map(line => {
-            let currency = {}
-            if (line.type === TransactionType.BUY) {
-                currency.name = line.to_currency.name
-                currency.symbol = line.to_currency.symbol
-            } else {
-                currency.name = line.from_currency.name
-                currency.symbol = line.from_currency.symbol
-            }
-
-            const quantity =
-                line.type === TransactionType.BUY
-                    ? line.to_quantity
-                    : line.from_quantity
+            let currencyIn = {}
+            let currencyOut = {}
+            currencyIn.symbol = line.to_currency.symbol
+            currencyIn.quantity = line.to_quantity
+            currencyOut.symbol = line.from_currency.symbol
+            currencyOut.quantity = line.from_quantity
 
             return [
                 formatDate(line.date, true, 'fr-FR'),
                 <TransactionTypeBubble type={line.type} />,
-                <CurrencyBubble
-                    symbol={currency.symbol}
-                    name={currency.name}
+                <CurrencyOut
+                    symbol={currencyOut.symbol}
+                    quantity={currencyOut.quantity}
                 />,
-                quantity,
+                <CurrencyIn
+                    symbol={currencyIn.symbol}
+                    quantity={currencyIn.quantity}
+                />,
                 formatPrice(
                     line.total_price_per_fiat_currencies[user.currency_symbol],
                     user.currency_symbol,
@@ -179,8 +177,8 @@ const Transactions = () => {
                         header={[
                             'Date',
                             'Type',
-                            'Asset',
-                            'Quantity',
+                            'Asset Out',
+                            'Asset In',
                             'Price',
                             'Unit price',
                             'Location',

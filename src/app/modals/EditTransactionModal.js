@@ -10,6 +10,8 @@ import { TransactionType } from '@/enums/TransactionType'
 import Buy from '@/app/modals/TransactionParts/Buy'
 import Sell from '@/app/modals/TransactionParts/Sell'
 import Swap from '@/app/modals/TransactionParts/Swap'
+import Send from '@/app/modals/TransactionParts/Send'
+import Receive from '@/app/modals/TransactionParts/Receive'
 
 const EditTransactionModal = ({
     transaction,
@@ -239,6 +241,48 @@ const EditTransactionModal = ({
                             setHash={setHash}
                             toAddress={toAddress}
                             setToAddress={setToAddress}
+                            fromAddress={fromAddress}
+                            setFromAddress={setFromAddress}
+                            note={note}
+                            setNote={setNote}
+                            locations={locations}
+                            cryptoCurrencies={cryptoCurrencies}
+                        />
+                    ) : null}
+
+                    {type === TransactionType.RECEIVE ? (
+                        <Receive
+                            date={date}
+                            setDate={setDate}
+                            toCurrency={toCurrency}
+                            setToCurrency={setToCurrency}
+                            toQuantity={toQuantity}
+                            setToQuantity={setToQuantity}
+                            location={location}
+                            setLocation={setLocation}
+                            hash={hash}
+                            setHash={setHash}
+                            toAddress={toAddress}
+                            setToAddress={setToAddress}
+                            note={note}
+                            setNote={setNote}
+                            locations={locations}
+                            cryptoCurrencies={cryptoCurrencies}
+                        />
+                    ) : null}
+
+                    {type === TransactionType.SEND ? (
+                        <Send
+                            date={date}
+                            setDate={setDate}
+                            fromCurrency={fromCurrency}
+                            setFromCurrency={setFromCurrency}
+                            fromQuantity={fromQuantity}
+                            setFromQuantity={setFromQuantity}
+                            location={location}
+                            setLocation={setLocation}
+                            hash={hash}
+                            setHash={setHash}
                             fromAddress={fromAddress}
                             setFromAddress={setFromAddress}
                             note={note}

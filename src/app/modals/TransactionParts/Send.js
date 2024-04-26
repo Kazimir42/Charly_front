@@ -5,13 +5,9 @@ import { Select } from '@/components/Select'
 import { ArrowDownIcon } from '@heroicons/react/24/outline'
 import Textarea from '@/components/Textarea'
 
-const Swap = ({
+const Send = ({
     date,
     setDate,
-    toCurrency,
-    setToCurrency,
-    toQuantity,
-    setToQuantity,
     fromCurrency,
     setFromCurrency,
     fromQuantity,
@@ -20,8 +16,6 @@ const Swap = ({
     setLocation,
     hash,
     setHash,
-    toAddress,
-    setToAddress,
     fromAddress,
     setFromAddress,
     note,
@@ -46,7 +40,7 @@ const Swap = ({
             </div>
             <div className={'grid grid-cols-2 gap-2'}>
                 <div>
-                    <Label htmlFor="from_currency">Asset From*</Label>
+                    <Label htmlFor="from_currency">Asset Sent*</Label>
                     <Select
                         id="from_currency"
                         name="from_currency"
@@ -65,7 +59,7 @@ const Swap = ({
                     />
                 </div>
                 <div>
-                    <Label htmlFor="from_quantity">Quantity From*</Label>
+                    <Label htmlFor="from_quantity">Quantity Sent*</Label>
                     <Input
                         id="from_quantity"
                         name="from_quantity"
@@ -75,49 +69,6 @@ const Swap = ({
                         value={fromQuantity}
                         className="block w-full"
                         onChange={event => setFromQuantity(event.target.value)}
-                        required
-                        autoFocus
-                    />
-                </div>
-            </div>
-            <ArrowDownIcon
-                className="w-5 h-5 mx-auto text-gray-900"
-                aria-hidden="true"
-            />
-            <div className={'grid grid-cols-2 gap-2'}>
-                <div>
-                    <Label htmlFor="to_currency">Asset To*</Label>
-                    <Select
-                        id="to_currency"
-                        name="to_currency"
-                        items={{
-                            0: 'Choose an asset',
-                            ...cryptoCurrencies.reduce(
-                                (acc, cryptoCurrency) => {
-                                    acc[cryptoCurrency.id] = cryptoCurrency.name
-                                    return acc
-                                },
-                                {},
-                            ),
-                        }}
-                        className="block w-full"
-                        value={toCurrency}
-                        onChange={event => setToCurrency(event.target.value)}
-                        required
-                        autoFocus
-                    />
-                </div>
-                <div>
-                    <Label htmlFor="to_quantity">Quantity To*</Label>
-                    <Input
-                        id="to_quantity"
-                        name="to_quantity"
-                        type="number"
-                        step={'0.01'}
-                        min={'0'}
-                        value={toQuantity}
-                        className="block w-full"
-                        onChange={event => setToQuantity(event.target.value)}
                         required
                         autoFocus
                     />
@@ -143,7 +94,7 @@ const Swap = ({
                 />
             </div>
             <div className={'grid grid-cols-2 gap-2'}>
-                <div className={'col-span-2'}>
+                <div>
                     <Label htmlFor="hash">Hash</Label>
                     <Input
                         id="hash"
@@ -167,18 +118,6 @@ const Swap = ({
                         autoFocus
                     />
                 </div>
-                <div>
-                    <Label htmlFor="to_address">Reception address</Label>
-                    <Input
-                        id="to_address"
-                        name="to_address"
-                        type="text"
-                        value={toAddress}
-                        className="block w-full"
-                        onChange={event => setToAddress(event.target.value)}
-                        autoFocus
-                    />
-                </div>
             </div>
             <div>
                 <Label htmlFor="note">Note</Label>
@@ -193,4 +132,4 @@ const Swap = ({
     )
 }
 
-export default Swap
+export default Send

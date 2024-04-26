@@ -72,6 +72,7 @@ const Transactions = () => {
                 formatDate(line.date, true, 'fr-FR'),
                 <TransactionTypeBubble type={line.type} />,
                 <CurrencyOut
+                    className={'ml-auto'}
                     symbol={currencyOut.symbol}
                     quantity={currencyOut.quantity}
                 />,
@@ -171,7 +172,8 @@ const Transactions = () => {
                         header={[
                             'Date',
                             'Type',
-                            'Asset Out',
+                            // eslint-disable-next-line react/jsx-key
+                            <p className={'text-right'}>Asset Out</p>,
                             'Asset In',
                             'Price',
                             'Unit price',

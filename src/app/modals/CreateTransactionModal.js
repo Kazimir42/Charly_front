@@ -11,6 +11,8 @@ import { CurrencyType } from '@/enums/CurrencyType'
 import { TransactionType } from '@/enums/TransactionType'
 import { useAuth } from '@/hooks/auth'
 import Swap from '@/app/modals/TransactionParts/Swap'
+import Receive from '@/app/modals/TransactionParts/Receive'
+import Send from '@/app/modals/TransactionParts/Send'
 
 const CreateTransactionModal = ({
     setIsOpen,
@@ -165,16 +167,14 @@ const CreateTransactionModal = ({
                         </div>
 
                         <div className={'flex flex-row gap-2'}>
-                            <Label
-                                htmlFor="withdraw"
-                                className={'cursor-pointer'}>
-                                Withdraw
+                            <Label htmlFor="send" className={'cursor-pointer'}>
+                                Send
                             </Label>
                             <Input
-                                id="withdraw"
+                                id="send"
                                 type="radio"
                                 name={'type'}
-                                value={TransactionType.WITHDRAW}
+                                value={TransactionType.SEND}
                                 className="cursor-pointer"
                                 onChange={event => setType(event.target.value)}
                                 required
@@ -272,6 +272,48 @@ const CreateTransactionModal = ({
                             setHash={setHash}
                             toAddress={toAddress}
                             setToAddress={setToAddress}
+                            fromAddress={fromAddress}
+                            setFromAddress={setFromAddress}
+                            note={note}
+                            setNote={setNote}
+                            locations={locations}
+                            cryptoCurrencies={cryptoCurrencies}
+                        />
+                    ) : null}
+
+                    {type === TransactionType.RECEIVE ? (
+                        <Receive
+                            date={date}
+                            setDate={setDate}
+                            toCurrency={toCurrency}
+                            setToCurrency={setToCurrency}
+                            toQuantity={toQuantity}
+                            setToQuantity={setToQuantity}
+                            location={location}
+                            setLocation={setLocation}
+                            hash={hash}
+                            setHash={setHash}
+                            toAddress={toAddress}
+                            setToAddress={setToAddress}
+                            note={note}
+                            setNote={setNote}
+                            locations={locations}
+                            cryptoCurrencies={cryptoCurrencies}
+                        />
+                    ) : null}
+
+                    {type === TransactionType.SEND ? (
+                        <Send
+                            date={date}
+                            setDate={setDate}
+                            fromCurrency={fromCurrency}
+                            setFromCurrency={setFromCurrency}
+                            fromQuantity={fromQuantity}
+                            setFromQuantity={setFromQuantity}
+                            location={location}
+                            setLocation={setLocation}
+                            hash={hash}
+                            setHash={setHash}
                             fromAddress={fromAddress}
                             setFromAddress={setFromAddress}
                             note={note}

@@ -9,6 +9,7 @@ import { CurrencyType } from '@/enums/CurrencyType'
 import { TransactionType } from '@/enums/TransactionType'
 import Buy from '@/app/modals/TransactionParts/Buy'
 import Sell from '@/app/modals/TransactionParts/Sell'
+import Swap from '@/app/modals/TransactionParts/Swap'
 
 const EditTransactionModal = ({
     transaction,
@@ -216,6 +217,33 @@ const EditTransactionModal = ({
                             setNote={setNote}
                             locations={locations}
                             fiatCurrencies={fiatCurrencies}
+                            cryptoCurrencies={cryptoCurrencies}
+                        />
+                    ) : null}
+
+                    {type === TransactionType.SWAP ? (
+                        <Swap
+                            date={date}
+                            setDate={setDate}
+                            toCurrency={toCurrency}
+                            setToCurrency={setToCurrency}
+                            toQuantity={toQuantity}
+                            setToQuantity={setToQuantity}
+                            fromCurrency={fromCurrency}
+                            setFromCurrency={setFromCurrency}
+                            fromQuantity={fromQuantity}
+                            setFromQuantity={setFromQuantity}
+                            location={location}
+                            setLocation={setLocation}
+                            hash={hash}
+                            setHash={setHash}
+                            toAddress={toAddress}
+                            setToAddress={setToAddress}
+                            fromAddress={fromAddress}
+                            setFromAddress={setFromAddress}
+                            note={note}
+                            setNote={setNote}
+                            locations={locations}
                             cryptoCurrencies={cryptoCurrencies}
                         />
                     ) : null}

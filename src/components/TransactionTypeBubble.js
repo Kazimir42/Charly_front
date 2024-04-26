@@ -15,17 +15,17 @@ const TransactionTypeBubble = ({ type }) => {
         ),
         [TransactionType.RECEIVE]: (
             <TemplateBubble className={'text-teal-600 bg-teal-100'}>
-                BUY
+                RECEIVE
             </TemplateBubble>
         ),
         [TransactionType.SEND]: (
             <TemplateBubble className={'text-orange-600 bg-orange-100'}>
-                BUY
+                SEND
             </TemplateBubble>
         ),
         [TransactionType.SWAP]: (
             <TemplateBubble className={'text-blue-600 bg-blue-100'}>
-                BUY
+                SWAP
             </TemplateBubble>
         ),
     }

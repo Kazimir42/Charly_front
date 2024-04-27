@@ -7,7 +7,7 @@ const Page = ({ params }) => {
         <>
             <Header
                 title={'Tax report for ' + params.year}
-                className={'mb-6'}
+                className={'mb-4'}
             />
         </>
     )

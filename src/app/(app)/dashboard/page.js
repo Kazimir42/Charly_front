@@ -153,7 +153,7 @@ const Dashboard = () => {
 
     return (
         <>
-            <Header title="Dashboard" className={'mb-6'} />
+            <Header title="Dashboard" className={'mb-4'} />
 
             <div className={'pb-6'}>
                 <div className={'flex flex-row gap-4 mb-4'}>

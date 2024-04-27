@@ -137,27 +137,23 @@ const LeftNavigation = ({ user }) => {
                                                     {navigation.map(item => (
                                                         <li key={item.name}>
                                                             <Link
-                                                                href={
-                                                                    item.href
-                                                                }>
-                                                                <a
+                                                                href={item.href}
+                                                                className={classNames(
+                                                                    item.current
+                                                                        ? 'bg-gray-50 text-default-primary'
+                                                                        : 'text-gray-700 hover:text-default-primary hover:bg-gray-50',
+                                                                    'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold',
+                                                                )}>
+                                                                <item.icon
                                                                     className={classNames(
                                                                         item.current
-                                                                            ? 'bg-gray-50 text-default-primary'
-                                                                            : 'text-gray-700 hover:text-default-primary hover:bg-gray-50',
-                                                                        'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold',
-                                                                    )}>
-                                                                    <item.icon
-                                                                        className={classNames(
-                                                                            item.current
-                                                                                ? 'text-default-primary'
-                                                                                : 'text-gray-400 group-hover:text-default-primary',
-                                                                            'h-6 w-6 shrink-0',
-                                                                        )}
-                                                                        aria-hidden="true"
-                                                                    />
-                                                                    {item.name}
-                                                                </a>
+                                                                            ? 'text-default-primary'
+                                                                            : 'text-gray-400 group-hover:text-default-primary',
+                                                                        'h-6 w-6 shrink-0',
+                                                                    )}
+                                                                    aria-hidden="true"
+                                                                />
+                                                                {item.name}
                                                             </Link>
                                                         </li>
                                                     ))}
@@ -172,7 +168,7 @@ const LeftNavigation = ({ user }) => {
                                                     className="-mx-2 mt-2 space-y-1">
                                                     {assets.map(asset => (
                                                         <li key={asset.name}>
-                                                            <a
+                                                            <Link
                                                                 href={
                                                                     asset.href
                                                                 }
@@ -196,7 +192,7 @@ const LeftNavigation = ({ user }) => {
                                                                 <span className="truncate">
                                                                     {asset.name}
                                                                 </span>
-                                                            </a>
+                                                            </Link>
                                                         </li>
                                                     ))}
                                                 </ul>
@@ -216,7 +212,10 @@ const LeftNavigation = ({ user }) => {
                         <WalletIcon
                             className={'h-8 w-8 text-default-primary'}
                         />
-                        <span className={'text-default-primary font-bold text-xl'}>
+                        <span
+                            className={
+                                'text-default-primary font-bold text-xl'
+                            }>
                             Charly
                         </span>
                     </div>
@@ -228,7 +227,7 @@ const LeftNavigation = ({ user }) => {
                                 <ul role="list" className="-mx-2 space-y-1">
                                     {navigation.map(item => (
                                         <li key={item.name}>
-                                            <a
+                                            <Link
                                                 href={item.href}
                                                 className={classNames(
                                                     item.current
@@ -246,7 +245,7 @@ const LeftNavigation = ({ user }) => {
                                                     aria-hidden="true"
                                                 />
                                                 {item.name}
-                                            </a>
+                                            </Link>
                                         </li>
                                     ))}
                                 </ul>
@@ -321,7 +320,9 @@ const LeftNavigation = ({ user }) => {
                                         </button>
                                     }>
                                     <DropdownButton>
-                                        <a href={'/my-account'}>My account</a>
+                                        <Link href={'/my-account'}>
+                                            My account
+                                        </Link>
                                     </DropdownButton>
                                     <DropdownButton onClick={logout}>
                                         Logout
@@ -366,7 +367,7 @@ const LeftNavigation = ({ user }) => {
                         </button>
                     }>
                     <DropdownButton>
-                        <a href={'/my-account'}>My account</a>
+                        <Link href={'/my-account'}>My account</Link>
                     </DropdownButton>
                     <DropdownButton onClick={logout}>Logout</DropdownButton>
                 </Dropdown>

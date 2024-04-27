@@ -138,13 +138,13 @@ const EditTransactionModal = ({
                         </div>
 
                         <div className={'flex flex-row gap-2'}>
-                            <Label htmlFor="withdraw">Withdraw</Label>
+                            <Label htmlFor="send">Send</Label>
                             <Input
-                                id="withdraw"
+                                id="send"
                                 type="radio"
                                 name={'type'}
-                                value={TransactionType.WITHDRAW}
-                                checked={TransactionType.WITHDRAW === type}
+                                value={TransactionType.SEND}
+                                checked={TransactionType.SEND === type}
                                 className=""
                                 onChange={event => setType(event.target.value)}
                                 required

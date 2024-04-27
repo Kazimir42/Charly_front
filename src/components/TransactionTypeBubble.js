@@ -14,7 +14,7 @@ const TransactionTypeBubble = ({ type }) => {
             </TemplateBubble>
         ),
         [TransactionType.RECEIVE]: (
-            <TemplateBubble className={'text-teal-600 bg-teal-100'}>
+            <TemplateBubble className={'text-blue-600 bg-blue-100'}>
                 RECEIVE
             </TemplateBubble>
         ),
@@ -24,7 +24,7 @@ const TransactionTypeBubble = ({ type }) => {
             </TemplateBubble>
         ),
         [TransactionType.SWAP]: (
-            <TemplateBubble className={'text-blue-600 bg-blue-100'}>
+            <TemplateBubble className={'text-purple-600 bg-purple-100'}>
                 SWAP
             </TemplateBubble>
         ),

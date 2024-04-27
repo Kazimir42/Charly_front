@@ -63,23 +63,31 @@ const Transactions = () => {
         const formattedData = transactions.map(line => {
             let currencyIn = {}
             let currencyOut = {}
-            currencyIn.symbol = line.to_currency.symbol
-            currencyIn.quantity = line.to_quantity
-            currencyOut.symbol = line.from_currency.symbol
-            currencyOut.quantity = line.from_quantity
+            currencyIn.symbol = line.to_currency?.symbol ?? null
+            currencyIn.quantity = line.to_quantity ?? 0
+            currencyOut.symbol = line.from_currency?.symbol ?? null
+            currencyOut.quantity = line.from_quantity ?? 0
 
             return [
                 formatDate(line.date, true, 'fr-FR'),
                 <TransactionTypeBubble type={line.type} />,
-                <CurrencyOut
-                    className={'ml-auto'}
-                    symbol={currencyOut.symbol}
-                    quantity={currencyOut.quantity}
-                />,
-                <CurrencyIn
-                    symbol={currencyIn.symbol}
-                    quantity={currencyIn.quantity}
-                />,
+                currencyOut.symbol ? (
+                    <CurrencyOut
+                        className={'ml-auto'}
+                        symbol={currencyOut.symbol}
+                        quantity={currencyOut.quantity}
+                    />
+                ) : (
+                    ''
+                ),
+                currencyIn.symbol ? (
+                    <CurrencyIn
+                        symbol={currencyIn.symbol}
+                        quantity={currencyIn.quantity}
+                    />
+                ) : (
+                    ''
+                ),
                 formatPrice(
                     line.total_price_per_fiat_currencies[user.currency_symbol],
                     user.currency_symbol,

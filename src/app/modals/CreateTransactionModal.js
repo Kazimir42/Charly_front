@@ -65,7 +65,11 @@ const CreateTransactionModal = ({
         } else if (type === TransactionType.SELL) {
             setToCurrency(user.currency_id ?? 0)
             setFromCurrency(0)
-        } else if (type === TransactionType.SWAP) {
+        } else if (
+            type === TransactionType.SWAP ||
+            type === TransactionType.RECEIVE ||
+            type === TransactionType.SEND
+        ) {
             setToCurrency(0)
             setFromCurrency(0)
         }

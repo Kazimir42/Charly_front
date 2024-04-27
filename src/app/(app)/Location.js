@@ -163,8 +163,8 @@ const Location = ({
                 </div>,
             ]}
             headerContent={[
-                <div key={'Name'} className="inline-block w-[19%]">
-                    Name
+                <div key={'Coin'} className="inline-block w-[19%]">
+                    Coin
                 </div>,
                 <div
                     key={'Quantity'}

@@ -2,14 +2,13 @@
 
 import Header from '@/app/(app)/Header'
 import SimpleCard from '@/components/SimpleCard'
-import TotalValueHistory from '@/app/stats/TotalValueHistory'
-import TreemapAllocation from '@/app/stats/TreemapAllocation'
 import { useEffect, useState } from 'react'
 import { useHistoryData } from '@/hooks/history'
+import SoldCrypto from '@/app/(app)/SoldCrypto'
 
 const History = () => {
     const [cardStats, setCardStats] = useState([])
-    const [assets, setAssets] = useState([])
+    const [cryptocurrencies, setCryptocurrencies] = useState([])
 
     const { getHistory } = useHistoryData()
 
@@ -20,7 +19,7 @@ const History = () => {
     function refreshDashboard() {
         getHistory().then(data => {
             if (data) {
-                setAssets(data.locations || [])
+                setCryptocurrencies(data)
                 // TODO
                 setCardStats([
                     {
@@ -53,6 +52,20 @@ const History = () => {
                             name={cardStat.name}>
                             {cardStat.value}
                         </SimpleCard>
+                    ))}
+                </div>
+            </div>
+
+            <div className={'pb-6'}>
+                <h3 className={'font-semibold text-xl mb-2'}>
+                    Cryptocurrencies
+                </h3>
+                <div className="grid grid-cols-2 gap-2">
+                    {cryptocurrencies.map((cryptocurrency, index) => (
+                        <SoldCrypto
+                            key={index}
+                            cryptocurrency={cryptocurrency}
+                        />
                     ))}
                 </div>
             </div>

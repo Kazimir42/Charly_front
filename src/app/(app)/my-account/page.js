@@ -11,6 +11,7 @@ import { useUserData } from '@/hooks/users'
 import { CurrencyType } from '@/enums/CurrencyType'
 import { useCurrencyData } from '@/hooks/currencies'
 import { Select } from '@/components/Select'
+import { useCountryData } from '@/hooks/countries'
 
 const MyAccount = () => {
     const { user } = useAuth({
@@ -18,22 +19,27 @@ const MyAccount = () => {
     })
     const { updateUser } = useUserData()
     const { getCurrencies } = useCurrencyData()
+    const { getCountries } = useCountryData()
     const router = useRouter()
 
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [currency, setCurrency] = useState(0)
+    const [taxResidence, setTaxResidence] = useState(0)
 
     const [fiatCurrencies, setFiatCurrencies] = useState([])
+    const [countries, setCountries] = useState([])
 
     useEffect(() => {
         setName(user.name)
         setCurrency(user.currency_id)
+        setTaxResidence(user.tax_residence_id)
         setEmail(user.email)
     }, [])
 
     useEffect(() => {
         getCurrencies({ type: CurrencyType.FIAT }).then(setFiatCurrencies)
+        getCountries().then(setCountries)
     }, [])
 
     function submitForm(event) {
@@ -42,6 +48,7 @@ const MyAccount = () => {
         updateUser(user.id, {
             name,
             currency_id: currency,
+            tax_residence_id: taxResidence,
         })
             .then(() => {
                 refreshAccount()
@@ -116,6 +123,28 @@ const MyAccount = () => {
                             className="block w-full mt-1"
                             value={currency}
                             onChange={event => setCurrency(event.target.value)}
+                            required
+                            autoFocus
+                        />
+                    </div>
+
+                    <div>
+                        <Label htmlFor="currency">Tax residence*</Label>
+                        <Select
+                            id="tax_residence"
+                            name="tax_residence"
+                            items={{
+                                0: 'Choose a country',
+                                ...countries.reduce((acc, country) => {
+                                    acc[country.id] = country.name
+                                    return acc
+                                }, {}),
+                            }}
+                            className="block w-full mt-1"
+                            value={taxResidence}
+                            onChange={event =>
+                                setTaxResidence(event.target.value)
+                            }
                             required
                             autoFocus
                         />

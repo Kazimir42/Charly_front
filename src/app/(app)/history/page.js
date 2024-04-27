@@ -60,7 +60,7 @@ const History = () => {
                 <h3 className={'font-semibold text-xl mb-2'}>
                     Cryptocurrencies
                 </h3>
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid 2xl:grid-cols-2 gap-2">
                     {cryptocurrencies.map((cryptocurrency, index) => (
                         <SoldCrypto
                             key={index}

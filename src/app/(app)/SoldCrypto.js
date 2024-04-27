@@ -1,13 +1,8 @@
 import React from 'react'
 import Accordion from '@/components/Accordion'
-import { formatPrice } from '@/lib/utils'
-import PercentageBubble from '@/components/PercentageBubble'
-import ProfitLossPrice from '@/components/ProfitLossPrice'
-import { EllipsisHorizontalIcon } from '@heroicons/react/24/outline'
-import { DropdownButton } from '@/components/DropdownLink'
-import Dropdown from '@/components/Dropdown'
-import CurrencyBubble from '@/components/CurrencyBubble'
 import { useAuth } from '@/hooks/auth'
+import CurrencyBubble from '@/components/CurrencyBubble'
+import { formatPrice } from '@/lib/utils'
 
 const SoldCrypto = ({ cryptocurrency }) => {
     const { user } = useAuth({ middleware: 'auth' })
@@ -15,31 +10,62 @@ const SoldCrypto = ({ cryptocurrency }) => {
     let formattedAssets = []
     cryptocurrency.locations.map(location => {
         formattedAssets.push([
-            <div key={location.id} className="inline-block w-[49%]">
+            <div key={location.id} className="inline-block w-[52%]">
                 {location.name}
             </div>,
-            <div className="inline-block w-[15%] text-right">a</div>,
-            <div className="inline-block w-[15%] text-right">b</div>,
-            <div className="inline-block w-[15%] text-right">d</div>,
+            <div className="inline-block w-[15%] text-right">
+                {location.quantity}
+            </div>,
+            <div className="inline-block w-[15%] text-right">
+                {formatPrice(
+                    location.average_unit_price_per_fiat_currencies[
+                        user.currency_symbol
+                    ],
+                    user.currency_symbol,
+                )}
+            </div>,
+            <div className="inline-block w-[15%] text-right">
+                {formatPrice(
+                    location.total_price_per_fiat_currencies[
+                        user.currency_symbol
+                    ],
+                    user.currency_symbol,
+                )}
+            </div>,
         ])
     })
 
     return (
         <Accordion
             header={[
-                <div key={cryptocurrency.name} className="inline-block w-[64%]">
-                    {cryptocurrency.name}
+                <div key={cryptocurrency.name} className="inline-block w-[52%]">
+                    <CurrencyBubble
+                        symbol={cryptocurrency.symbol}
+                        name={cryptocurrency.name}
+                    />
                 </div>,
-                <div className="inline-block w-[15%] text-right">a</div>,
-                <div className="inline-block w-[15%] text-right">b</div>,
-                <div
-                    key={'dropdown'}
-                    className="inline-block w-[3%] text-right">
-                    <div className={'flex justify-end'}></div>
+                <div className="inline-block w-[15%] text-right">
+                    {cryptocurrency.quantity}
+                </div>,
+                <div className="inline-block w-[15%] text-right">
+                    {formatPrice(
+                        cryptocurrency.average_unit_price_per_fiat_currencies[
+                            user.currency_symbol
+                        ],
+                        user.currency_symbol,
+                    )}
+                </div>,
+                <div className="inline-block w-[15%] text-right font-semibold">
+                    {formatPrice(
+                        cryptocurrency.total_price_per_fiat_currencies[
+                            user.currency_symbol
+                        ],
+                        user.currency_symbol,
+                    )}
                 </div>,
             ]}
             headerContent={[
-                <div key={'Location'} className="inline-block w-[49%]">
+                <div key={'Location'} className="inline-block w-[52%]">
                     Location
                 </div>,
                 <div

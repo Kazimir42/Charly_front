@@ -14,9 +14,11 @@ import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline'
 import { useAuth } from '@/hooks/auth'
 import CurrencyIn from '@/components/CurrencyIn'
 import CurrencyOut from '@/components/CurrencyOut'
+import { useSearchParams } from 'next/navigation'
 
 const Transactions = () => {
     const { user } = useAuth({ middleware: 'auth' })
+    const searchParams = useSearchParams()
 
     const {
         getTransactions,
@@ -38,17 +40,30 @@ const Transactions = () => {
         setTransactionDeleteModalIsOpen,
     ] = useState(false)
     const [transactions, setTransactions] = useState([])
+    const [paginationData, setPaginationData] = useState(null)
     const [formattedTransactions, setFormattedTransactions] = useState([])
     const [selectedTransaction, setSelectedTransaction] = useState(null)
 
     useEffect(() => {
         refreshTransactions()
-    }, [])
+    }, [searchParams.get('page')])
 
     function refreshTransactions() {
-        getTransactions().then(data => {
+        let params = searchParams.size ? '?' + searchParams.toString() : ''
+        getTransactions(params).then(data => {
             if (data) {
-                setTransactions(data)
+                setTransactions(data.data)
+                setPaginationData({
+                    current_page: data.current_page,
+                    per_page: data.per_page,
+                    last_page: data.last_page,
+                    from: data.from,
+                    to: data.to,
+                    total: data.total,
+                    links: data.links,
+                    prev_page_url: data.prev_page_url,
+                    next_page_url: data.next_page_url,
+                })
             }
         })
     }
@@ -189,6 +204,7 @@ const Transactions = () => {
                             '',
                         ]}
                         content={formattedTransactions}
+                        paginationData={paginationData}
                     />
                 </div>
             </div>

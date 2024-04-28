@@ -2,9 +2,9 @@ import axios from '@/lib/axios'
 import { toast } from 'react-toastify'
 
 export const useTransactionData = () => {
-    const getTransactions = async () => {
+    const getTransactions = async params => {
         return axios
-            .get('/api/transactions')
+            .get('/api/transactions' + params)
             .then(response => {
                 return response.data
             })

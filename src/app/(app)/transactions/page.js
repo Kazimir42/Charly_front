@@ -10,11 +10,17 @@ import DeleteModal from '@/app/modals/DeleteModal'
 import EditTransactionModal from '@/app/modals/EditTransactionModal'
 import TransactionTypeBubble from '@/components/TransactionTypeBubble'
 import { formatDate, formatPrice } from '@/lib/utils'
-import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline'
+import {
+    ArrowDownIcon,
+    PencilIcon,
+    TrashIcon,
+} from '@heroicons/react/24/outline'
 import { useAuth } from '@/hooks/auth'
 import CurrencyIn from '@/components/CurrencyIn'
 import CurrencyOut from '@/components/CurrencyOut'
 import { useSearchParams } from 'next/navigation'
+import Link from 'next/link'
+import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/16/solid'
 
 const Transactions = () => {
     const { user } = useAuth({ middleware: 'auth' })
@@ -46,7 +52,11 @@ const Transactions = () => {
 
     useEffect(() => {
         refreshTransactions()
-    }, [searchParams.get('page')])
+    }, [
+        searchParams.get('page'),
+        searchParams.get('orderBy'),
+        searchParams.get('orderDirection'),
+    ])
 
     function refreshTransactions() {
         let params = searchParams.size ? '?' + searchParams.toString() : ''
@@ -180,6 +190,41 @@ const Transactions = () => {
             .catch(() => {})
     }
 
+    function getOrderByLink(column) {
+        let pathname = window.location.pathname
+        let query = ''
+
+        query += '?page=' + (searchParams.get('page') ?? 1)
+
+        if (searchParams.get('orderDirection')) {
+            if (searchParams.get('orderDirection') === 'asc') {
+                query += '&orderDirection=desc'
+            } else {
+                query += '&orderDirection=asc'
+            }
+        } else {
+            query += '&orderDirection=desc'
+        }
+
+        query += '&orderBy=' + column
+
+        return pathname + query
+    }
+
+    function OrderIndicator({ field }) {
+        let orderBy = searchParams.get('orderBy')
+        let orderDirection = searchParams.get('orderDirection')
+
+        if (orderBy === field) {
+            return orderDirection === 'desc' ? (
+                <ChevronDownIcon className={'h-4 w-4'} />
+            ) : (
+                <ChevronUpIcon className={'h-4 w-4'} />
+            )
+        }
+        return null
+    }
+
     return (
         <>
             <div className={'flex flex-row items-center justify-between mb-4'}>
@@ -193,14 +238,69 @@ const Transactions = () => {
                 <div className="flex flex-col gap-2">
                     <Table
                         header={[
-                            'Date',
-                            'Type',
-                            // eslint-disable-next-line react/jsx-key
-                            <p className={'text-right'}>Asset Out</p>,
-                            'Asset In',
-                            'Price',
-                            'Unit price',
-                            'Location',
+                            <Link
+                                key={'date'}
+                                href={getOrderByLink('date')}
+                                className={
+                                    'flex flex-row gap-1 items-center hover:font-bold'
+                                }>
+                                Date
+                                <OrderIndicator field="date" />
+                            </Link>,
+                            <Link
+                                key={'type'}
+                                href={getOrderByLink('type')}
+                                className={
+                                    'flex flex-row gap-1 items-center hover:font-bold'
+                                }>
+                                Type
+                                <OrderIndicator field="type" />
+                            </Link>,
+                            <Link
+                                key={'from_quantity'}
+                                href={getOrderByLink('from_quantity')}
+                                className={
+                                    'text-right justify-end flex flex-row gap-1 items-center hover:font-bold'
+                                }>
+                                Asset Out
+                                <OrderIndicator field="from_quantity" />
+                            </Link>,
+                            <Link
+                                key={'to_quantity'}
+                                href={getOrderByLink('to_quantity')}
+                                className={
+                                    'flex flex-row gap-1 items-center hover:font-bold'
+                                }>
+                                Asset In
+                                <OrderIndicator field="to_quantity" />
+                            </Link>,
+                            <Link
+                                key={'total_price'}
+                                href={getOrderByLink('total_price')}
+                                className={
+                                    'flex flex-row gap-1 items-center hover:font-bold'
+                                }>
+                                Price
+                                <OrderIndicator field="total_price" />
+                            </Link>,
+                            <Link
+                                key={'unit_price'}
+                                href={getOrderByLink('unit_price')}
+                                className={
+                                    'flex flex-row gap-1 items-center hover:font-bold'
+                                }>
+                                Unit price
+                                <OrderIndicator field="unit_price" />
+                            </Link>,
+                            <Link
+                                key={'location_id'}
+                                href={getOrderByLink('location_id')}
+                                className={
+                                    'flex flex-row gap-1 items-center hover:font-bold'
+                                }>
+                                Location
+                                <OrderIndicator field="location_id" />
+                            </Link>,
                             '',
                         ]}
                         content={formattedTransactions}

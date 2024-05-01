@@ -14,8 +14,13 @@ import TreemapAllocation from '@/app/stats/TreemapAllocation'
 import TotalValueHistory from '@/app/stats/TotalValueHistory'
 import CreateTransactionModal from '@/app/modals/CreateTransactionModal'
 import { useTransactionData } from '@/hooks/transactions'
+import { useAuth } from '@/hooks/auth'
+import { formatPrice } from '@/lib/utils'
 
 const Dashboard = () => {
+    const { user } = useAuth({
+        middleware: 'auth',
+    })
     const { getDashboard } = useDashboardData()
     const { updateLocation, deleteLocation, createLocation } = useLocationData()
     const { createTransaction } = useTransactionData()
@@ -51,15 +56,33 @@ const Dashboard = () => {
                 setCardStats([
                     {
                         name: 'Total value invested',
-                        value: 'TODO €',
+                        value: formatPrice(
+                            data.stats.total_value_invested
+                                .value_per_fiat_currencies[
+                                user.currency_symbol
+                            ],
+                            user.currency_symbol,
+                        ),
                     },
                     {
                         name: 'Total value sold',
-                        value: 'TODO €',
+                        value: formatPrice(
+                            data.stats.total_value_sold
+                                .value_per_fiat_currencies[
+                                user.currency_symbol
+                            ],
+                            user.currency_symbol,
+                        ),
                     },
                     {
                         name: 'Current total value',
-                        value: 'TODO €',
+                        value: formatPrice(
+                            data.stats.current_total_value
+                                .value_per_fiat_currencies[
+                                user.currency_symbol
+                            ],
+                            user.currency_symbol,
+                        ),
                     },
                     {
                         name: 'Current Profit / Loss',
@@ -160,7 +183,7 @@ const Dashboard = () => {
             <Header title="Dashboard" className={'mb-4'} />
 
             <div className={'pb-6'}>
-                <div className={'flex flex-row gap-4 mb-4'}>
+                <div className={'flex flex-row flex-wrap gap-4 mb-4'}>
                     {cardStats.map((cardStat, index) => (
                         <SimpleCard
                             key={index}
@@ -170,9 +193,9 @@ const Dashboard = () => {
                         </SimpleCard>
                     ))}
                 </div>
-                <div className={'grid grid-cols-3 gap-4 mb-4'}>
+                <div className={'grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4'}>
                     <SimpleCard
-                        className={'col-span-2'}
+                        className={'col-span-1 lg:col-span-2'}
                         childrenClass={'h-[200px]'}
                         name={'Total value history'}>
                         <TotalValueHistory

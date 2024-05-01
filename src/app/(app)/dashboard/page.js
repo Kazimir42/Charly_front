@@ -15,7 +15,7 @@ import TotalValueHistory from '@/app/stats/TotalValueHistory'
 import CreateTransactionModal from '@/app/modals/CreateTransactionModal'
 import { useTransactionData } from '@/hooks/transactions'
 import { useAuth } from '@/hooks/auth'
-import { formatPrice } from '@/lib/utils'
+import { formatPercentage, formatPrice } from '@/lib/utils'
 
 const Dashboard = () => {
     const { user } = useAuth({
@@ -86,11 +86,19 @@ const Dashboard = () => {
                     },
                     {
                         name: 'Current Profit / Loss',
-                        value: 'TODO €',
+                        value: formatPrice(
+                            data.stats.current_profit_loss
+                                .value_per_fiat_currencies[
+                                user.currency_symbol
+                            ],
+                            user.currency_symbol,
+                        ),
                     },
                     {
                         name: 'Current Profit / Loss by %',
-                        value: 'TODO €',
+                        value: formatPercentage(
+                            data.stats.current_profit_loss_percentage.value,
+                        ),
                     },
                 ])
                 setAllocationStats(data.stats.allocation)

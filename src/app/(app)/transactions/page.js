@@ -336,7 +336,7 @@ const Transactions = () => {
                             />,
                             <HeaderTitle
                                 key={'location_id'}
-                                title={'Location price'}
+                                title={'Location'}
                                 name={'location_id'}
                             />,
                             '',

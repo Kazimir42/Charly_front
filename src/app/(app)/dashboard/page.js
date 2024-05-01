@@ -16,6 +16,8 @@ import CreateTransactionModal from '@/app/modals/CreateTransactionModal'
 import { useTransactionData } from '@/hooks/transactions'
 import { useAuth } from '@/hooks/auth'
 import { formatPercentage, formatPrice } from '@/lib/utils'
+import ProfitLossPrice from '@/components/ProfitLossPrice'
+import PercentageBubble from '@/components/PercentageBubble'
 
 const Dashboard = () => {
     const { user } = useAuth({
@@ -86,18 +88,28 @@ const Dashboard = () => {
                     },
                     {
                         name: 'Current Profit / Loss',
-                        value: formatPrice(
-                            data.stats.current_profit_loss
-                                .value_per_fiat_currencies[
-                                user.currency_symbol
-                            ],
-                            user.currency_symbol,
+                        value: (
+                            <ProfitLossPrice
+                                value={
+                                    data.stats.current_profit_loss
+                                        .value_per_fiat_currencies[
+                                        user.currency_symbol
+                                    ]
+                                }
+                                symbol={user.currency_symbol}
+                            />
                         ),
                     },
                     {
                         name: 'Current Profit / Loss by %',
-                        value: formatPercentage(
-                            data.stats.current_profit_loss_percentage.value,
+                        value: (
+                            <PercentageBubble
+                                className={''}
+                                value={
+                                    data.stats.current_profit_loss_percentage
+                                        .value
+                                }
+                            />
                         ),
                     },
                 ])

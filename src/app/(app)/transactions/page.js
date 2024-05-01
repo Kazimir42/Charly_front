@@ -315,7 +315,7 @@ const Transactions = () => {
                                 key={'from_quantity'}
                                 title={'Asset Out'}
                                 name={'from_quantity'}
-                                className={'text-right justify-end'}
+                                className={'ml-auto'}
                             />,
                             <HeaderTitle
                                 key={'to_quantity'}

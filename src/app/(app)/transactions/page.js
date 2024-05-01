@@ -280,8 +280,10 @@ const Transactions = () => {
         const queryParams = new URLSearchParams()
 
         for (const key in formData) {
-            if (formData[key]) {
-                queryParams.append(key, formData[key])
+            if (key !== 'page') {
+                if (formData[key]) {
+                    queryParams.append(key, formData[key])
+                }
             }
         }
 

@@ -50,19 +50,23 @@ const Dashboard = () => {
                 // TODO
                 setCardStats([
                     {
-                        name: 'Total invested',
+                        name: 'Total value invested',
                         value: 'TODO €',
                     },
                     {
-                        name: 'Total value',
+                        name: 'Total value sold',
                         value: 'TODO €',
                     },
                     {
-                        name: 'Profit / Loss',
+                        name: 'Current total value',
                         value: 'TODO €',
                     },
                     {
-                        name: 'Profit / Loss by %',
+                        name: 'Current Profit / Loss',
+                        value: 'TODO €',
+                    },
+                    {
+                        name: 'Current Profit / Loss by %',
                         value: 'TODO €',
                     },
                 ])

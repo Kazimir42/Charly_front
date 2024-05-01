@@ -23,15 +23,19 @@ const History = () => {
                 // TODO
                 setCardStats([
                     {
+                        name: 'Total value invested',
+                        value: 'TODO €',
+                    },
+                    {
                         name: 'Total value sold',
                         value: 'TODO €',
                     },
                     {
-                        name: 'Profit / Loss',
+                        name: 'Realized Profit / Loss',
                         value: 'TODO €',
                     },
                     {
-                        name: 'Profit / Loss by %',
+                        name: 'Realized Profit / Loss by %',
                         value: 'TODO €',
                     },
                 ])

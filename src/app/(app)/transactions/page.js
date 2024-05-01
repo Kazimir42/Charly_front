@@ -29,6 +29,8 @@ import { Select } from '@/components/Select'
 import { TransactionType } from '@/enums/TransactionType'
 import { useCurrencyData } from '@/hooks/currencies'
 import { useLocationData } from '@/hooks/locations'
+import { CloseIcon } from 'next/dist/client/components/react-dev-overlay/internal/icons/CloseIcon'
+import Link from 'next/link'
 
 const Transactions = () => {
     const { user } = useAuth({ middleware: 'auth' })
@@ -66,18 +68,35 @@ const Transactions = () => {
     const [locations, setLocations] = useState([])
 
     const [formData, setFormData] = useState({
-        searchFromDate: searchParams.get('searchFromDate'),
-        searchToDate: searchParams.get('searchToDate'),
-        searchType: searchParams.get('searchType'),
-        searchFromAsset: searchParams.get('searchFromAsset'),
-        searchToAsset: searchParams.get('searchToAsset'),
-        searchTotalPrice: searchParams.get('searchTotalPrice'),
-        searchUnitPrice: searchParams.get('searchUnitPrice'),
-        searchLocation: searchParams.get('searchLocation'),
-        page: searchParams.get('page'),
-        orderBy: searchParams.get('orderBy'),
-        orderDirection: searchParams.get('orderDirection'),
+        searchFromDate: '',
+        searchToDate: '',
+        searchType: '',
+        searchFromAsset: '',
+        searchToAsset: '',
+        searchTotalPrice: '',
+        searchUnitPrice: '',
+        searchLocation: '',
+        page: '',
+        orderBy: '',
+        orderDirection: '',
     })
+
+    useEffect(() => {
+        setFormData(prevState => ({
+            ...prevState,
+            searchFromDate: searchParams.get('searchFromDate'),
+            searchToDate: searchParams.get('searchToDate'),
+            searchType: searchParams.get('searchType'),
+            searchFromAsset: searchParams.get('searchFromAsset'),
+            searchToAsset: searchParams.get('searchToAsset'),
+            searchTotalPrice: searchParams.get('searchTotalPrice'),
+            searchUnitPrice: searchParams.get('searchUnitPrice'),
+            searchLocation: searchParams.get('searchLocation'),
+            page: searchParams.get('page'),
+            orderBy: searchParams.get('orderBy'),
+            orderDirection: searchParams.get('orderDirection'),
+        }))
+    }, [])
 
     useEffect(() => {
         refreshTransactions()
@@ -343,6 +362,7 @@ const Transactions = () => {
                         ]}
                         filter={[
                             <div
+                                key={'searchDate'}
                                 className={
                                     'flex flex-row gap-1 w-fit items-center'
                                 }>
@@ -365,6 +385,7 @@ const Transactions = () => {
                                 />
                             </div>,
                             <Select
+                                key={'searchType'}
                                 form={'filterForm'}
                                 className={'text-sm py-1.5'}
                                 name={'searchType'}
@@ -379,6 +400,7 @@ const Transactions = () => {
                                     SWAP: TransactionType.SWAP,
                                 }}></Select>,
                             <Select
+                                key={'searchFromAsset'}
                                 form={'filterForm'}
                                 className={
                                     'text-sm py-1.5 flex flex-row ml-auto'
@@ -394,6 +416,7 @@ const Transactions = () => {
                                     { '': '' },
                                 )}></Select>,
                             <Select
+                                key={'searchToAsset'}
                                 form={'filterForm'}
                                 className={'text-sm py-1.5'}
                                 name={'searchToAsset'}
@@ -407,6 +430,7 @@ const Transactions = () => {
                                     { '': '' },
                                 )}></Select>,
                             <Input
+                                key={'searchTotalPrice'}
                                 form={'filterForm'}
                                 type={'number'}
                                 className={'text-sm p-1.5'}
@@ -415,6 +439,7 @@ const Transactions = () => {
                                 onChange={handleFilterChange}
                             />,
                             <Input
+                                key={'searchUnitPrice'}
                                 form={'filterForm'}
                                 type={'number'}
                                 className={'text-sm p-1.5'}
@@ -423,6 +448,7 @@ const Transactions = () => {
                                 onChange={handleFilterChange}
                             />,
                             <Select
+                                key={'searchLocation'}
                                 form={'filterForm'}
                                 className={'text-sm py-1.5'}
                                 name={'searchLocation'}
@@ -436,9 +462,15 @@ const Transactions = () => {
                                     { '': '' },
                                 )}></Select>,
                             <form
+                                key={'filterForm'}
                                 id={'filterForm'}
-                                className={'flex flex-row justify-end'}
+                                className={'flex flex-row justify-end gap-1'}
                                 onSubmit={submitForm}>
+                                <Link
+                                    href={'/transactions'}
+                                    className="hover:text-gray-700 text-gray-500 p-1 duration-100 transition">
+                                    <CloseIcon className="h-6 w-6" />
+                                </Link>
                                 <button
                                     type={'submit'}
                                     className="hover:text-gray-700 text-gray-500 p-1 duration-100 transition">

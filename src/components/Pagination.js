@@ -44,32 +44,56 @@ const Pagination = ({ paginationData }) => {
                     <nav
                         className="isolate inline-flex -space-x-px rounded-md shadow-sm"
                         aria-label="Pagination">
-                        {paginationData.links.map((link, index) => (
-                            <Link
-                                key={index}
-                                href={
-                                    link.url ? '?' + link.url.split('?')[1] : ''
+                        {paginationData.links.map((link, index) => {
+                            let fullQuery = ''
+
+                            let pageQuery = link.url
+                                ? link.url.split('?')[1]
+                                : ''
+                            if (pageQuery) {
+                                pageQuery = '?' + pageQuery
+                            }
+
+                            if (pageQuery) {
+                                if (paginationData.current_query) {
+                                    fullQuery =
+                                        pageQuery +
+                                        '&' +
+                                        paginationData.current_query
+                                } else {
+                                    fullQuery = pageQuery
                                 }
-                                aria-current="page"
-                                className={
-                                    'relative z-10 inline-flex items-center px-4 py-2 text-sm font-semibold ' +
-                                    (link.active
-                                        ? 'bg-default-primary text-white'
-                                        : 'text-gray-900 hover:bg-gray-100 ring-1 ring-inset ring-gray-300 ') +
-                                    ' ' +
-                                    (index === 0 ? 'rounded-l-md' : '') +
-                                    ' ' +
-                                    (index === paginationData.links.length - 1
-                                        ? 'rounded-r-md'
-                                        : '')
-                                }>
-                                {index === 0
-                                    ? '<'
-                                    : index === paginationData.links.length - 1
-                                    ? '>'
-                                    : link.label}
-                            </Link>
-                        ))}
+                            } else {
+                                fullQuery = '?' + paginationData.current_query
+                            }
+
+                            return (
+                                <Link
+                                    key={index}
+                                    href={fullQuery}
+                                    aria-current="page"
+                                    className={
+                                        'relative z-10 inline-flex items-center px-4 py-2 text-sm font-semibold ' +
+                                        (link.active
+                                            ? 'bg-default-primary text-white'
+                                            : 'text-gray-900 hover:bg-gray-100 ring-1 ring-inset ring-gray-300 ') +
+                                        ' ' +
+                                        (index === 0 ? 'rounded-l-md' : '') +
+                                        ' ' +
+                                        (index ===
+                                        paginationData.links.length - 1
+                                            ? 'rounded-r-md'
+                                            : '')
+                                    }>
+                                    {index === 0
+                                        ? '<'
+                                        : index ===
+                                          paginationData.links.length - 1
+                                        ? '>'
+                                        : link.label}
+                                </Link>
+                            )
+                        })}
                     </nav>
                 </div>
             </div>

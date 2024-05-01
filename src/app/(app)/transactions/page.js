@@ -11,20 +11,29 @@ import EditTransactionModal from '@/app/modals/EditTransactionModal'
 import TransactionTypeBubble from '@/components/TransactionTypeBubble'
 import { formatDate, formatPrice } from '@/lib/utils'
 import {
-    ArrowDownIcon,
+    MagnifyingGlassIcon,
     PencilIcon,
     TrashIcon,
 } from '@heroicons/react/24/outline'
 import { useAuth } from '@/hooks/auth'
 import CurrencyIn from '@/components/CurrencyIn'
 import CurrencyOut from '@/components/CurrencyOut'
-import { useSearchParams } from 'next/navigation'
-import Link from 'next/link'
-import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/16/solid'
+import { useRouter, useSearchParams } from 'next/navigation'
+import {
+    ArrowRightIcon,
+    ChevronDownIcon,
+    ChevronUpIcon,
+} from '@heroicons/react/16/solid'
+import Input from '@/components/Input'
+import { Select } from '@/components/Select'
+import { TransactionType } from '@/enums/TransactionType'
+import { useCurrencyData } from '@/hooks/currencies'
+import { useLocationData } from '@/hooks/locations'
 
 const Transactions = () => {
     const { user } = useAuth({ middleware: 'auth' })
     const searchParams = useSearchParams()
+    const router = useRouter()
 
     const {
         getTransactions,
@@ -32,6 +41,10 @@ const Transactions = () => {
         updateTransaction,
         deleteTransaction,
     } = useTransactionData()
+
+    const { getCurrencies } = useCurrencyData()
+
+    const { getLocations } = useLocationData()
 
     const [
         transactionCreateModalIsOpen,
@@ -49,17 +62,33 @@ const Transactions = () => {
     const [paginationData, setPaginationData] = useState(null)
     const [formattedTransactions, setFormattedTransactions] = useState([])
     const [selectedTransaction, setSelectedTransaction] = useState(null)
+    const [currencies, setCurrencies] = useState([])
+    const [locations, setLocations] = useState([])
+
+    const [formData, setFormData] = useState({
+        searchFromDate: searchParams.get('searchFromDate'),
+        searchToDate: searchParams.get('searchToDate'),
+        searchType: searchParams.get('searchType'),
+        searchFromAsset: searchParams.get('searchFromAsset'),
+        searchToAsset: searchParams.get('searchToAsset'),
+        searchTotalPrice: searchParams.get('searchTotalPrice'),
+        searchUnitPrice: searchParams.get('searchUnitPrice'),
+        searchLocation: searchParams.get('searchLocation'),
+        page: searchParams.get('page'),
+        orderBy: searchParams.get('orderBy'),
+        orderDirection: searchParams.get('orderDirection'),
+    })
 
     useEffect(() => {
         refreshTransactions()
-    }, [
-        searchParams.get('page'),
-        searchParams.get('orderBy'),
-        searchParams.get('orderDirection'),
-    ])
+    }, [searchParams.toString()])
 
     function refreshTransactions() {
         let params = searchParams.size ? '?' + searchParams.toString() : ''
+
+        const paramsWithoutPage = new URLSearchParams(window.location.search)
+        paramsWithoutPage.delete('page')
+
         getTransactions(params).then(data => {
             if (data) {
                 setTransactions(data.data)
@@ -73,9 +102,12 @@ const Transactions = () => {
                     links: data.links,
                     prev_page_url: data.prev_page_url,
                     next_page_url: data.next_page_url,
+                    current_query: paramsWithoutPage.toString(),
                 })
             }
         })
+        getCurrencies().then(setCurrencies)
+        getLocations().then(setLocations)
     }
 
     useEffect(() => {
@@ -190,39 +222,70 @@ const Transactions = () => {
             .catch(() => {})
     }
 
-    function getOrderByLink(column) {
-        let pathname = window.location.pathname
-        let query = ''
-
-        query += '?page=' + (searchParams.get('page') ?? 1)
-
-        if (searchParams.get('orderDirection')) {
-            if (searchParams.get('orderDirection') === 'asc') {
-                query += '&orderDirection=desc'
-            } else {
-                query += '&orderDirection=asc'
-            }
-        } else {
-            query += '&orderDirection=desc'
-        }
-
-        query += '&orderBy=' + column
-
-        return pathname + query
-    }
-
     function OrderIndicator({ field }) {
-        let orderBy = searchParams.get('orderBy')
-        let orderDirection = searchParams.get('orderDirection')
-
-        if (orderBy === field) {
-            return orderDirection === 'desc' ? (
+        if (formData.orderBy === field) {
+            return formData.orderDirection === 'desc' ? (
                 <ChevronDownIcon className={'h-4 w-4'} />
             ) : (
                 <ChevronUpIcon className={'h-4 w-4'} />
             )
         }
         return null
+    }
+
+    function HeaderTitle({ title, name, className }) {
+        return (
+            <button
+                key={name}
+                onClick={() => submitFormWithOrder(name)}
+                className={
+                    'flex flex-row gap-1 items-center hover:font-bold  ' +
+                    className
+                }>
+                {title}
+                <OrderIndicator field={name} />
+            </button>
+        )
+    }
+
+    const handleFilterChange = e => {
+        const { name, value } = e.target
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: value,
+        }))
+    }
+
+    function submitFormWithOrder(name) {
+        formData.orderBy = name
+
+        if (formData.orderDirection) {
+            if (formData.orderDirection === 'asc') {
+                formData.orderDirection = 'desc'
+            } else {
+                formData.orderDirection = 'asc'
+            }
+        } else {
+            formData.orderDirection = 'desc'
+        }
+
+        submitForm()
+    }
+
+    function submitForm(e = null) {
+        if (e) {
+            e.preventDefault()
+        }
+
+        const queryParams = new URLSearchParams()
+
+        for (const key in formData) {
+            if (formData[key]) {
+                queryParams.append(key, formData[key])
+            }
+        }
+
+        router.push(`/transactions?${queryParams.toString()}`)
     }
 
     return (
@@ -238,70 +301,148 @@ const Transactions = () => {
                 <div className="flex flex-col gap-2">
                     <Table
                         header={[
-                            <Link
+                            <HeaderTitle
                                 key={'date'}
-                                href={getOrderByLink('date')}
-                                className={
-                                    'flex flex-row gap-1 items-center hover:font-bold'
-                                }>
-                                Date
-                                <OrderIndicator field="date" />
-                            </Link>,
-                            <Link
+                                title={'Date'}
+                                name={'date'}
+                            />,
+                            <HeaderTitle
                                 key={'type'}
-                                href={getOrderByLink('type')}
-                                className={
-                                    'flex flex-row gap-1 items-center hover:font-bold'
-                                }>
-                                Type
-                                <OrderIndicator field="type" />
-                            </Link>,
-                            <Link
+                                title={'Type'}
+                                name={'type'}
+                            />,
+                            <HeaderTitle
                                 key={'from_quantity'}
-                                href={getOrderByLink('from_quantity')}
-                                className={
-                                    'text-right justify-end flex flex-row gap-1 items-center hover:font-bold'
-                                }>
-                                Asset Out
-                                <OrderIndicator field="from_quantity" />
-                            </Link>,
-                            <Link
+                                title={'Asset Out'}
+                                name={'from_quantity'}
+                                className={'text-right justify-end'}
+                            />,
+                            <HeaderTitle
                                 key={'to_quantity'}
-                                href={getOrderByLink('to_quantity')}
-                                className={
-                                    'flex flex-row gap-1 items-center hover:font-bold'
-                                }>
-                                Asset In
-                                <OrderIndicator field="to_quantity" />
-                            </Link>,
-                            <Link
+                                title={'Asset In'}
+                                name={'to_quantity'}
+                            />,
+                            <HeaderTitle
                                 key={'total_price'}
-                                href={getOrderByLink('total_price')}
-                                className={
-                                    'flex flex-row gap-1 items-center hover:font-bold'
-                                }>
-                                Price
-                                <OrderIndicator field="total_price" />
-                            </Link>,
-                            <Link
+                                title={'Price'}
+                                name={'total_price'}
+                            />,
+                            <HeaderTitle
                                 key={'unit_price'}
-                                href={getOrderByLink('unit_price')}
-                                className={
-                                    'flex flex-row gap-1 items-center hover:font-bold'
-                                }>
-                                Unit price
-                                <OrderIndicator field="unit_price" />
-                            </Link>,
-                            <Link
+                                title={'Unit price'}
+                                name={'unit_price'}
+                            />,
+                            <HeaderTitle
                                 key={'location_id'}
-                                href={getOrderByLink('location_id')}
-                                className={
-                                    'flex flex-row gap-1 items-center hover:font-bold'
-                                }>
-                                Location
-                                <OrderIndicator field="location_id" />
-                            </Link>,
+                                title={'Location price'}
+                                name={'location_id'}
+                            />,
                             '',
+                        ]}
+                        filter={[
+                            <div
+                                className={
+                                    'flex flex-row gap-1 w-fit items-center'
+                                }>
+                                <Input
+                                    form={'filterForm'}
+                                    type={'datetime-local'}
+                                    className={'text-sm p-1.5 w-28'}
+                                    name={'searchFromDate'}
+                                    value={formData.searchFromDate}
+                                    onChange={handleFilterChange}
+                                />
+                                <ArrowRightIcon className={'h-4 w-4'} />
+                                <Input
+                                    form={'filterForm'}
+                                    type={'datetime-local'}
+                                    className={'text-sm p-1.5 w-28'}
+                                    name={'searchToDate'}
+                                    value={formData.searchToDate}
+                                    onChange={handleFilterChange}
+                                />
+                            </div>,
+                            <Select
+                                form={'filterForm'}
+                                className={'text-sm py-1.5'}
+                                name={'searchType'}
+                                value={formData.searchType}
+                                onChange={handleFilterChange}
+                                items={{
+                                    '': '',
+                                    BUY: TransactionType.BUY,
+                                    SELL: TransactionType.SELL,
+                                    RECEIVE: TransactionType.RECEIVE,
+                                    SEND: TransactionType.SEND,
+                                    SWAP: TransactionType.SWAP,
+                                }}></Select>,
+                            <Select
+                                form={'filterForm'}
+                                className={
+                                    'text-sm py-1.5 flex flex-row ml-auto'
+                                }
+                                name={'searchFromAsset'}
+                                value={formData.searchFromAsset}
+                                onChange={handleFilterChange}
+                                items={currencies?.reduce(
+                                    (accumulator, currency) => {
+                                        accumulator[currency.id] = currency.name
+                                        return accumulator
+                                    },
+                                    { '': '' },
+                                )}></Select>,
+                            <Select
+                                form={'filterForm'}
+                                className={'text-sm py-1.5'}
+                                name={'searchToAsset'}
+                                value={formData.searchToAsset}
+                                onChange={handleFilterChange}
+                                items={currencies?.reduce(
+                                    (accumulator, currency) => {
+                                        accumulator[currency.id] = currency.name
+                                        return accumulator
+                                    },
+                                    { '': '' },
+                                )}></Select>,
+                            <Input
+                                form={'filterForm'}
+                                type={'number'}
+                                className={'text-sm p-1.5'}
+                                name={'searchTotalPrice'}
+                                value={formData.searchTotalPrice}
+                                onChange={handleFilterChange}
+                            />,
+                            <Input
+                                form={'filterForm'}
+                                type={'number'}
+                                className={'text-sm p-1.5'}
+                                name={'searchUnitPrice'}
+                                value={formData.searchUnitPrice}
+                                onChange={handleFilterChange}
+                            />,
+                            <Select
+                                form={'filterForm'}
+                                className={'text-sm py-1.5'}
+                                name={'searchLocation'}
+                                value={formData.searchLocation}
+                                onChange={handleFilterChange}
+                                items={locations?.reduce(
+                                    (accumulator, location) => {
+                                        accumulator[location.id] = location.name
+                                        return accumulator
+                                    },
+                                    { '': '' },
+                                )}></Select>,
+                            <form
+                                id={'filterForm'}
+                                className={'flex flex-row justify-end'}
+                                onSubmit={submitForm}>
+                                <button
+                                    type={'submit'}
+                                    className="hover:text-gray-700 text-gray-500 p-1 duration-100 transition">
+                                    <MagnifyingGlassIcon className="h-6 w-6" />
+                                </button>
+                            </form>,
                         ]}
                         content={formattedTransactions}
                         paginationData={paginationData}

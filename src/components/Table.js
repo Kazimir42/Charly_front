@@ -1,7 +1,7 @@
 import React from 'react'
 import Pagination from '@/components/Pagination'
 
-const Table = ({ header, content, paginationData }) => {
+const Table = ({ header, filter, content, paginationData }) => {
     return (
         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
@@ -25,6 +25,26 @@ const Table = ({ header, content, paginationData }) => {
                                     </th>
                                 ))}
                             </tr>
+                            {filter ? (
+                                <tr>
+                                    {filter.map((item, index) => (
+                                        <th
+                                            key={index}
+                                            scope="col"
+                                            className={
+                                                'px-3 py-3.5 text-left text-sm font-semibold text-gray-900 ' +
+                                                (index === 0
+                                                    ? ' pl-5 '
+                                                    : index ===
+                                                      header.length - 1
+                                                    ? 'pr-5'
+                                                    : '')
+                                            }>
+                                            {item}
+                                        </th>
+                                    ))}
+                                </tr>
+                            ) : null}
                         </thead>
                         <tbody className="divide-y divide-gray-200 bg-white">
                             {content.map((lines, index) => (
@@ -47,7 +67,9 @@ const Table = ({ header, content, paginationData }) => {
                             ))}
                         </tbody>
                     </table>
-                    {paginationData ? <Pagination paginationData={paginationData} /> : null}
+                    {paginationData ? (
+                        <Pagination paginationData={paginationData} />
+                    ) : null}
                 </div>
             </div>
         </div>

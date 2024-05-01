@@ -3,11 +3,13 @@ import { toast } from 'react-toastify'
 
 export const useCurrencyData = () => {
     const getCurrencies = async params => {
-        let stringedParams = Object.entries(params).reduce((acc, param) => {
-            acc += (acc.length ? '&' : '?') + param[0] + '=' + param[1]
-            return acc
-        }, '')
-
+        let stringedParams = ''
+        if (params) {
+            stringedParams = Object.entries(params).reduce((acc, param) => {
+                acc += (acc.length ? '&' : '?') + param[0] + '=' + param[1]
+                return acc
+            }, '')
+        }
         return axios
             .get('/api/currencies' + stringedParams)
             .then(response => {

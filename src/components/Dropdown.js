@@ -52,7 +52,11 @@ const Dropdown = ({
 
                     <Transition
                         show={open}
-                        enter="transition ease-out duration-200"
+                        enter={
+                            openDirection === 'down'
+                                ? 'transition ease-out duration-200'
+                                : ''
+                        }
                         enterFrom={
                             // Todo : fix me
                             openDirection === 'down'

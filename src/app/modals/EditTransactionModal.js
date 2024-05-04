@@ -11,6 +11,7 @@ import In from '@/app/modals/TransactionParts/In'
 import Out from '@/app/modals/TransactionParts/Out'
 import Swap from '@/app/modals/TransactionParts/Swap'
 import { useTransactionLabelData } from '@/hooks/transactionLabels'
+import TransactionTypeBubble from '@/components/TransactionTypeBubble'
 
 const EditTransactionModal = ({
     transaction,
@@ -106,9 +107,11 @@ const EditTransactionModal = ({
             <form className={'flex flex-col gap-4'} onSubmit={submitForm}>
                 <div>
                     <h4 className={'mb-2'}>Type of transaction*</h4>
-                    <div className={'flex flex-row gap-4 justify-between'}>
-                        <div className={'flex flex-row gap-2'}>
-                            <Label htmlFor="in">In</Label>
+                    <div className={'flex flex-row gap-4'}>
+                        <div
+                            className={
+                                'flex flex-row gap-1 bg-gray-100 items-center pl-3 pr-2 py-1.5 rounded-full'
+                            }>
                             <Input
                                 id="in"
                                 type="radio"
@@ -120,10 +123,17 @@ const EditTransactionModal = ({
                                 required
                                 autoFocus
                             />
+                            <Label htmlFor="in" className={'cursor-pointer'}>
+                                <TransactionTypeBubble
+                                    type={TransactionType.IN}
+                                />
+                            </Label>
                         </div>
 
-                        <div className={'flex flex-row gap-2'}>
-                            <Label htmlFor="out">Out</Label>
+                        <div
+                            className={
+                                'flex flex-row gap-1 bg-gray-100 items-center pl-3 pr-2 py-1.5 rounded-full'
+                            }>
                             <Input
                                 id="out"
                                 type="radio"
@@ -135,10 +145,17 @@ const EditTransactionModal = ({
                                 required
                                 autoFocus
                             />
+                            <Label htmlFor="out" className={'cursor-pointer'}>
+                                <TransactionTypeBubble
+                                    type={TransactionType.OUT}
+                                />
+                            </Label>
                         </div>
 
-                        <div className={'flex flex-row gap-2'}>
-                            <Label htmlFor="swap">Swap</Label>
+                        <div
+                            className={
+                                'flex flex-row gap-1 bg-gray-100 items-center pl-3 pr-2 py-1.5 rounded-full'
+                            }>
                             <Input
                                 id="swap"
                                 type="radio"
@@ -150,6 +167,11 @@ const EditTransactionModal = ({
                                 required
                                 autoFocus
                             />
+                            <Label htmlFor="swap" className={'cursor-pointer'}>
+                                <TransactionTypeBubble
+                                    type={TransactionType.SWAP}
+                                />
+                            </Label>
                         </div>
                     </div>
                 </div>

@@ -105,6 +105,7 @@ const Dashboard = () => {
                         value: (
                             <PercentageBubble
                                 className={''}
+                                withFont={false}
                                 value={
                                     data.stats.current_profit_loss_percentage
                                         .value

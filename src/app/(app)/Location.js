@@ -141,20 +141,24 @@ const Location = ({
                                 </button>
                             }>
                             <DropdownButton
-                                onClick={() =>
-                                    openOrCloseLocationDeleteModal(location.id)
+                                onClick={e =>
+                                    openOrCloseLocationDeleteModal(
+                                        location.id,
+                                    ) + e.stopPropagation()
                                 }>
                                 Delete
                             </DropdownButton>
                             <DropdownButton
-                                onClick={() =>
-                                    openOrCloseLocationEditModal(location.id)
+                                onClick={e =>
+                                    openOrCloseLocationEditModal(location.id) +
+                                    e.stopPropagation()
                                 }>
                                 Edit
                             </DropdownButton>
                             <DropdownButton
-                                onClick={() =>
-                                    openNewTransactionModal(location.id)
+                                onClick={e =>
+                                    openNewTransactionModal(location.id) +
+                                    e.stopPropagation()
                                 }>
                                 New transaction
                             </DropdownButton>

@@ -7,7 +7,7 @@ const PercentageBubble = ({ className, value }) => {
             <span
                 className={
                     (className ?? '') +
-                    ' rounded-lg px-1  ' +
+                    ' rounded-full px-1  ' +
                     (value > 0
                         ? 'text-green-600 bg-green-100'
                         : value === 0

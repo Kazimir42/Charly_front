@@ -200,7 +200,7 @@ const Out = ({
             <div className={'flex flex-row gap-1 '}>
                 <Input
                     id="taxable"
-                    type="radio"
+                    type="checkbox"
                     name={'taxable'}
                     checked={taxable}
                     className=""

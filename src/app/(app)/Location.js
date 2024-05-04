@@ -172,7 +172,7 @@ const Location = ({
                     Quantity
                 </div>,
                 <div
-                    key={'Buy unit price'}
+                    key={'In unit price'}
                     className="inline-block w-[15%] text-right">
                     Buy unit price
                 </div>,

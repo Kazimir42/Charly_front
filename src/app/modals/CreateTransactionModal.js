@@ -3,16 +3,15 @@ import Modal from '@/components/Modal'
 import Input from '@/components/Input'
 import Label from '@/components/Label'
 import Button from '@/components/Button'
-import Buy from '@/app/modals/TransactionParts/Buy'
-import Sell from '@/app/modals/TransactionParts/Sell'
+import In from '@/app/modals/TransactionParts/In'
+import Out from '@/app/modals/TransactionParts/Out'
 import { useLocationData } from '@/hooks/locations'
 import { useCurrencyData } from '@/hooks/currencies'
 import { CurrencyType } from '@/enums/CurrencyType'
 import { TransactionType } from '@/enums/TransactionType'
 import { useAuth } from '@/hooks/auth'
 import Swap from '@/app/modals/TransactionParts/Swap'
-import Receive from '@/app/modals/TransactionParts/Receive'
-import Send from '@/app/modals/TransactionParts/Send'
+import TransactionTypeBubble from '@/components/TransactionTypeBubble'
 
 const CreateTransactionModal = ({
     setIsOpen,
@@ -37,6 +36,7 @@ const CreateTransactionModal = ({
     const [fromAddress, setFromAddress] = useState('')
     const [toAddress, setToAddress] = useState('')
     const [note, setNote] = useState('')
+    const [taxable, setTaxable] = useState(false)
 
     const [locations, setLocations] = useState([])
     const [fiatCurrencies, setFiatCurrencies] = useState([])
@@ -59,17 +59,13 @@ const CreateTransactionModal = ({
     }, [defaultLocation])
 
     useEffect(() => {
-        if (type === TransactionType.BUY) {
+        if (type === TransactionType.IN) {
             setFromCurrency(user.currency_id ?? 0)
             setToCurrency(0)
-        } else if (type === TransactionType.SELL) {
+        } else if (type === TransactionType.OUT) {
             setToCurrency(user.currency_id ?? 0)
             setFromCurrency(0)
-        } else if (
-            type === TransactionType.SWAP ||
-            type === TransactionType.RECEIVE ||
-            type === TransactionType.SEND
-        ) {
+        } else if (type === TransactionType.SWAP) {
             setToCurrency(0)
             setFromCurrency(0)
         }
@@ -90,6 +86,7 @@ const CreateTransactionModal = ({
             to_address: toAddress,
             from_address: fromAddress,
             note,
+            taxable,
         })
 
         openOrClose()
@@ -107,6 +104,7 @@ const CreateTransactionModal = ({
         setFromAddress('')
         setToAddress('')
         setNote('')
+        setTaxable(false)
         setIsOpen(!isOpen)
     }
 
@@ -119,77 +117,53 @@ const CreateTransactionModal = ({
             <form className={'flex flex-col gap-4'} onSubmit={submitForm}>
                 <div>
                     <h4 className={'mb-2'}>Type of transaction*</h4>
-                    <div className={'flex flex-row gap-4 justify-between'}>
-                        <div className={'flex flex-row gap-2'}>
-                            <Label htmlFor="buy" className={'cursor-pointer'}>
-                                Buy
-                            </Label>
+                    <div className={'flex flex-row gap-4'}>
+                        <div
+                            className={
+                                'flex flex-row gap-1 bg-gray-100 items-center pl-3 pr-2 py-1.5 rounded-full'
+                            }>
                             <Input
-                                id="buy"
+                                id="in"
                                 type="radio"
                                 name={'type'}
-                                value={TransactionType.BUY}
+                                value={TransactionType.IN}
                                 className="cursor-pointer"
                                 onChange={event => setType(event.target.value)}
                                 required
                                 autoFocus
                             />
+                            <Label htmlFor="in" className={'cursor-pointer'}>
+                                <TransactionTypeBubble
+                                    type={TransactionType.IN}
+                                />
+                            </Label>
                         </div>
 
-                        <div className={'flex flex-row gap-2'}>
-                            <Label htmlFor="sell" className={'cursor-pointer'}>
-                                Sell
-                            </Label>
+                        <div
+                            className={
+                                'flex flex-row gap-1 bg-gray-100 items-center pl-3 pr-2 py-1.5 rounded-full'
+                            }>
                             <Input
-                                id="sell"
+                                id="out"
                                 type="radio"
                                 name={'type'}
-                                value={TransactionType.SELL}
+                                value={TransactionType.OUT}
                                 className="cursor-pointer"
                                 onChange={event => setType(event.target.value)}
                                 required
                                 autoFocus
                             />
+                            <Label htmlFor="out" className={'cursor-pointer'}>
+                                <TransactionTypeBubble
+                                    type={TransactionType.OUT}
+                                />
+                            </Label>
                         </div>
 
-                        <div className={'flex flex-row gap-2'}>
-                            <Label
-                                htmlFor="receive"
-                                className={'cursor-pointer'}>
-                                Receive
-                            </Label>
-                            <Input
-                                id="receive"
-                                type="radio"
-                                name={'type'}
-                                value={TransactionType.RECEIVE}
-                                className="cursor-pointer"
-                                onChange={event => setType(event.target.value)}
-                                required
-                                autoFocus
-                            />
-                        </div>
-
-                        <div className={'flex flex-row gap-2'}>
-                            <Label htmlFor="send" className={'cursor-pointer'}>
-                                Send
-                            </Label>
-                            <Input
-                                id="send"
-                                type="radio"
-                                name={'type'}
-                                value={TransactionType.SEND}
-                                className="cursor-pointer"
-                                onChange={event => setType(event.target.value)}
-                                required
-                                autoFocus
-                            />
-                        </div>
-
-                        <div className={'flex flex-row gap-2'}>
-                            <Label htmlFor="swap" className={'cursor-pointer'}>
-                                Swap
-                            </Label>
+                        <div
+                            className={
+                                'flex flex-row gap-1 bg-gray-100 items-center pl-3 pr-2 py-1.5 rounded-full'
+                            }>
                             <Input
                                 id="swap"
                                 type="radio"
@@ -200,14 +174,19 @@ const CreateTransactionModal = ({
                                 required
                                 autoFocus
                             />
+                            <Label htmlFor="swap" className={'cursor-pointer'}>
+                                <TransactionTypeBubble
+                                    type={TransactionType.SWAP}
+                                />
+                            </Label>
                         </div>
                     </div>
                 </div>
 
                 <div>
                     <h4 className={'mb-2'}>Informations</h4>
-                    {type === TransactionType.BUY ? (
-                        <Buy
+                    {type === TransactionType.IN ? (
+                        <In
                             date={date}
                             setDate={setDate}
                             toCurrency={toCurrency}
@@ -232,8 +211,8 @@ const CreateTransactionModal = ({
                         />
                     ) : null}
 
-                    {type === TransactionType.SELL ? (
-                        <Sell
+                    {type === TransactionType.OUT ? (
+                        <Out
                             date={date}
                             setDate={setDate}
                             toCurrency={toCurrency}
@@ -255,6 +234,8 @@ const CreateTransactionModal = ({
                             locations={locations}
                             fiatCurrencies={fiatCurrencies}
                             cryptoCurrencies={cryptoCurrencies}
+                            taxable={taxable}
+                            setTaxable={setTaxable}
                         />
                     ) : null}
 
@@ -276,48 +257,6 @@ const CreateTransactionModal = ({
                             setHash={setHash}
                             toAddress={toAddress}
                             setToAddress={setToAddress}
-                            fromAddress={fromAddress}
-                            setFromAddress={setFromAddress}
-                            note={note}
-                            setNote={setNote}
-                            locations={locations}
-                            cryptoCurrencies={cryptoCurrencies}
-                        />
-                    ) : null}
-
-                    {type === TransactionType.RECEIVE ? (
-                        <Receive
-                            date={date}
-                            setDate={setDate}
-                            toCurrency={toCurrency}
-                            setToCurrency={setToCurrency}
-                            toQuantity={toQuantity}
-                            setToQuantity={setToQuantity}
-                            location={location}
-                            setLocation={setLocation}
-                            hash={hash}
-                            setHash={setHash}
-                            toAddress={toAddress}
-                            setToAddress={setToAddress}
-                            note={note}
-                            setNote={setNote}
-                            locations={locations}
-                            cryptoCurrencies={cryptoCurrencies}
-                        />
-                    ) : null}
-
-                    {type === TransactionType.SEND ? (
-                        <Send
-                            date={date}
-                            setDate={setDate}
-                            fromCurrency={fromCurrency}
-                            setFromCurrency={setFromCurrency}
-                            fromQuantity={fromQuantity}
-                            setFromQuantity={setFromQuantity}
-                            location={location}
-                            setLocation={setLocation}
-                            hash={hash}
-                            setHash={setHash}
                             fromAddress={fromAddress}
                             setFromAddress={setFromAddress}
                             note={note}

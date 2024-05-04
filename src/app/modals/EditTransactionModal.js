@@ -7,11 +7,9 @@ import { useLocationData } from '@/hooks/locations'
 import { useCurrencyData } from '@/hooks/currencies'
 import { CurrencyType } from '@/enums/CurrencyType'
 import { TransactionType } from '@/enums/TransactionType'
-import Buy from '@/app/modals/TransactionParts/Buy'
-import Sell from '@/app/modals/TransactionParts/Sell'
+import In from '@/app/modals/TransactionParts/In'
+import Out from '@/app/modals/TransactionParts/Out'
 import Swap from '@/app/modals/TransactionParts/Swap'
-import Send from '@/app/modals/TransactionParts/Send'
-import Receive from '@/app/modals/TransactionParts/Receive'
 
 const EditTransactionModal = ({
     transaction,
@@ -34,6 +32,7 @@ const EditTransactionModal = ({
     const [fromAddress, setFromAddress] = useState('')
     const [toAddress, setToAddress] = useState('')
     const [note, setNote] = useState('')
+    const [taxable, setTaxable] = useState(false)
 
     const [locations, setLocations] = useState([])
     const [fiatCurrencies, setFiatCurrencies] = useState([])
@@ -62,6 +61,7 @@ const EditTransactionModal = ({
         setFromAddress(transaction?.from_address ?? '')
         setToAddress(transaction?.to_address ?? '')
         setNote(transaction?.note ?? '')
+        setTaxable(transaction?.taxable ?? false)
     }, [transaction])
 
     const submitForm = async event => {
@@ -79,8 +79,13 @@ const EditTransactionModal = ({
             to_address: toAddress,
             from_address: fromAddress,
             note,
+            taxable,
         })
     }
+
+    useEffect(() => {
+        console.log(taxable)
+    }, [taxable])
 
     return (
         <Modal
@@ -93,13 +98,13 @@ const EditTransactionModal = ({
                     <h4 className={'mb-2'}>Type of transaction*</h4>
                     <div className={'flex flex-row gap-4 justify-between'}>
                         <div className={'flex flex-row gap-2'}>
-                            <Label htmlFor="buy">Buy</Label>
+                            <Label htmlFor="in">In</Label>
                             <Input
-                                id="buy"
+                                id="in"
                                 type="radio"
                                 name={'type'}
-                                value={TransactionType.BUY}
-                                checked={TransactionType.BUY === type}
+                                value={TransactionType.IN}
+                                checked={TransactionType.IN === type}
                                 className=""
                                 onChange={event => setType(event.target.value)}
                                 required
@@ -108,43 +113,13 @@ const EditTransactionModal = ({
                         </div>
 
                         <div className={'flex flex-row gap-2'}>
-                            <Label htmlFor="sell">Sell</Label>
+                            <Label htmlFor="out">Out</Label>
                             <Input
-                                id="sell"
+                                id="out"
                                 type="radio"
                                 name={'type'}
-                                value={TransactionType.SELL}
-                                checked={TransactionType.SELL === type}
-                                className=""
-                                onChange={event => setType(event.target.value)}
-                                required
-                                autoFocus
-                            />
-                        </div>
-
-                        <div className={'flex flex-row gap-2'}>
-                            <Label htmlFor="receive">Receive</Label>
-                            <Input
-                                id="receive"
-                                type="radio"
-                                name={'type'}
-                                value={TransactionType.RECEIVE}
-                                checked={TransactionType.RECEIVE === type}
-                                className=""
-                                onChange={event => setType(event.target.value)}
-                                required
-                                autoFocus
-                            />
-                        </div>
-
-                        <div className={'flex flex-row gap-2'}>
-                            <Label htmlFor="send">Send</Label>
-                            <Input
-                                id="send"
-                                type="radio"
-                                name={'type'}
-                                value={TransactionType.SEND}
-                                checked={TransactionType.SEND === type}
+                                value={TransactionType.OUT}
+                                checked={TransactionType.OUT === type}
                                 className=""
                                 onChange={event => setType(event.target.value)}
                                 required
@@ -171,8 +146,8 @@ const EditTransactionModal = ({
 
                 <div>
                     <h4 className={'mb-2'}>Informations</h4>
-                    {type === TransactionType.BUY ? (
-                        <Buy
+                    {type === TransactionType.IN ? (
+                        <In
                             date={date}
                             setDate={setDate}
                             toCurrency={toCurrency}
@@ -197,8 +172,8 @@ const EditTransactionModal = ({
                         />
                     ) : null}
 
-                    {type === TransactionType.SELL ? (
-                        <Sell
+                    {type === TransactionType.OUT ? (
+                        <Out
                             date={date}
                             setDate={setDate}
                             toCurrency={toCurrency}
@@ -220,6 +195,8 @@ const EditTransactionModal = ({
                             locations={locations}
                             fiatCurrencies={fiatCurrencies}
                             cryptoCurrencies={cryptoCurrencies}
+                            taxable={taxable}
+                            setTaxable={setTaxable}
                         />
                     ) : null}
 
@@ -241,48 +218,6 @@ const EditTransactionModal = ({
                             setHash={setHash}
                             toAddress={toAddress}
                             setToAddress={setToAddress}
-                            fromAddress={fromAddress}
-                            setFromAddress={setFromAddress}
-                            note={note}
-                            setNote={setNote}
-                            locations={locations}
-                            cryptoCurrencies={cryptoCurrencies}
-                        />
-                    ) : null}
-
-                    {type === TransactionType.RECEIVE ? (
-                        <Receive
-                            date={date}
-                            setDate={setDate}
-                            toCurrency={toCurrency}
-                            setToCurrency={setToCurrency}
-                            toQuantity={toQuantity}
-                            setToQuantity={setToQuantity}
-                            location={location}
-                            setLocation={setLocation}
-                            hash={hash}
-                            setHash={setHash}
-                            toAddress={toAddress}
-                            setToAddress={setToAddress}
-                            note={note}
-                            setNote={setNote}
-                            locations={locations}
-                            cryptoCurrencies={cryptoCurrencies}
-                        />
-                    ) : null}
-
-                    {type === TransactionType.SEND ? (
-                        <Send
-                            date={date}
-                            setDate={setDate}
-                            fromCurrency={fromCurrency}
-                            setFromCurrency={setFromCurrency}
-                            fromQuantity={fromQuantity}
-                            setFromQuantity={setFromQuantity}
-                            location={location}
-                            setLocation={setLocation}
-                            hash={hash}
-                            setHash={setHash}
                             fromAddress={fromAddress}
                             setFromAddress={setFromAddress}
                             note={note}

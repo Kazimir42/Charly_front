@@ -74,7 +74,7 @@ const SoldCrypto = ({ cryptocurrency }) => {
                     Quantity sold
                 </div>,
                 <div
-                    key={'Buy unit price'}
+                    key={'In unit price'}
                     className="inline-block w-[15%] text-right">
                     Sold unit price
                 </div>,

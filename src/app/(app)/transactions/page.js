@@ -393,10 +393,8 @@ const Transactions = () => {
                                 onChange={handleFilterChange}
                                 items={{
                                     '': '',
-                                    BUY: TransactionType.BUY,
-                                    SELL: TransactionType.SELL,
-                                    RECEIVE: TransactionType.RECEIVE,
-                                    SEND: TransactionType.SEND,
+                                    IN: TransactionType.IN,
+                                    OUT: TransactionType.OUT,
                                     SWAP: TransactionType.SWAP,
                                 }}></Select>,
                             <Select

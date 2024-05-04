@@ -5,7 +5,7 @@ import { Select } from '@/components/Select'
 import { ArrowDownIcon } from '@heroicons/react/24/outline'
 import Textarea from '@/components/Textarea'
 
-const Sell = ({
+const In = ({
     date,
     setDate,
     toCurrency,
@@ -20,8 +20,8 @@ const Sell = ({
     setLocation,
     hash,
     setHash,
-    fromAddress,
-    setFromAddress,
+    toAddress,
+    setToAddress,
     note,
     setNote,
     locations,
@@ -45,13 +45,13 @@ const Sell = ({
             </div>
             <div className={'grid grid-cols-2 gap-2'}>
                 <div>
-                    <Label htmlFor="from_currency">Asset Sold*</Label>
+                    <Label htmlFor="from_currency">Asset Spent</Label>
                     <Select
                         id="from_currency"
                         name="from_currency"
                         items={{
                             0: 'Choose an asset',
-                            ...cryptoCurrencies.reduce((acc, fiatCurrency) => {
+                            ...fiatCurrencies.reduce((acc, fiatCurrency) => {
                                 acc[fiatCurrency.id] = fiatCurrency.name
                                 return acc
                             }, {}),
@@ -59,12 +59,11 @@ const Sell = ({
                         className="block w-full"
                         value={fromCurrency}
                         onChange={event => setFromCurrency(event.target.value)}
-                        required
                         autoFocus
                     />
                 </div>
                 <div>
-                    <Label htmlFor="from_quantity">Quantity Sold*</Label>
+                    <Label htmlFor="from_quantity">Quantity Spent</Label>
                     <Input
                         id="from_quantity"
                         name="from_quantity"
@@ -74,7 +73,6 @@ const Sell = ({
                         value={fromQuantity}
                         className="block w-full"
                         onChange={event => setFromQuantity(event.target.value)}
-                        required
                         autoFocus
                     />
                 </div>
@@ -85,16 +83,19 @@ const Sell = ({
             />
             <div className={'grid grid-cols-2 gap-2'}>
                 <div>
-                    <Label htmlFor="to_currency">Asset Received*</Label>
+                    <Label htmlFor="to_currency">Asset Bought*</Label>
                     <Select
                         id="to_currency"
                         name="to_currency"
                         items={{
                             0: 'Choose an asset',
-                            ...fiatCurrencies.reduce((acc, cryptoCurrency) => {
-                                acc[cryptoCurrency.id] = cryptoCurrency.name
-                                return acc
-                            }, {}),
+                            ...cryptoCurrencies.reduce(
+                                (acc, cryptoCurrency) => {
+                                    acc[cryptoCurrency.id] = cryptoCurrency.name
+                                    return acc
+                                },
+                                {},
+                            ),
                         }}
                         className="block w-full"
                         value={toCurrency}
@@ -104,7 +105,7 @@ const Sell = ({
                     />
                 </div>
                 <div>
-                    <Label htmlFor="to_quantity">Quantity Received*</Label>
+                    <Label htmlFor="to_quantity">Quantity Bought*</Label>
                     <Input
                         id="to_quantity"
                         name="to_quantity"
@@ -152,14 +153,14 @@ const Sell = ({
                     />
                 </div>
                 <div>
-                    <Label htmlFor="from_address">Departure address</Label>
+                    <Label htmlFor="to_address">Reception address</Label>
                     <Input
-                        id="from_address"
-                        name="from_address"
+                        id="to_address"
+                        name="to_address"
                         type="text"
-                        value={fromAddress}
+                        value={toAddress}
                         className="block w-full"
-                        onChange={event => setFromAddress(event.target.value)}
+                        onChange={event => setToAddress(event.target.value)}
                         autoFocus
                     />
                 </div>
@@ -177,4 +178,4 @@ const Sell = ({
     )
 }
 
-export default Sell
+export default In

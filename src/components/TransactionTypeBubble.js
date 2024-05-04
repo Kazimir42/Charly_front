@@ -1,31 +1,28 @@
 import React from 'react'
 import { TransactionType } from '@/enums/TransactionType'
+import { ArrowDownTrayIcon, ArrowPathRoundedSquareIcon, ArrowUpTrayIcon } from '@heroicons/react/16/solid'
 
 const TransactionTypeBubble = ({ type }) => {
     let typeComponents = {
-        [TransactionType.BUY]: (
-            <TemplateBubble className={'text-green-600 bg-green-100'}>
-                BUY
+        [TransactionType.IN]: (
+            <TemplateBubble
+                className={'flex flex-row gap-1 text-center items-center'}>
+                <ArrowDownTrayIcon className={'h-6 w-6'} />
+                <p className={'font-black'}>In</p>
             </TemplateBubble>
         ),
-        [TransactionType.SELL]: (
-            <TemplateBubble className={'text-red-600 bg-red-100'}>
-                SELL
-            </TemplateBubble>
-        ),
-        [TransactionType.RECEIVE]: (
-            <TemplateBubble className={'text-blue-600 bg-blue-100'}>
-                RECEIVE
-            </TemplateBubble>
-        ),
-        [TransactionType.SEND]: (
-            <TemplateBubble className={'text-orange-600 bg-orange-100'}>
-                SEND
+        [TransactionType.OUT]: (
+            <TemplateBubble
+                className={'flex flex-row gap-1 text-center items-center'}>
+                <ArrowUpTrayIcon className={'h-6 w-6'} />
+                <p className={'font-black'}>Out</p>
             </TemplateBubble>
         ),
         [TransactionType.SWAP]: (
-            <TemplateBubble className={'text-purple-600 bg-purple-100'}>
-                SWAP
+            <TemplateBubble
+                className={'flex flex-row gap-1 text-center items-center'}>
+                <ArrowPathRoundedSquareIcon className={'h-6 w-6'} />
+                <p className={'font-black'}>Swap</p>
             </TemplateBubble>
         ),
     }

@@ -10,10 +10,7 @@ import DeleteModal from '@/app/modals/DeleteModal'
 import EditTransactionModal from '@/app/modals/EditTransactionModal'
 import TransactionTypeBubble from '@/components/TransactionTypeBubble'
 import { formatDate, formatPrice } from '@/lib/utils'
-import {
-    PencilIcon,
-    TrashIcon,
-} from '@heroicons/react/24/outline'
+import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline'
 import { useAuth } from '@/hooks/auth'
 import CurrencyIn from '@/components/CurrencyIn'
 import CurrencyOut from '@/components/CurrencyOut'
@@ -67,7 +64,7 @@ const Transactions = () => {
     const [searchTotalPrice, setSearchTotalPrice] = useState('')
     const [searchUnitPrice, setSearchUnitPrice] = useState('')
     const [searchLocation, setSearchLocation] = useState('')
-    const [page, setPage] = useState(1)
+    const [page, setPage] = useState('')
     const [orderBy, setOrderBy] = useState('')
     const [orderDirection, setOrderDirection] = useState('')
 
@@ -241,47 +238,68 @@ const Transactions = () => {
     }
 
     function submitFormWithOrder(name) {
+        let tempData = {
+            orderBy: name,
+        }
+
         setOrderBy(name)
 
         if (orderDirection) {
             if (orderDirection === 'asc') {
                 setOrderDirection('desc')
+                tempData.orderDirection = 'desc'
             } else {
                 setOrderDirection('asc')
+                tempData.orderDirection = 'asc'
             }
         } else {
             setOrderDirection('asc')
+            tempData.orderDirection = 'asc'
         }
 
-        submitForm()
+        submitForm(null, tempData)
     }
 
-    function submitForm(event = null) {
-        if (event) {
-            event.preventDefault()
-        }
-
-        const searchParams = {
-            orderBy,
-            orderDirection,
-            searchFromDate,
-            searchToDate,
-            searchType,
-            searchFromAsset,
-            searchToAsset,
-            searchTotalPrice,
-            searchUnitPrice,
-            searchLocation,
+    function submitForm(e = null, tempData = {}) {
+        if (e) {
+            e.preventDefault()
         }
 
         const queryParams = new URLSearchParams()
 
-        // Append only non-empty parameters to the queryParams
-        Object.entries(searchParams).forEach(([key, value]) => {
-            if (value) {
-                queryParams.append(key, value)
-            }
-        })
+        if (tempData?.orderBy || orderBy) {
+            queryParams.append('orderBy', tempData?.orderBy ?? orderBy)
+        }
+        if (tempData?.orderDirection || orderDirection) {
+            queryParams.append(
+                'orderDirection',
+                tempData?.orderDirection ?? orderDirection,
+            )
+        }
+        if (searchFromDate) {
+            queryParams.append('searchFromDate', searchFromDate)
+        }
+        if (searchToDate) {
+            queryParams.append('searchToDate', searchToDate)
+        }
+        if (searchType) {
+            queryParams.append('searchType', searchType)
+        }
+        if (searchFromAsset) {
+            queryParams.append('searchFromAsset', searchFromAsset)
+        }
+        if (searchToAsset) {
+            queryParams.append('searchToAsset', searchToAsset)
+        }
+        if (searchTotalPrice) {
+            queryParams.append('searchTotalPrice', searchTotalPrice)
+        }
+        if (searchUnitPrice) {
+            queryParams.append('searchUnitPrice', searchUnitPrice)
+        }
+        if (searchLocation) {
+            queryParams.append('searchLocation', searchLocation)
+        }
 
         router.push(`/transactions?${queryParams.toString()}`)
     }

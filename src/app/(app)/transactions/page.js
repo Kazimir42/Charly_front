@@ -31,6 +31,7 @@ import { useCurrencyData } from '@/hooks/currencies'
 import { useLocationData } from '@/hooks/locations'
 import { CloseIcon } from 'next/dist/client/components/react-dev-overlay/internal/icons/CloseIcon'
 import Link from 'next/link'
+import TransactionLabelBubble from '@/components/TransactionLabelBubble'
 
 const Transactions = () => {
     const { user } = useAuth({ middleware: 'auth' })
@@ -146,7 +147,16 @@ const Transactions = () => {
 
             return [
                 formatDate(line.date, true, 'fr-FR'),
-                <TransactionTypeBubble type={line.type} />,
+                <div className={'flex flex-row gap-1 items-center'}>
+                    <TransactionTypeBubble type={line.type} />
+                    {line?.transaction_label_id ? (
+                        <TransactionLabelBubble
+                            name={line?.label?.name ?? ''}
+                        />
+                    ) : (
+                        ''
+                    )}
+                </div>,
                 currencyOut.symbol ? (
                     <CurrencyOut
                         className={'ml-auto'}

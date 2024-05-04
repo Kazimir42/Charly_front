@@ -12,6 +12,7 @@ import { TransactionType } from '@/enums/TransactionType'
 import { useAuth } from '@/hooks/auth'
 import Swap from '@/app/modals/TransactionParts/Swap'
 import TransactionTypeBubble from '@/components/TransactionTypeBubble'
+import { useTransactionLabelData } from '@/hooks/transactionLabels'
 
 const CreateTransactionModal = ({
     setIsOpen,
@@ -21,11 +22,13 @@ const CreateTransactionModal = ({
 }) => {
     const { getLocations } = useLocationData()
     const { getCurrencies } = useCurrencyData()
+    const { getTransactionLabels } = useTransactionLabelData()
     const { user } = useAuth({
         middleware: 'auth',
     })
 
     const [type, setType] = useState('')
+    const [transactionLabel, setTransactionLabel] = useState(0)
     const [date, setDate] = useState('')
     const [toCurrency, setToCurrency] = useState(0)
     const [toQuantity, setToQuantity] = useState(0)
@@ -41,6 +44,8 @@ const CreateTransactionModal = ({
     const [locations, setLocations] = useState([])
     const [fiatCurrencies, setFiatCurrencies] = useState([])
     const [cryptoCurrencies, setCryptoCurrencies] = useState([])
+    const [transactionLabelsIn, setTransactionLabelsIn] = useState([])
+    const [transactionLabelsOut, setTransactionLabelsOut] = useState([])
 
     useEffect(() => {
         if (isOpen) {
@@ -48,6 +53,12 @@ const CreateTransactionModal = ({
             getCurrencies({ type: CurrencyType.FIAT }).then(setFiatCurrencies)
             getCurrencies({ type: CurrencyType.CRYPTO }).then(
                 setCryptoCurrencies,
+            )
+            getTransactionLabels({ type: TransactionType.IN }).then(
+                setTransactionLabelsIn,
+            )
+            getTransactionLabels({ type: TransactionType.OUT }).then(
+                setTransactionLabelsOut,
             )
         }
     }, [isOpen])
@@ -77,6 +88,8 @@ const CreateTransactionModal = ({
         createTransaction({
             type,
             date,
+            transaction_label_id:
+                transactionLabel > 0 ? transactionLabel : null,
             from_currency_id: fromCurrency,
             from_quantity: fromQuantity,
             to_currency_id: toCurrency,
@@ -95,6 +108,7 @@ const CreateTransactionModal = ({
     function openOrClose() {
         setType(null)
         setDate('')
+        setTransactionLabel(0)
         setToCurrency(0)
         setToQuantity(0)
         setFromCurrency(0)
@@ -189,6 +203,8 @@ const CreateTransactionModal = ({
                         <In
                             date={date}
                             setDate={setDate}
+                            transactionLabel={transactionLabel}
+                            setTransactionLabel={setTransactionLabel}
                             toCurrency={toCurrency}
                             setToCurrency={setToCurrency}
                             toQuantity={toQuantity}
@@ -208,6 +224,7 @@ const CreateTransactionModal = ({
                             locations={locations}
                             fiatCurrencies={fiatCurrencies}
                             cryptoCurrencies={cryptoCurrencies}
+                            transactionLabels={transactionLabelsIn}
                         />
                     ) : null}
 
@@ -215,6 +232,8 @@ const CreateTransactionModal = ({
                         <Out
                             date={date}
                             setDate={setDate}
+                            transactionLabel={transactionLabel}
+                            setTransactionLabel={setTransactionLabel}
                             toCurrency={toCurrency}
                             setToCurrency={setToCurrency}
                             toQuantity={toQuantity}
@@ -234,6 +253,7 @@ const CreateTransactionModal = ({
                             locations={locations}
                             fiatCurrencies={fiatCurrencies}
                             cryptoCurrencies={cryptoCurrencies}
+                            transactionLabels={transactionLabelsOut}
                             taxable={taxable}
                             setTaxable={setTaxable}
                         />

@@ -27,6 +27,9 @@ const In = ({
     locations,
     fiatCurrencies,
     cryptoCurrencies,
+    transactionLabels,
+    transactionLabel,
+    setTransactionLabel,
 }) => {
     return (
         <div className={'flex flex-col gap-2'}>
@@ -43,9 +46,30 @@ const In = ({
                     autoFocus
                 />
             </div>
+            <div>
+                <Label htmlFor="location">Type</Label>
+                <Select
+                    id="transaction_type"
+                    name="transaction_type"
+                    items={{
+                        0: 'Choose a type',
+                        ...transactionLabels.reduce((acc, transactionLabel) => {
+                            acc[transactionLabel.id] =
+                                transactionLabel.name +
+                                ': ' +
+                                transactionLabel.description
+                            return acc
+                        }, {}),
+                    }}
+                    className="block w-full"
+                    value={transactionLabel}
+                    onChange={event => setTransactionLabel(event.target.value)}
+                    autoFocus
+                />
+            </div>
             <div className={'grid grid-cols-2 gap-2'}>
                 <div>
-                    <Label htmlFor="from_currency">Asset Spent</Label>
+                    <Label htmlFor="from_currency">Asset Sent</Label>
                     <Select
                         id="from_currency"
                         name="from_currency"
@@ -63,7 +87,7 @@ const In = ({
                     />
                 </div>
                 <div>
-                    <Label htmlFor="from_quantity">Quantity Spent</Label>
+                    <Label htmlFor="from_quantity">Quantity Sent</Label>
                     <Input
                         id="from_quantity"
                         name="from_quantity"
@@ -83,7 +107,7 @@ const In = ({
             />
             <div className={'grid grid-cols-2 gap-2'}>
                 <div>
-                    <Label htmlFor="to_currency">Asset Bought*</Label>
+                    <Label htmlFor="to_currency">Asset Receive*</Label>
                     <Select
                         id="to_currency"
                         name="to_currency"
@@ -105,7 +129,7 @@ const In = ({
                     />
                 </div>
                 <div>
-                    <Label htmlFor="to_quantity">Quantity Bought*</Label>
+                    <Label htmlFor="to_quantity">Quantity Receive*</Label>
                     <Input
                         id="to_quantity"
                         name="to_quantity"

@@ -29,6 +29,9 @@ const Out = ({
     cryptoCurrencies,
     taxable,
     setTaxable,
+    transactionLabels,
+    transactionLabel,
+    setTransactionLabel,
 }) => {
     return (
         <div className={'flex flex-col gap-2'}>
@@ -45,9 +48,30 @@ const Out = ({
                     autoFocus
                 />
             </div>
+            <div>
+                <Label htmlFor="location">Type</Label>
+                <Select
+                    id="transaction_type"
+                    name="transaction_type"
+                    items={{
+                        0: 'Choose a type',
+                        ...transactionLabels.reduce((acc, transactionLabel) => {
+                            acc[transactionLabel.id] =
+                                transactionLabel.name +
+                                ': ' +
+                                transactionLabel.description
+                            return acc
+                        }, {}),
+                    }}
+                    className="block w-full"
+                    value={transactionLabel}
+                    onChange={event => setTransactionLabel(event.target.value)}
+                    autoFocus
+                />
+            </div>
             <div className={'grid grid-cols-2 gap-2'}>
                 <div>
-                    <Label htmlFor="from_currency">Asset Sold*</Label>
+                    <Label htmlFor="from_currency">Asset Sent*</Label>
                     <Select
                         id="from_currency"
                         name="from_currency"
@@ -66,7 +90,7 @@ const Out = ({
                     />
                 </div>
                 <div>
-                    <Label htmlFor="from_quantity">Quantity Sold*</Label>
+                    <Label htmlFor="from_quantity">Quantity Sent*</Label>
                     <Input
                         id="from_quantity"
                         name="from_quantity"

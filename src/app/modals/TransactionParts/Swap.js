@@ -46,7 +46,7 @@ const Swap = ({
             </div>
             <div className={'grid grid-cols-2 gap-2'}>
                 <div>
-                    <Label htmlFor="from_currency">Asset From*</Label>
+                    <Label htmlFor="from_currency">Asset Sent*</Label>
                     <Select
                         id="from_currency"
                         name="from_currency"
@@ -65,7 +65,7 @@ const Swap = ({
                     />
                 </div>
                 <div>
-                    <Label htmlFor="from_quantity">Quantity From*</Label>
+                    <Label htmlFor="from_quantity">Quantity Sent*</Label>
                     <Input
                         id="from_quantity"
                         name="from_quantity"
@@ -86,7 +86,7 @@ const Swap = ({
             />
             <div className={'grid grid-cols-2 gap-2'}>
                 <div>
-                    <Label htmlFor="to_currency">Asset To*</Label>
+                    <Label htmlFor="to_currency">Asset Receive*</Label>
                     <Select
                         id="to_currency"
                         name="to_currency"
@@ -108,7 +108,7 @@ const Swap = ({
                     />
                 </div>
                 <div>
-                    <Label htmlFor="to_quantity">Quantity To*</Label>
+                    <Label htmlFor="to_quantity">Quantity Receive*</Label>
                     <Input
                         id="to_quantity"
                         name="to_quantity"

@@ -10,6 +10,7 @@ import { TransactionType } from '@/enums/TransactionType'
 import In from '@/app/modals/TransactionParts/In'
 import Out from '@/app/modals/TransactionParts/Out'
 import Swap from '@/app/modals/TransactionParts/Swap'
+import { useTransactionLabelData } from '@/hooks/transactionLabels'
 
 const EditTransactionModal = ({
     transaction,
@@ -19,8 +20,10 @@ const EditTransactionModal = ({
 }) => {
     const { getLocations } = useLocationData()
     const { getCurrencies } = useCurrencyData()
+    const { getTransactionLabels } = useTransactionLabelData()
 
     const [id, setId] = useState('')
+    const [transactionLabel, setTransactionLabel] = useState(0)
     const [type, setType] = useState('')
     const [date, setDate] = useState('')
     const [toCurrency, setToCurrency] = useState(0)
@@ -37,6 +40,8 @@ const EditTransactionModal = ({
     const [locations, setLocations] = useState([])
     const [fiatCurrencies, setFiatCurrencies] = useState([])
     const [cryptoCurrencies, setCryptoCurrencies] = useState([])
+    const [transactionLabelsIn, setTransactionLabelsIn] = useState([])
+    const [transactionLabelsOut, setTransactionLabelsOut] = useState([])
 
     useEffect(() => {
         if (isOpen) {
@@ -45,12 +50,19 @@ const EditTransactionModal = ({
             getCurrencies({ type: CurrencyType.CRYPTO }).then(
                 setCryptoCurrencies,
             )
+            getTransactionLabels({ type: TransactionType.IN }).then(
+                setTransactionLabelsIn,
+            )
+            getTransactionLabels({ type: TransactionType.OUT }).then(
+                setTransactionLabelsOut,
+            )
         }
     }, [isOpen])
 
     useEffect(() => {
         setId(transaction?.id ?? '')
         setType(transaction?.type ?? '')
+        setTransactionLabel(transaction?.transaction_label_id ?? 0)
         setDate(transaction?.date ?? '')
         setToCurrency(transaction?.to_currency_id ?? 0)
         setToQuantity(transaction?.to_quantity ?? 0)
@@ -70,6 +82,8 @@ const EditTransactionModal = ({
         updateTransaction(id, {
             type,
             date,
+            transaction_label_id:
+                transactionLabel > 0 ? transactionLabel : null,
             from_currency_id: fromCurrency,
             from_quantity: fromQuantity,
             to_currency_id: toCurrency,
@@ -82,10 +96,6 @@ const EditTransactionModal = ({
             taxable,
         })
     }
-
-    useEffect(() => {
-        console.log(taxable)
-    }, [taxable])
 
     return (
         <Modal
@@ -150,6 +160,8 @@ const EditTransactionModal = ({
                         <In
                             date={date}
                             setDate={setDate}
+                            transactionLabel={transactionLabel}
+                            setTransactionLabel={setTransactionLabel}
                             toCurrency={toCurrency}
                             setToCurrency={setToCurrency}
                             toQuantity={toQuantity}
@@ -169,6 +181,7 @@ const EditTransactionModal = ({
                             locations={locations}
                             fiatCurrencies={fiatCurrencies}
                             cryptoCurrencies={cryptoCurrencies}
+                            transactionLabels={transactionLabelsIn}
                         />
                     ) : null}
 
@@ -176,6 +189,8 @@ const EditTransactionModal = ({
                         <Out
                             date={date}
                             setDate={setDate}
+                            transactionLabel={transactionLabel}
+                            setTransactionLabel={setTransactionLabel}
                             toCurrency={toCurrency}
                             setToCurrency={setToCurrency}
                             toQuantity={toQuantity}
@@ -195,6 +210,7 @@ const EditTransactionModal = ({
                             locations={locations}
                             fiatCurrencies={fiatCurrencies}
                             cryptoCurrencies={cryptoCurrencies}
+                            transactionLabels={transactionLabelsOut}
                             taxable={taxable}
                             setTaxable={setTaxable}
                         />

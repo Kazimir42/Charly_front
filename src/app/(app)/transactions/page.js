@@ -132,14 +132,10 @@ const Transactions = () => {
                 <div
                     key={'type'}
                     className={'flex flex-row gap-1 items-center'}>
-                    <TransactionTypeBubble type={line.type} />
-                    {line?.transaction_label_id ? (
-                        <TransactionLabelBubble
-                            name={line?.label?.name ?? ''}
-                        />
-                    ) : (
-                        ''
-                    )}
+                    <TransactionTypeBubble
+                        type={line.type}
+                        label={line?.label}
+                    />
                 </div>,
                 currencyOut.symbol ? (
                     <CurrencyOut

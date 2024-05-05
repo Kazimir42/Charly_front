@@ -115,11 +115,12 @@ const Transactions = () => {
     useEffect(() => {
         if (transactions) {
             formatTransactionData()
+        } else {
         }
     }, [transactions])
 
     function formatTransactionData() {
-        const formattedData = transactions.map(line => {
+        let formattedData = transactions.map(line => {
             let currencyIn = {}
             let currencyOut = {}
             currencyIn.symbol = line.to_currency?.symbol ?? null
@@ -181,6 +182,12 @@ const Transactions = () => {
                 </div>,
             ]
         })
+
+        if (!transactions.length) {
+            formattedData = [
+                ['No transactions found :(', '', '', '', '', '', '', ''],
+            ]
+        }
         setFormattedTransactions(formattedData)
     }
 

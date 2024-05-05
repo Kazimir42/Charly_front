@@ -15,6 +15,7 @@ export default function SelectCombobox({
     selectedItem,
     setSelectedItem,
     className,
+    contentClassName,
 }) {
     const [query, setQuery] = useState('')
     const [selectedLocalItem, setSelectedLocalItem] = useState(null)
@@ -29,18 +30,20 @@ export default function SelectCombobox({
     useEffect(() => {
         if (selectedItem && items) {
             setSelectedLocalItem(items.find(item => item.id === selectedItem))
+        } else {
+            setSelectedLocalItem(null)
         }
     }, [selectedItem, items])
 
     return (
         <Combobox
             as="div"
-            value={selectedLocalItem}
+            value={selectedLocalItem ?? ''}
             onChange={item => {
                 setQuery('')
                 setSelectedItem(item.id)
             }}>
-            <div className="relative">
+            <div className={'relative ' + contentClassName}>
                 <Combobox.Input
                     placeholder={placeholder}
                     id={id}
@@ -77,11 +80,16 @@ export default function SelectCombobox({
                                 {({ active, selected }) => (
                                     <>
                                         <div className="flex items-center">
-                                            <img
-                                                src={item.imageUrl}
-                                                alt=""
-                                                className="h-6 w-6 flex-shrink-0 rounded-full"
-                                            />
+                                            {item.imageUrl ? (
+                                                <img
+                                                    src={item.imageUrl}
+                                                    alt=""
+                                                    className="h-6 w-6 flex-shrink-0 rounded-full"
+                                                />
+                                            ) : (
+                                                <div
+                                                    className={'h-6 w-6'}></div>
+                                            )}
                                             <span
                                                 className={classNames(
                                                     'ml-3 truncate',

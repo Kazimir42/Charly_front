@@ -81,6 +81,7 @@ const Out = ({
                         selectedItem={fromCurrency}
                         setSelectedItem={setFromCurrency}
                         items={[
+                            [{ id: 0, name: '' }],
                             ...cryptoCurrencies.reduce(
                                 (acc, cryptoCurrency) => {
                                     acc.push({
@@ -130,6 +131,7 @@ const Out = ({
                         selectedItem={toCurrency}
                         setSelectedItem={setToCurrency}
                         items={[
+                            [{ id: 0, name: '' }],
                             ...fiatCurrencies.reduce((acc, fiatCurrency) => {
                                 acc.push({
                                     id: fiatCurrency.id,

@@ -4,7 +4,6 @@ import Label from '@/components/Label'
 import { Select } from '@/components/Select'
 import { ArrowDownIcon } from '@heroicons/react/24/outline'
 import Textarea from '@/components/Textarea'
-import Combobox from '@/components/SelectCombobox'
 import SelectCombobox from '@/components/SelectCombobox'
 
 const In = ({
@@ -79,6 +78,7 @@ const In = ({
                         selectedItem={fromCurrency}
                         setSelectedItem={setFromCurrency}
                         items={[
+                            [{ id: 0, name: '' }],
                             ...fiatCurrencies.reduce((acc, fiatCurrency) => {
                                 acc.push({
                                     id: fiatCurrency.id,
@@ -124,6 +124,7 @@ const In = ({
                         selectedItem={toCurrency}
                         setSelectedItem={setToCurrency}
                         items={[
+                            [{ id: 0, name: '' }],
                             ...cryptoCurrencies.reduce(
                                 (acc, cryptoCurrency) => {
                                     acc.push({

@@ -184,13 +184,12 @@ const TransactionTableHeader = ({
                         key={'searchFromAsset'}
                         id="searchFromAsset"
                         name="searchFromAsset"
-                        className={
-                            'text-sm py-1.5 flex flex-row ml-auto w-fit'
-                        }
+                        className={'text-sm py-1.5 flex flex-row ml-auto w-fit'}
                         placeholder={'Choose an asset'}
                         selectedItem={parseInt(searchFromAsset)}
                         setSelectedItem={setSearchFromAsset}
                         items={[
+                            [{ id: 0, name: '' }],
                             ...currencies.reduce((acc, currency) => {
                                 acc.push({
                                     id: currency.id,
@@ -214,13 +213,13 @@ const TransactionTableHeader = ({
                         key={'searchToAsset'}
                         id="searchToAsset"
                         name="searchToAsset"
-                        className={
-                            'text-sm py-1.5 flex flex-row ml-auto w-fit'
-                        }
+                        className={'text-sm py-1.5 flex flex-row w-fit'}
+                        contentClassName={'w-fit'}
                         placeholder={'Choose an asset'}
                         selectedItem={parseInt(searchToAsset)}
                         setSelectedItem={setSearchToAsset}
                         items={[
+                            [{ id: 0, name: '' }],
                             ...currencies.reduce((acc, currency) => {
                                 acc.push({
                                     id: currency.id,

@@ -56,6 +56,7 @@ const Swap = ({
                         selectedItem={fromCurrency}
                         setSelectedItem={setFromCurrency}
                         items={[
+                            [{ id: 0, name: '' }],
                             ...cryptoCurrencies.reduce(
                                 (acc, cryptoCurrency) => {
                                     acc.push({
@@ -106,6 +107,7 @@ const Swap = ({
                         selectedItem={toCurrency}
                         setSelectedItem={setToCurrency}
                         items={[
+                            [{ id: 0, name: '' }],
                             ...cryptoCurrencies.reduce(
                                 (acc, cryptoCurrency) => {
                                     acc.push({

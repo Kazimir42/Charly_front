@@ -4,6 +4,8 @@ import Label from '@/components/Label'
 import { Select } from '@/components/Select'
 import { ArrowDownIcon } from '@heroicons/react/24/outline'
 import Textarea from '@/components/Textarea'
+import Combobox from '@/components/SelectCombobox'
+import SelectCombobox from '@/components/SelectCombobox'
 
 const In = ({
     date,
@@ -70,20 +72,26 @@ const In = ({
             <div className={'grid grid-cols-2 gap-2'}>
                 <div>
                     <Label htmlFor="from_currency">Asset Sent</Label>
-                    <Select
+                    <SelectCombobox
                         id="from_currency"
                         name="from_currency"
-                        items={{
-                            0: 'Choose an asset',
+                        placeholder={'Choose an asset'}
+                        selectedItem={fromCurrency}
+                        setSelectedItem={setFromCurrency}
+                        items={[
                             ...fiatCurrencies.reduce((acc, fiatCurrency) => {
-                                acc[fiatCurrency.id] = fiatCurrency.name
+                                acc.push({
+                                    id: fiatCurrency.id,
+                                    name: fiatCurrency.name,
+                                    imageUrl:
+                                        process.env.NEXT_PUBLIC_BACKEND_URL +
+                                        '/currencies/logo/' +
+                                        fiatCurrency.symbol +
+                                        '.svg',
+                                })
                                 return acc
-                            }, {}),
-                        }}
-                        className="block w-full"
-                        value={fromCurrency}
-                        onChange={event => setFromCurrency(event.target.value)}
-                        autoFocus
+                            }, []),
+                        ]}
                     />
                 </div>
                 <div>

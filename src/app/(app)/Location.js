@@ -97,7 +97,7 @@ const Location = ({
                     {formatPrice(
                         location.summary.total_value_per_fiat_currencies[
                             user.currency_symbol
-                        ],
+                        ] ?? 0,
                         user.currency_symbol,
                     )}
                 </div>,
@@ -115,7 +115,7 @@ const Location = ({
                                 location.summary
                                     .profit_loss_per_fiat_currencies[
                                     user.currency_symbol
-                                ]
+                                ] ?? 0
                             }
                             symbol={user.currency_symbol}
                         />

@@ -4,6 +4,7 @@ import Label from '@/components/Label'
 import { Select } from '@/components/Select'
 import { ArrowDownIcon } from '@heroicons/react/24/outline'
 import Textarea from '@/components/Textarea'
+import SelectCombobox from '@/components/SelectCombobox'
 
 const Swap = ({
     date,
@@ -47,21 +48,30 @@ const Swap = ({
             <div className={'grid grid-cols-2 gap-2'}>
                 <div>
                     <Label htmlFor="from_currency">Asset Sent*</Label>
-                    <Select
+                    <SelectCombobox
                         id="from_currency"
                         name="from_currency"
-                        items={{
-                            0: 'Choose an asset',
-                            ...cryptoCurrencies.reduce((acc, fiatCurrency) => {
-                                acc[fiatCurrency.id] = fiatCurrency.name
-                                return acc
-                            }, {}),
-                        }}
-                        className="block w-full"
-                        value={fromCurrency}
-                        onChange={event => setFromCurrency(event.target.value)}
-                        required
-                        autoFocus
+                        placeholder={'Choose an asset'}
+                        selectedItem={fromCurrency}
+                        setSelectedItem={setFromCurrency}
+                        items={[
+                            ...cryptoCurrencies.reduce(
+                                (acc, cryptoCurrency) => {
+                                    acc.push({
+                                        id: cryptoCurrency.id,
+                                        name: cryptoCurrency.name,
+                                        imageUrl:
+                                            process.env
+                                                .NEXT_PUBLIC_BACKEND_URL +
+                                            '/currencies/logo/' +
+                                            cryptoCurrency.symbol +
+                                            '.svg',
+                                    })
+                                    return acc
+                                },
+                                [],
+                            ),
+                        ]}
                     />
                 </div>
                 <div>
@@ -87,24 +97,30 @@ const Swap = ({
             <div className={'grid grid-cols-2 gap-2'}>
                 <div>
                     <Label htmlFor="to_currency">Asset Receive*</Label>
-                    <Select
+                    <SelectCombobox
                         id="to_currency"
                         name="to_currency"
-                        items={{
-                            0: 'Choose an asset',
+                        placeholder={'Choose an asset'}
+                        selectedItem={toCurrency}
+                        setSelectedItem={setToCurrency}
+                        items={[
                             ...cryptoCurrencies.reduce(
                                 (acc, cryptoCurrency) => {
-                                    acc[cryptoCurrency.id] = cryptoCurrency.name
+                                    acc.push({
+                                        id: cryptoCurrency.id,
+                                        name: cryptoCurrency.name,
+                                        imageUrl:
+                                            process.env
+                                                .NEXT_PUBLIC_BACKEND_URL +
+                                            '/currencies/logo/' +
+                                            cryptoCurrency.symbol +
+                                            '.svg',
+                                    })
                                     return acc
                                 },
-                                {},
+                                [],
                             ),
-                        }}
-                        className="block w-full"
-                        value={toCurrency}
-                        onChange={event => setToCurrency(event.target.value)}
-                        required
-                        autoFocus
+                        ]}
                     />
                 </div>
                 <div>

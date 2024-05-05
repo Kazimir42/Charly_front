@@ -43,7 +43,7 @@ export default function SelectCombobox({
                     placeholder={placeholder}
                     id={id}
                     name={name}
-                    className="w-full rounded-md border-0 bg-white pr-12 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-default-primary "
+                    className="rounded-md shadow-sm border-gray-300 focus:border-default-primary_lightest focus:ring focus:ring-default-primary_lightest focus:ring-opacity-50 pr-12 w-full "
                     onChange={event => setQuery(event.target.value)}
                     onBlur={() => setQuery('')}
                     displayValue={item => item?.name}

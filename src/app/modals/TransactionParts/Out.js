@@ -4,6 +4,7 @@ import Label from '@/components/Label'
 import { Select } from '@/components/Select'
 import { ArrowDownIcon } from '@heroicons/react/24/outline'
 import Textarea from '@/components/Textarea'
+import SelectCombobox from '@/components/SelectCombobox'
 
 const Out = ({
     date,
@@ -72,21 +73,30 @@ const Out = ({
             <div className={'grid grid-cols-2 gap-2'}>
                 <div>
                     <Label htmlFor="from_currency">Asset Sent*</Label>
-                    <Select
+                    <SelectCombobox
                         id="from_currency"
                         name="from_currency"
-                        items={{
-                            0: 'Choose an asset',
-                            ...cryptoCurrencies.reduce((acc, fiatCurrency) => {
-                                acc[fiatCurrency.id] = fiatCurrency.name
-                                return acc
-                            }, {}),
-                        }}
-                        className="block w-full"
-                        value={fromCurrency}
-                        onChange={event => setFromCurrency(event.target.value)}
-                        required
-                        autoFocus
+                        placeholder={'Choose an asset'}
+                        selectedItem={fromCurrency}
+                        setSelectedItem={setFromCurrency}
+                        items={[
+                            ...cryptoCurrencies.reduce(
+                                (acc, cryptoCurrency) => {
+                                    acc.push({
+                                        id: cryptoCurrency.id,
+                                        name: cryptoCurrency.name,
+                                        imageUrl:
+                                            process.env
+                                                .NEXT_PUBLIC_BACKEND_URL +
+                                            '/currencies/logo/' +
+                                            cryptoCurrency.symbol +
+                                            '.svg',
+                                    })
+                                    return acc
+                                },
+                                [],
+                            ),
+                        ]}
                     />
                 </div>
                 <div>
@@ -112,20 +122,26 @@ const Out = ({
             <div className={'grid grid-cols-2 gap-2'}>
                 <div>
                     <Label htmlFor="to_currency">Asset Received</Label>
-                    <Select
+                    <SelectCombobox
                         id="to_currency"
                         name="to_currency"
-                        items={{
-                            0: 'Choose an asset',
-                            ...fiatCurrencies.reduce((acc, cryptoCurrency) => {
-                                acc[cryptoCurrency.id] = cryptoCurrency.name
+                        placeholder={'Choose an asset'}
+                        selectedItem={toCurrency}
+                        setSelectedItem={setToCurrency}
+                        items={[
+                            ...fiatCurrencies.reduce((acc, fiatCurrency) => {
+                                acc.push({
+                                    id: fiatCurrency.id,
+                                    name: fiatCurrency.name,
+                                    imageUrl:
+                                        process.env.NEXT_PUBLIC_BACKEND_URL +
+                                        '/currencies/logo/' +
+                                        fiatCurrency.symbol +
+                                        '.svg',
+                                })
                                 return acc
-                            }, {}),
-                        }}
-                        className="block w-full"
-                        value={toCurrency}
-                        onChange={event => setToCurrency(event.target.value)}
-                        autoFocus
+                            }, []),
+                        ]}
                     />
                 </div>
                 <div>

@@ -116,24 +116,30 @@ const In = ({
             <div className={'grid grid-cols-2 gap-2'}>
                 <div>
                     <Label htmlFor="to_currency">Asset Receive*</Label>
-                    <Select
+                    <SelectCombobox
                         id="to_currency"
                         name="to_currency"
-                        items={{
-                            0: 'Choose an asset',
+                        placeholder={'Choose an asset'}
+                        selectedItem={toCurrency}
+                        setSelectedItem={setToCurrency}
+                        items={[
                             ...cryptoCurrencies.reduce(
                                 (acc, cryptoCurrency) => {
-                                    acc[cryptoCurrency.id] = cryptoCurrency.name
+                                    acc.push({
+                                        id: cryptoCurrency.id,
+                                        name: cryptoCurrency.name,
+                                        imageUrl:
+                                            process.env
+                                                .NEXT_PUBLIC_BACKEND_URL +
+                                            '/currencies/logo/' +
+                                            cryptoCurrency.symbol +
+                                            '.svg',
+                                    })
                                     return acc
                                 },
-                                {},
+                                [],
                             ),
-                        }}
-                        className="block w-full"
-                        value={toCurrency}
-                        onChange={event => setToCurrency(event.target.value)}
-                        required
-                        autoFocus
+                        ]}
                     />
                 </div>
                 <div>

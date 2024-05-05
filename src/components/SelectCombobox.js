@@ -24,7 +24,11 @@ export default function SelectCombobox({
         query === ''
             ? items
             : items.filter(item => {
-                  return item.name.toLowerCase().includes(query.toLowerCase())
+                  if (item.name) {
+                      return item.name
+                          .toLowerCase()
+                          .includes(query.toLowerCase())
+                  }
               })
 
     useEffect(() => {

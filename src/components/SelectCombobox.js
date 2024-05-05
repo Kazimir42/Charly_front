@@ -47,7 +47,6 @@ export default function SelectCombobox({
                     required={!!required}
                     className="rounded-md shadow-sm border-gray-300 focus:border-default-primary_lightest focus:ring focus:ring-default-primary_lightest focus:ring-opacity-50 pr-12 w-full "
                     onChange={event => setQuery(event.target.value)}
-                    onBlur={() => setQuery('')}
                     displayValue={item => item?.name}
                 />
                 <Combobox.Button className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">

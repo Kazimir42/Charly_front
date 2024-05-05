@@ -12,7 +12,7 @@ import {
 
 import { useAuth } from '@/hooks/auth'
 import Dropdown from '@/components/Dropdown'
-import { DropdownButton } from '@/components/DropdownLink'
+import DropdownLink, { DropdownButton } from '@/components/DropdownLink'
 import { usePathname } from 'next/navigation'
 import { WalletIcon } from '@heroicons/react/24/solid'
 import Link from 'next/link'
@@ -314,11 +314,9 @@ const LeftNavigation = ({ user }) => {
                                             </div>
                                         </button>
                                     }>
-                                    <DropdownButton>
-                                        <Link href={'/my-account'}>
-                                            My account
-                                        </Link>
-                                    </DropdownButton>
+                                    <DropdownLink href={'/my-account'}>
+                                        My account
+                                    </DropdownLink>
                                     <DropdownButton onClick={logout}>
                                         Logout
                                     </DropdownButton>
@@ -361,9 +359,7 @@ const LeftNavigation = ({ user }) => {
                             </div>
                         </button>
                     }>
-                    <DropdownButton>
-                        <Link href={'/my-account'}>My account</Link>
-                    </DropdownButton>
+                    <DropdownLink href={'/my-account'}>My account</DropdownLink>
                     <DropdownButton onClick={logout}>Logout</DropdownButton>
                 </Dropdown>
             </div>

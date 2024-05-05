@@ -119,6 +119,7 @@ const In = ({
                     <SelectCombobox
                         id="to_currency"
                         name="to_currency"
+                        required={true}
                         placeholder={'Choose an asset'}
                         selectedItem={toCurrency}
                         setSelectedItem={setToCurrency}

@@ -76,6 +76,7 @@ const Out = ({
                     <SelectCombobox
                         id="from_currency"
                         name="from_currency"
+                        required={true}
                         placeholder={'Choose an asset'}
                         selectedItem={fromCurrency}
                         setSelectedItem={setFromCurrency}

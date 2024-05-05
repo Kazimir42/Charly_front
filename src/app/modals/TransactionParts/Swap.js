@@ -51,6 +51,7 @@ const Swap = ({
                     <SelectCombobox
                         id="from_currency"
                         name="from_currency"
+                        required={true}
                         placeholder={'Choose an asset'}
                         selectedItem={fromCurrency}
                         setSelectedItem={setFromCurrency}
@@ -100,6 +101,7 @@ const Swap = ({
                     <SelectCombobox
                         id="to_currency"
                         name="to_currency"
+                        required={true}
                         placeholder={'Choose an asset'}
                         selectedItem={toCurrency}
                         setSelectedItem={setToCurrency}

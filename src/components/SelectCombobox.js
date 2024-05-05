@@ -11,6 +11,7 @@ export default function SelectCombobox({
     name,
     placeholder,
     items,
+    required,
     selectedItem,
     setSelectedItem,
 }) {
@@ -43,6 +44,7 @@ export default function SelectCombobox({
                     placeholder={placeholder}
                     id={id}
                     name={name}
+                    required={!!required}
                     className="rounded-md shadow-sm border-gray-300 focus:border-default-primary_lightest focus:ring focus:ring-default-primary_lightest focus:ring-opacity-50 pr-12 w-full "
                     onChange={event => setQuery(event.target.value)}
                     onBlur={() => setQuery('')}

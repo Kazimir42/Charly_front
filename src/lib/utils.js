@@ -40,7 +40,7 @@ export function formatDate(date, withTime = true, lang = 'en-US') {
 
     if (withTime) {
         parsedDate = parsedDate.toLocaleString(lang)
-    }else {
+    } else {
         parsedDate = parsedDate.toLocaleDateString(lang)
     }
 

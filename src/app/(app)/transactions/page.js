@@ -17,8 +17,8 @@ import CurrencyOut from '@/components/CurrencyOut'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useCurrencyData } from '@/hooks/currencies'
 import { useLocationData } from '@/hooks/locations'
-import TransactionLabelBubble from '@/components/TransactionLabelBubble'
 import TransactionTableHeader from '@/app/(app)/TransactionTableHeader'
+import Input from '@/components/Input'
 
 const Transactions = () => {
     const { user } = useAuth({ middleware: 'auth' })
@@ -54,6 +54,10 @@ const Transactions = () => {
     const [selectedTransaction, setSelectedTransaction] = useState(null)
     const [currencies, setCurrencies] = useState([])
     const [locations, setLocations] = useState([])
+    const [multiSelectorIsSelected, setMultiSelectorIsSelected] = useState(
+        false,
+    )
+    const [selectedTransactionIds, setSelectedTransactionIds] = useState([])
 
     // Query params
     const [searchFromDate, setSearchFromDate] = useState('')
@@ -115,9 +119,14 @@ const Transactions = () => {
     useEffect(() => {
         if (transactions) {
             formatTransactionData()
-        } else {
         }
     }, [transactions])
+
+    useEffect(() => {
+        if (transactions) {
+            formatTransactionData()
+        }
+    }, [selectedTransactionIds])
 
     function formatTransactionData() {
         let formattedData = transactions.map(line => {
@@ -129,6 +138,34 @@ const Transactions = () => {
             currencyOut.quantity = line.from_quantity ?? 0
 
             return [
+                <div>
+                    <Input
+                        type={'checkbox'}
+                        checked={
+                            !!selectedTransactionIds.find(
+                                id => id === parseInt(line.id),
+                            )
+                        }
+                        onChange={() => {
+                            if (
+                                selectedTransactionIds.find(
+                                    id => id === parseInt(line.id),
+                                )
+                            ) {
+                                setSelectedTransactionIds(
+                                    selectedTransactionIds.filter(
+                                        id => id !== parseInt(line.id),
+                                    ),
+                                )
+                            } else {
+                                setSelectedTransactionIds([
+                                    ...selectedTransactionIds,
+                                    parseInt(line.id),
+                                ])
+                            }
+                        }}
+                    />
+                </div>,
                 formatDate(line.date, true, 'fr-FR'),
                 <div
                     key={'type'}
@@ -307,6 +344,22 @@ const Transactions = () => {
         router.push(`/transactions?${queryParams.toString()}`)
     }
 
+    function handleMultiSelectorChange() {
+        // It's empty, select all
+        if (!multiSelectorIsSelected) {
+            let ids = transactions.reduce((acc, cur) => {
+                acc.push(cur.id)
+                return acc
+            }, [])
+            setSelectedTransactionIds(ids)
+            setMultiSelectorIsSelected(true)
+        } else {
+            // It's full, unselect all
+            setSelectedTransactionIds([])
+            setMultiSelectorIsSelected(false)
+        }
+    }
+
     return (
         <>
             <div className={'flex flex-row items-center justify-between mb-4'}>
@@ -345,6 +398,12 @@ const Transactions = () => {
                                 searchLocation={searchLocation}
                                 currencies={currencies}
                                 locations={locations}
+                                multiSelectorIsSelected={
+                                    multiSelectorIsSelected
+                                }
+                                setMultiSelectorIsSelected={
+                                    handleMultiSelectorChange
+                                }
                             />
                         }
                         content={formattedTransactions}

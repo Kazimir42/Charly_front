@@ -35,6 +35,8 @@ const TransactionTableHeader = ({
     submitFormWithOrder,
     locations,
     currencies,
+    multiSelectorIsSelected,
+    setMultiSelectorIsSelected,
 }) => {
     function HeaderTitle({ title, name, className }) {
         return (
@@ -65,78 +67,10 @@ const TransactionTableHeader = ({
     return (
         <>
             <tr>
-                <th
-                    className={
-                        'px-3 py-3.5 text-left text-sm font-semibold text-gray-900 pl-5'
-                    }>
-                    <HeaderTitle key={'date'} title={'Date'} name={'date'} />
-                </th>
+                <th className={'px-3 py-3.5 pl-5 text-left'}></th>
                 <th
                     className={
                         'px-3 py-3.5 text-left text-sm font-semibold text-gray-900'
-                    }>
-                    <HeaderTitle key={'type'} title={'Type'} name={'type'} />
-                </th>
-                <th
-                    className={
-                        'px-3 py-3.5 text-left text-sm font-semibold text-gray-900'
-                    }>
-                    <HeaderTitle
-                        key={'from_quantity'}
-                        title={'Asset Out'}
-                        name={'from_quantity'}
-                        className={'ml-auto'}
-                    />
-                </th>
-                <th
-                    className={
-                        'px-3 py-3.5 text-left text-sm font-semibold text-gray-900'
-                    }>
-                    <HeaderTitle
-                        key={'to_quantity'}
-                        title={'Asset In'}
-                        name={'to_quantity'}
-                    />
-                </th>
-                <th
-                    className={
-                        'px-3 py-3.5 text-left text-sm font-semibold text-gray-900'
-                    }>
-                    <HeaderTitle
-                        key={'total_price'}
-                        title={'Price'}
-                        name={'total_price'}
-                    />
-                </th>
-                <th
-                    className={
-                        'px-3 py-3.5 text-left text-sm font-semibold text-gray-900'
-                    }>
-                    <HeaderTitle
-                        key={'unit_price'}
-                        title={'Unit price'}
-                        name={'unit_price'}
-                    />
-                </th>
-                <th
-                    className={
-                        'px-3 py-3.5 text-left text-sm font-semibold text-gray-900'
-                    }>
-                    <HeaderTitle
-                        key={'location_id'}
-                        title={'Location'}
-                        name={'location_id'}
-                    />
-                </th>
-                <th
-                    className={
-                        'px-3 py-3.5 text-left text-sm font-semibold text-gray-900 pr-5'
-                    }></th>
-            </tr>
-            <tr>
-                <th
-                    className={
-                        'px-3 py-3.5 text-left text-sm font-semibold text-gray-900 pl-5'
                     }>
                     <div
                         key={'searchDate'}
@@ -300,6 +234,83 @@ const TransactionTableHeader = ({
                         </button>
                     </form>
                 </th>
+            </tr>
+            <tr>
+                <th className={'px-3 py-3.5 pl-5 text-left'}>
+                    <Input
+                        checked={multiSelectorIsSelected}
+                        onChange={setMultiSelectorIsSelected}
+                        type="checkbox"
+                        className={'h-5 w-5'}
+                    />
+                </th>
+                <th
+                    className={
+                        'px-3 py-3.5 text-left text-sm font-semibold text-gray-900 '
+                    }>
+                    <HeaderTitle key={'date'} title={'Date'} name={'date'} />
+                </th>
+                <th
+                    className={
+                        'px-3 py-3.5 text-left text-sm font-semibold text-gray-900'
+                    }>
+                    <HeaderTitle key={'type'} title={'Type'} name={'type'} />
+                </th>
+                <th
+                    className={
+                        'px-3 py-3.5 text-left text-sm font-semibold text-gray-900'
+                    }>
+                    <HeaderTitle
+                        key={'from_quantity'}
+                        title={'Asset Out'}
+                        name={'from_quantity'}
+                        className={'ml-auto'}
+                    />
+                </th>
+                <th
+                    className={
+                        'px-3 py-3.5 text-left text-sm font-semibold text-gray-900'
+                    }>
+                    <HeaderTitle
+                        key={'to_quantity'}
+                        title={'Asset In'}
+                        name={'to_quantity'}
+                    />
+                </th>
+                <th
+                    className={
+                        'px-3 py-3.5 text-left text-sm font-semibold text-gray-900'
+                    }>
+                    <HeaderTitle
+                        key={'total_price'}
+                        title={'Price'}
+                        name={'total_price'}
+                    />
+                </th>
+                <th
+                    className={
+                        'px-3 py-3.5 text-left text-sm font-semibold text-gray-900'
+                    }>
+                    <HeaderTitle
+                        key={'unit_price'}
+                        title={'Unit price'}
+                        name={'unit_price'}
+                    />
+                </th>
+                <th
+                    className={
+                        'px-3 py-3.5 text-left text-sm font-semibold text-gray-900'
+                    }>
+                    <HeaderTitle
+                        key={'location_id'}
+                        title={'Location'}
+                        name={'location_id'}
+                    />
+                </th>
+                <th
+                    className={
+                        'px-3 py-3.5 text-left text-sm font-semibold text-gray-900 pr-5'
+                    }></th>
             </tr>
         </>
     )

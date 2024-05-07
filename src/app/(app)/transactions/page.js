@@ -410,6 +410,26 @@ const Transactions = () => {
                         paginationData={paginationData}
                     />
                 </div>
+                {selectedTransactionIds.length ? (
+                    <div className={'w-full flex justify-center'}>
+                        <div
+                            className={
+                                'fixed bottom-0 bg-white px-5 pt-5 pb-3 border shadow rounded-t-lg'
+                            }>
+                            <p className={'mb-2 text-gray-500 text-sm'}>
+                                {selectedTransactionIds.length} transactions
+                                selected
+                            </p>
+                            <Button
+                                className={
+                                    'flex flex-row gap-1 bg-red-500 hover:bg-red-600'
+                                }>
+                                <TrashIcon className={'h-5 w-5'} />
+                                <p>Delete</p>
+                            </Button>
+                        </div>
+                    </div>
+                ) : null}
             </div>
 
             <CreateTransactionModal

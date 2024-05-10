@@ -4,10 +4,14 @@ import Header from '@/app/(app)/Header'
 import YearSwitcher from '@/components/YearSwitcher'
 import { useTaxReportData } from '@/hooks/taxReports'
 import { useEffect, useState } from 'react'
-import Button from '@/components/Button'
+import SimpleCard from '@/components/SimpleCard'
+import CreateTaxReportForm from '@/app/(app)/CreateTaxReportForm'
+import Loading from '@/app/(app)/Loading'
 
 const Page = ({ params }) => {
+    const [isLoading, setIsLoading] = useState(true)
     const [taxReport, setTaxReport] = useState(null)
+    const [cardStats, setCardStats] = useState([])
 
     const { getTaxReport, createTaxReport } = useTaxReportData()
 
@@ -26,7 +30,18 @@ const Page = ({ params }) => {
         getTaxReport(params.year).then(result => {
             if (result.id) {
                 setTaxReport(result)
+                setCardStats([
+                    {
+                        name: 'Total value sold',
+                        value: 'TODO €',
+                    },
+                    {
+                        name: 'Total Profit / Loss',
+                        value: 'TODO €',
+                    },
+                ])
             }
+            setIsLoading(false)
         })
     }
 
@@ -41,26 +56,26 @@ const Page = ({ params }) => {
                     nextTitle={parseInt(params.year) + 1}
                 />
             </div>
-            {!taxReport ? (
-                <div className={'pb-6 max-w-xl mt-16'}>
-                    <form
-                        onSubmit={submitCreateForm}
-                        className={'flex flex-col'}>
-                        <h3 className={'font-semibold text-xl mb-2'}>
-                            Not tax report found
-                        </h3>
-                        <p
-                            className={
-                                'block font-medium text-sm text-gray-700 mb-4'
-                            }>
-                            The tax report is based on transactions completed in
-                            the selected year for the tax residency specified in
-                            the profile.
-                        </p>
-                        <Button className={'w-fit'}>Create report</Button>
-                    </form>
+            {isLoading ? (
+                <Loading fullHeight={false} />
+            ) : taxReport ? (
+                <div className={'pb-6'}>
+                    <div className={'flex flex-row gap-4 mb-4'}>
+                        {cardStats.map((cardStat, index) => (
+                            <SimpleCard
+                                key={index}
+                                className={'grow'}
+                                name={cardStat.name}>
+                                {cardStat.value}
+                            </SimpleCard>
+                        ))}
+                    </div>
                 </div>
-            ) : null}
+            ) : (
+                <div className={'pb-6 max-w-xl mt-16'}>
+                    <CreateTaxReportForm onSubmit={submitCreateForm} />
+                </div>
+            )}
         </>
     )
 }

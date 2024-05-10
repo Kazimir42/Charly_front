@@ -9,7 +9,7 @@ const AppLayout = ({ children }) => {
     const { user } = useAuth({ middleware: 'auth' })
 
     if (!user) {
-        return <Loading />
+        return <Loading fullHeight={true} />
     }
 
     return (

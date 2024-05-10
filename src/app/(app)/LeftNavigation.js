@@ -50,7 +50,7 @@ const LeftNavigation = ({ user }) => {
             name: 'Tax report',
             href: '/tax-report/' + (new Date().getFullYear() - 1),
             icon: DocumentTextIcon,
-            current: pathname === '/tax-report',
+            current: pathname.includes('/tax-report/'),
         },
         {
             name: 'Stats',

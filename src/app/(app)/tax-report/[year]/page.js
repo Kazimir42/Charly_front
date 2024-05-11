@@ -12,6 +12,7 @@ import { useAuth } from '@/hooks/auth'
 import Document2086 from '@/app/taxReportDocuments/FR/Document2086'
 import Card from '@/components/Card'
 import DocumentCard from '@/components/DocumentCard'
+import Document3916bis from '@/app/taxReportDocuments/FR/Document3916bis'
 
 const Page = ({ params }) => {
     const { user } = useAuth({ middleware: 'auth' })
@@ -133,15 +134,18 @@ const Page = ({ params }) => {
                             Documents
                         </h3>
                         {taxReport.country.iso_code === 'FR' ? (
-                            <>
-                                <div>
-                                    <DocumentCard
-                                        title={'Report my taxable transactions'}
-                                        form={'2086'}>
-                                        <Document2086 />
-                                    </DocumentCard>
-                                </div>
-                            </>
+                            <div className={'flex flex-col gap-4'}>
+                                <DocumentCard
+                                    title={'Report my taxable transactions'}
+                                    form={'2086'}>
+                                    <Document2086 />
+                                </DocumentCard>
+                                <DocumentCard
+                                    title={'Declare my accounts abroad'}
+                                    form={'3916 bis'}>
+                                    <Document3916bis />
+                                </DocumentCard>
+                            </div>
                         ) : null}
                     </div>
                 </>

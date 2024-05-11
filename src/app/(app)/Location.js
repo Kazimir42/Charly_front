@@ -1,5 +1,5 @@
 import React from 'react'
-import Accordion from '@/components/Accordion'
+import AccordionTable from '@/components/AccordionTable'
 import { formatPrice } from '@/lib/utils'
 import PercentageBubble from '@/components/PercentageBubble'
 import ProfitLossPrice from '@/components/ProfitLossPrice'
@@ -82,7 +82,7 @@ const Location = ({
     })
 
     return (
-        <Accordion
+        <AccordionTable
             header={[
                 <div key={location.name} className="inline-block w-[64%]">
                     {location.name}

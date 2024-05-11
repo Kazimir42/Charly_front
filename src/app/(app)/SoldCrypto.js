@@ -1,5 +1,5 @@
 import React from 'react'
-import Accordion from '@/components/Accordion'
+import AccordionTable from '@/components/AccordionTable'
 import { useAuth } from '@/hooks/auth'
 import CurrencyBubble from '@/components/CurrencyBubble'
 import { formatPrice } from '@/lib/utils'
@@ -36,7 +36,7 @@ const SoldCrypto = ({ cryptocurrency }) => {
     })
 
     return (
-        <Accordion
+        <AccordionTable
             header={[
                 <div key={cryptocurrency.name} className="inline-block w-[52%]">
                     <CurrencyBubble

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const Accordion = ({ header, headerContent, content }) => {
+const AccordionTable = ({ header, headerContent, content }) => {
     const [isOpen, setIsOpen] = useState(false)
 
     const toggleAccordion = () => {
@@ -100,4 +100,4 @@ const Accordion = ({ header, headerContent, content }) => {
     )
 }
 
-export default Accordion
+export default AccordionTable

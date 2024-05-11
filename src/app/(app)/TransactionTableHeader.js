@@ -34,6 +34,8 @@ const TransactionTableHeader = ({
     submitForm,
     submitFormWithOrder,
     locations,
+    searchTaxable,
+    setSearchTaxable,
     currencies,
     multiSelectorIsSelected,
     setMultiSelectorIsSelected,
@@ -215,6 +217,22 @@ const TransactionTableHeader = ({
                 </th>
                 <th
                     className={
+                        'px-3 py-3.5 text-left text-sm font-semibold text-gray-900'
+                    }>
+                    <Input
+                        key={'searchTaxable'}
+                        type={'checkbox'}
+                        className={'text-sm p-2'}
+                        name={'searchTaxable'}
+                        checked={searchTaxable}
+                        value={searchTaxable}
+                        onChange={e =>
+                            setSearchTaxable(e.target.checked ? 1 : 0)
+                        }
+                    />
+                </th>
+                <th
+                    className={
                         'px-3 py-3.5 text-left text-sm font-semibold text-gray-900 pr-5'
                     }>
                     <form
@@ -305,6 +323,16 @@ const TransactionTableHeader = ({
                         key={'location_id'}
                         title={'Location'}
                         name={'location_id'}
+                    />
+                </th>
+                <th
+                    className={
+                        'px-3 py-3.5 text-left text-sm font-semibold text-gray-900'
+                    }>
+                    <HeaderTitle
+                        key={'taxable'}
+                        title={'Taxable'}
+                        name={'taxable'}
                     />
                 </th>
                 <th

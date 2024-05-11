@@ -68,6 +68,7 @@ const Transactions = () => {
     const [searchTotalPrice, setSearchTotalPrice] = useState('')
     const [searchUnitPrice, setSearchUnitPrice] = useState('')
     const [searchLocation, setSearchLocation] = useState('')
+    const [searchTaxable, setSearchTaxable] = useState('')
     const [page, setPage] = useState('')
     const [orderBy, setOrderBy] = useState('')
     const [orderDirection, setOrderDirection] = useState('')
@@ -82,6 +83,7 @@ const Transactions = () => {
         setSearchTotalPrice(searchParams.get('searchTotalPrice'))
         setSearchUnitPrice(searchParams.get('searchUnitPrice'))
         setSearchLocation(searchParams.get('searchLocation'))
+        setSearchTaxable(searchParams.get('searchTaxable'))
         setPage(searchParams.get('page'))
         setOrderBy(searchParams.get('orderBy'))
         setOrderDirection(searchParams.get('orderDirection'))
@@ -201,6 +203,12 @@ const Transactions = () => {
                     user.currency_symbol,
                 ),
                 line.location?.name ?? '',
+                <Input
+                    key={'taxable'}
+                    type={'checkbox'}
+                    checked={line.taxable} // Todo : fix me (A component is changing a controlled input to be uncontrolled.)
+                    disabled={true}
+                />,
                 <div
                     key={'actions'}
                     className="flex flex-row gap-2 justify-end">
@@ -340,6 +348,9 @@ const Transactions = () => {
         if (searchLocation) {
             queryParams.append('searchLocation', searchLocation)
         }
+        if (searchTaxable) {
+            queryParams.append('searchTaxable', searchTaxable)
+        }
 
         router.push(`/transactions?${queryParams.toString()}`)
     }
@@ -396,6 +407,8 @@ const Transactions = () => {
                                 searchUnitPrice={searchUnitPrice}
                                 setSearchLocation={setSearchLocation}
                                 searchLocation={searchLocation}
+                                setSearchTaxable={setSearchTaxable}
+                                searchTaxable={searchTaxable}
                                 currencies={currencies}
                                 locations={locations}
                                 multiSelectorIsSelected={

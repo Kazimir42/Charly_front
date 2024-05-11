@@ -7,8 +7,15 @@ import { useEffect, useState } from 'react'
 import SimpleCard from '@/components/SimpleCard'
 import CreateTaxReportForm from '@/app/(app)/CreateTaxReportForm'
 import Loading from '@/app/(app)/Loading'
+import CardDescriptionList from '@/app/(app)/CardDescriptionList'
+import { useAuth } from '@/hooks/auth'
+import Document2086 from '@/app/taxReportDocuments/FR/Document2086'
+import Card from '@/components/Card'
+import DocumentCard from '@/components/DocumentCard'
 
 const Page = ({ params }) => {
+    const { user } = useAuth({ middleware: 'auth' })
+
     const [isLoading, setIsLoading] = useState(true)
     const [taxReport, setTaxReport] = useState(null)
     const [cardStats, setCardStats] = useState([])
@@ -39,6 +46,10 @@ const Page = ({ params }) => {
                         name: 'Total Profit / Loss',
                         value: 'TODO €',
                     },
+                    {
+                        name: 'Tax value',
+                        value: 'TODO €',
+                    },
                 ])
             }
             setIsLoading(false)
@@ -59,18 +70,81 @@ const Page = ({ params }) => {
             {isLoading ? (
                 <Loading fullHeight={false} />
             ) : taxReport ? (
-                <div className={'pb-6'}>
-                    <div className={'flex flex-row gap-4 mb-4'}>
-                        {cardStats.map((cardStat, index) => (
-                            <SimpleCard
-                                key={index}
-                                className={'grow'}
-                                name={cardStat.name}>
-                                {cardStat.value}
-                            </SimpleCard>
-                        ))}
+                <>
+                    <div className={'pb-6'}>
+                        <div className={'flex flex-row gap-4 mb-4'}>
+                            {cardStats.map((cardStat, index) => (
+                                <SimpleCard
+                                    key={index}
+                                    className={'grow'}
+                                    name={cardStat.name}>
+                                    {cardStat.value}
+                                </SimpleCard>
+                            ))}
+                        </div>
                     </div>
-                </div>
+                    <div className={'grid grid-cols-2 gap-4 pb-6'}>
+                        <div className={''}>
+                            <h3 className={'font-semibold text-xl mb-2'}>
+                                Information
+                            </h3>
+                            <CardDescriptionList
+                                lines={[
+                                    {
+                                        name: 'Accounts added',
+                                        value: 'todo',
+                                    },
+                                    {
+                                        name: 'Transactions over the year',
+                                        value: 'todo',
+                                    },
+                                    {
+                                        name:
+                                            'Taxable transactions over the year',
+                                        value: 'todo',
+                                    },
+                                ]}
+                            />
+                        </div>
+                        <div className={''}>
+                            <h3 className={'font-semibold text-xl mb-2'}>
+                                Configuration
+                            </h3>
+                            <CardDescriptionList
+                                lines={[
+                                    {
+                                        name: 'Tax residence',
+                                        value: taxReport.country.name,
+                                    },
+                                    {
+                                        name: 'Calculation method',
+                                        value: 'todo',
+                                    },
+                                    {
+                                        name: 'Method of declaration',
+                                        value: 'Flat tax 30%',
+                                    },
+                                ]}
+                            />
+                        </div>
+                    </div>
+                    <div className={''}>
+                        <h3 className={'font-semibold text-xl mb-2'}>
+                            Documents
+                        </h3>
+                        {taxReport.country.iso_code === 'FR' ? (
+                            <>
+                                <div>
+                                    <DocumentCard
+                                        title={'Report my taxable transactions'}
+                                        form={'2086'}>
+                                        <Document2086 />
+                                    </DocumentCard>
+                                </div>
+                            </>
+                        ) : null}
+                    </div>
+                </>
             ) : (
                 <div className={'pb-6 max-w-xl mt-16'}>
                     <CreateTaxReportForm onSubmit={submitCreateForm} />

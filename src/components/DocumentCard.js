@@ -12,7 +12,7 @@ const DocumentCard = ({ title, form, children }) => {
                         }>
                         {form}
                     </span>
-                    <h4 className={'font-semibold text-lg'}>{title}</h4>
+                    <h4 className={''}>{title}</h4>
                 </div>
             }>
             <div className={'p-5'}>{children}</div>

@@ -2,7 +2,7 @@ import React from 'react'
 
 const CardDescriptionList = ({ title, titleDesc, lines }) => {
     return (
-        <div className="overflow-hidden bg-white shadow sm:rounded-lg">
+        <div className="overflow-hidden bg-white shadow rounded-lg">
             {title || titleDesc ? (
                 <div className="px-4 py-6 sm:px-6">
                     <h3 className="text-base font-semibold leading-7 text-gray-900">
@@ -20,8 +20,8 @@ const CardDescriptionList = ({ title, titleDesc, lines }) => {
                     {lines.map((line, i) => (
                         <div
                             key={i}
-                            className="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt className="font-semibold text-sm text-gray-900">
+                            className="px-4 py-5 lg:grid 2xl:grid-cols-2 xl:grid-cols-3 lg:gap-4 ">
+                            <dt className="font-semibold text-sm text-gray-900 xl:col-span-2 2xl:col-span-1">
                                 {line.name}
                             </dt>
                             <dd className="whitespace-nowrap text-sm text-gray-500 ">

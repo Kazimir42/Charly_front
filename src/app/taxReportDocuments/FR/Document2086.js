@@ -1,51 +1,6 @@
 import React from 'react'
 
-const example = [
-    {
-        211: 0,
-        212: 1,
-        213: 2,
-        214: 3,
-        215: 4,
-        216: 5,
-        217: 6,
-        218: 7,
-        220: 8,
-        221: 10,
-        222: 11,
-        223: 12,
-    },
-    {
-        211: 0,
-        212: 1,
-        213: 2,
-        214: 3,
-        215: 4,
-        216: 5,
-        217: 6,
-        218: 7,
-        220: 8,
-        221: 10,
-        222: 11,
-        223: 12,
-    },
-    {
-        211: 0,
-        212: 1,
-        213: 2,
-        214: 3,
-        215: 4,
-        216: 5,
-        217: 6,
-        218: 7,
-        220: 8,
-        221: 10,
-        222: 11,
-        223: 12,
-    },
-]
-
-const Document2086 = () => {
+const Document2086 = ({ data }) => {
     return (
         <div>
             <p className={'text-sm text-gray-700 mb-4'}>
@@ -57,7 +12,7 @@ const Document2086 = () => {
                 <thead>
                     <tr>
                         <th></th>
-                        {example.map((item, index) => (
+                        {data.transfers.map((item, index) => (
                             <th
                                 className={
                                     'bg-gray-100 px-4 w-32 py-2 text-center font-semibold text-sm border border-gray-300'
@@ -76,7 +31,7 @@ const Document2086 = () => {
                             }>
                             211
                         </td>
-                        {example.map((item, index) => (
+                        {data.transfers.map((item, index) => (
                             <td
                                 className={
                                     'border border-gray-300 text-center text-sm text-gray-500'
@@ -93,7 +48,7 @@ const Document2086 = () => {
                             }>
                             212
                         </td>
-                        {example.map((item, index) => (
+                        {data.transfers.map((item, index) => (
                             <td
                                 className={
                                     'border border-gray-300 text-center text-sm text-gray-500'
@@ -113,7 +68,7 @@ const Document2086 = () => {
                             }>
                             213
                         </td>
-                        {example.map((item, index) => (
+                        {data.transfers.map((item, index) => (
                             <td
                                 className={
                                     'border border-gray-300 text-center text-sm text-gray-500'
@@ -130,7 +85,7 @@ const Document2086 = () => {
                             }>
                             214
                         </td>
-                        {example.map((item, index) => (
+                        {data.transfers.map((item, index) => (
                             <td
                                 className={
                                     'border border-gray-300 text-center text-sm text-gray-500'
@@ -147,7 +102,7 @@ const Document2086 = () => {
                             }>
                             215
                         </td>
-                        {example.map((item, index) => (
+                        {data.transfers.map((item, index) => (
                             <td
                                 className={
                                     'border border-gray-300 text-center text-sm text-gray-500'
@@ -164,7 +119,7 @@ const Document2086 = () => {
                             }>
                             216
                         </td>
-                        {example.map((item, index) => (
+                        {data.transfers.map((item, index) => (
                             <td
                                 className={
                                     'border border-gray-300 text-center text-sm text-gray-500'
@@ -181,7 +136,7 @@ const Document2086 = () => {
                             }>
                             217
                         </td>
-                        {example.map((item, index) => (
+                        {data.transfers.map((item, index) => (
                             <td
                                 className={
                                     'border border-gray-300 text-center text-sm text-gray-500'
@@ -198,7 +153,7 @@ const Document2086 = () => {
                             }>
                             218
                         </td>
-                        {example.map((item, index) => (
+                        {data.transfers.map((item, index) => (
                             <td
                                 className={
                                     'border border-gray-300 text-center text-sm text-gray-500'
@@ -218,7 +173,7 @@ const Document2086 = () => {
                             }>
                             220
                         </td>
-                        {example.map((item, index) => (
+                        {data.transfers.map((item, index) => (
                             <td
                                 className={
                                     'border border-gray-300 text-center text-sm text-gray-500'
@@ -235,7 +190,7 @@ const Document2086 = () => {
                             }>
                             221
                         </td>
-                        {example.map((item, index) => (
+                        {data.transfers.map((item, index) => (
                             <td
                                 className={
                                     'border border-gray-300 text-center text-sm text-gray-500'
@@ -252,7 +207,7 @@ const Document2086 = () => {
                             }>
                             222
                         </td>
-                        {example.map((item, index) => (
+                        {data.transfers.map((item, index) => (
                             <td
                                 className={
                                     'border border-gray-300 text-center text-sm text-gray-500'
@@ -269,7 +224,7 @@ const Document2086 = () => {
                             }>
                             223
                         </td>
-                        {example.map((item, index) => (
+                        {data.transfers.map((item, index) => (
                             <td
                                 className={
                                     'border border-gray-300 text-center text-sm text-gray-500'
@@ -289,8 +244,8 @@ const Document2086 = () => {
                             }>
                             224
                         </td>
-                        {example.map((item, index) =>
-                            index === example.length - 1 ? (
+                        {data.transfers.map((item, index) =>
+                            index === data.transfers.length - 1 ? (
                                 <td
                                     className={
                                         'border border-gray-300 text-center text-sm text-gray-500'

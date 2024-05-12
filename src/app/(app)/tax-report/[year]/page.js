@@ -10,9 +10,9 @@ import Loading from '@/app/(app)/Loading'
 import CardDescriptionList from '@/app/(app)/CardDescriptionList'
 import { useAuth } from '@/hooks/auth'
 import Document2086 from '@/app/taxReportDocuments/FR/Document2086'
-import Card from '@/components/Card'
 import DocumentCard from '@/components/DocumentCard'
 import Document3916bis from '@/app/taxReportDocuments/FR/Document3916bis'
+import { formatPrice } from '@/lib/utils'
 
 const Page = ({ params }) => {
     const { user } = useAuth({ middleware: 'auth' })
@@ -41,7 +41,12 @@ const Page = ({ params }) => {
                 setCardStats([
                     {
                         name: 'Total value sold',
-                        value: 'TODO €',
+                        value: formatPrice(
+                            result.total_sold_value_per_fiat_currencies[
+                                user.currency_symbol
+                            ],
+                            user.currency_symbol,
+                        ),
                     },
                     {
                         name: 'Total Profit / Loss',
@@ -97,12 +102,14 @@ const Page = ({ params }) => {
                                     },
                                     {
                                         name: 'Transactions over the year',
-                                        value: 'todo',
+                                        value:
+                                            taxReport.number_transactions_done,
                                     },
                                     {
                                         name:
                                             'Taxable transactions over the year',
-                                        value: 'todo',
+                                        value:
+                                            taxReport.number_taxable_transactions_done,
                                     },
                                 ]}
                             />
@@ -138,7 +145,9 @@ const Page = ({ params }) => {
                                 <DocumentCard
                                     title={'Report my taxable transactions'}
                                     form={'2086'}>
-                                    <Document2086 />
+                                    <Document2086
+                                        data={taxReport.documents['2086']}
+                                    />
                                 </DocumentCard>
                                 <DocumentCard
                                     title={'Declare my accounts abroad'}

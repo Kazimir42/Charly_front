@@ -371,6 +371,15 @@ const Transactions = () => {
         }
     }
 
+    function deleteAll() {
+        selectedTransactionIds.forEach(id => {
+            deleteTransaction(id).then(() => {
+                refreshTransactions()
+            })
+        })
+        setSelectedTransactionIds([])
+    }
+
     return (
         <>
             <div className={'flex flex-row items-center justify-between mb-4'}>
@@ -434,6 +443,7 @@ const Transactions = () => {
                                 selected
                             </p>
                             <Button
+                                onClick={deleteAll}
                                 className={
                                     'flex flex-row gap-1 bg-red-500 hover:bg-red-600'
                                 }>

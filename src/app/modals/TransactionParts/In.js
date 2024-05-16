@@ -81,7 +81,7 @@ const In = ({
                             min={'0'}
                             placeholder={'Quantity'}
                             value={fromQuantity}
-                            className="block w-full"
+                            className="block w-1/3"
                             onChange={event =>
                                 setFromQuantity(event.target.value)
                             }
@@ -98,7 +98,26 @@ const In = ({
                                     (acc, fiatCurrency) => {
                                         acc.push({
                                             id: fiatCurrency.id,
-                                            name: fiatCurrency.name,
+                                            name:
+                                                fiatCurrency.symbol +
+                                                ' ' +
+                                                fiatCurrency.name,
+                                            showedName: (
+                                                <div
+                                                    className={
+                                                        'flex flex-row justify-between gap-1.5'
+                                                    }>
+                                                    <span>
+                                                        {fiatCurrency.name}
+                                                    </span>
+                                                    <span
+                                                        className={
+                                                            'text-gray-400'
+                                                        }>
+                                                        {fiatCurrency.symbol}
+                                                    </span>
+                                                </div>
+                                            ),
                                             imageUrl:
                                                 process.env
                                                     .NEXT_PUBLIC_BACKEND_URL +
@@ -134,7 +153,7 @@ const In = ({
                             min={'0'}
                             placeholder={'Quantity'}
                             value={toQuantity}
-                            className="block w-full"
+                            className="block w-1/3"
                             onChange={event =>
                                 setToQuantity(event.target.value)
                             }
@@ -153,7 +172,26 @@ const In = ({
                                     (acc, cryptoCurrency) => {
                                         acc.push({
                                             id: cryptoCurrency.id,
-                                            name: cryptoCurrency.name,
+                                            name:
+                                                cryptoCurrency.symbol +
+                                                ' ' +
+                                                cryptoCurrency.name,
+                                            showedName: (
+                                                <div
+                                                    className={
+                                                        'flex flex-row justify-between gap-1.5'
+                                                    }>
+                                                    <span>
+                                                        {cryptoCurrency.name}
+                                                    </span>
+                                                    <span
+                                                        className={
+                                                            'text-gray-400'
+                                                        }>
+                                                        {cryptoCurrency.symbol}
+                                                    </span>
+                                                </div>
+                                            ),
                                             imageUrl:
                                                 process.env
                                                     .NEXT_PUBLIC_BACKEND_URL +

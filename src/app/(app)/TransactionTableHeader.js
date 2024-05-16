@@ -129,7 +129,18 @@ const TransactionTableHeader = ({
                             ...currencies.reduce((acc, currency) => {
                                 acc.push({
                                     id: currency.id,
-                                    name: currency.name,
+                                    name: currency.symbol + ' ' + currency.name,
+                                    showedName: (
+                                        <div
+                                            className={
+                                                'flex flex-row justify-between gap-1.5'
+                                            }>
+                                            <span>{currency.name}</span>
+                                            <span className={'text-gray-400'}>
+                                                {currency.symbol}
+                                            </span>
+                                        </div>
+                                    ),
                                     imageUrl:
                                         process.env.NEXT_PUBLIC_BACKEND_URL +
                                         '/currencies/logo/' +
@@ -159,7 +170,18 @@ const TransactionTableHeader = ({
                             ...currencies.reduce((acc, currency) => {
                                 acc.push({
                                     id: currency.id,
-                                    name: currency.name,
+                                    name: currency.symbol + ' ' + currency.name,
+                                    showedName: (
+                                        <div
+                                            className={
+                                                'flex flex-row justify-between gap-1.5'
+                                            }>
+                                            <span>{currency.name}</span>
+                                            <span className={'text-gray-400'}>
+                                                {currency.symbol}
+                                            </span>
+                                        </div>
+                                    ),
                                     imageUrl:
                                         process.env.NEXT_PUBLIC_BACKEND_URL +
                                         '/currencies/logo/' +

@@ -99,7 +99,7 @@ export default function SelectCombobox({
                                                     'ml-3 truncate',
                                                     selected && 'font-semibold',
                                                 )}>
-                                                {item.name}
+                                                {item.showedName ?? item.name}
                                             </span>
                                         </div>
 

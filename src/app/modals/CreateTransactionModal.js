@@ -144,7 +144,6 @@ const CreateTransactionModal = ({
                                 className="cursor-pointer"
                                 onChange={event => setType(event.target.value)}
                                 required
-                                autoFocus
                             />
                             <Label htmlFor="in" className={'cursor-pointer'}>
                                 <TransactionTypeBubble
@@ -165,7 +164,6 @@ const CreateTransactionModal = ({
                                 className="cursor-pointer"
                                 onChange={event => setType(event.target.value)}
                                 required
-                                autoFocus
                             />
                             <Label htmlFor="out" className={'cursor-pointer'}>
                                 <TransactionTypeBubble
@@ -186,7 +184,6 @@ const CreateTransactionModal = ({
                                 className="cursor-pointer"
                                 onChange={event => setType(event.target.value)}
                                 required
-                                autoFocus
                             />
                             <Label htmlFor="swap" className={'cursor-pointer'}>
                                 <TransactionTypeBubble

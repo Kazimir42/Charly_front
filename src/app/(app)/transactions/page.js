@@ -230,7 +230,18 @@ const Transactions = () => {
 
         if (!transactions.length) {
             formattedData = [
-                ['No transactions found :(', '', '', '', '', '', '', ''],
+                [
+                    'No transactions found :(',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                ],
             ]
         }
         setFormattedTransactions(formattedData)

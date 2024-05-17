@@ -109,7 +109,7 @@ const CreateTransactionModal = ({
     }
 
     function openOrClose() {
-        setType(null)
+        setType('IN')
         setDate('')
         setTransactionLabel(0)
         setToCurrency(0)

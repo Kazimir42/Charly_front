@@ -47,7 +47,7 @@ export default function SelectCombobox({
                 setQuery('')
                 setSelectedItem(item.id)
             }}>
-            <div className={'relative ' + contentClassName}>
+            <div className={'relative ' + (contentClassName ?? '')}>
                 <Combobox.Input
                     placeholder={placeholder}
                     id={id}

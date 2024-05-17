@@ -12,6 +12,7 @@ import Out from '@/app/modals/TransactionParts/Out'
 import Swap from '@/app/modals/TransactionParts/Swap'
 import { useTransactionLabelData } from '@/hooks/transactionLabels'
 import TransactionTypeBubble from '@/components/TransactionTypeBubble'
+import Fees from '@/app/modals/TransactionParts/Fees'
 
 const EditTransactionModal = ({
     transaction,
@@ -43,6 +44,8 @@ const EditTransactionModal = ({
     const [cryptoCurrencies, setCryptoCurrencies] = useState([])
     const [transactionLabelsIn, setTransactionLabelsIn] = useState([])
     const [transactionLabelsOut, setTransactionLabelsOut] = useState([])
+
+    const [activeTab, setActiveTab] = useState('informations')
 
     useEffect(() => {
         if (isOpen) {
@@ -174,93 +177,130 @@ const EditTransactionModal = ({
                 </div>
 
                 <div>
-                    <h4 className={'mb-2'}>Informations</h4>
-                    {type === TransactionType.IN ? (
-                        <In
-                            date={date}
-                            setDate={setDate}
-                            transactionLabel={transactionLabel}
-                            setTransactionLabel={setTransactionLabel}
-                            toCurrency={toCurrency}
-                            setToCurrency={setToCurrency}
-                            toQuantity={toQuantity}
-                            setToQuantity={setToQuantity}
-                            fromCurrency={fromCurrency}
-                            setFromCurrency={setFromCurrency}
-                            fromQuantity={fromQuantity}
-                            setFromQuantity={setFromQuantity}
-                            location={location}
-                            setLocation={setLocation}
-                            hash={hash}
-                            setHash={setHash}
-                            toAddress={toAddress}
-                            setToAddress={setToAddress}
-                            note={note}
-                            setNote={setNote}
-                            locations={locations}
-                            fiatCurrencies={fiatCurrencies}
-                            cryptoCurrencies={cryptoCurrencies}
-                            transactionLabels={transactionLabelsIn}
-                        />
-                    ) : null}
-
-                    {type === TransactionType.OUT ? (
-                        <Out
-                            date={date}
-                            setDate={setDate}
-                            transactionLabel={transactionLabel}
-                            setTransactionLabel={setTransactionLabel}
-                            toCurrency={toCurrency}
-                            setToCurrency={setToCurrency}
-                            toQuantity={toQuantity}
-                            setToQuantity={setToQuantity}
-                            fromCurrency={fromCurrency}
-                            setFromCurrency={setFromCurrency}
-                            fromQuantity={fromQuantity}
-                            setFromQuantity={setFromQuantity}
-                            location={location}
-                            setLocation={setLocation}
-                            hash={hash}
-                            setHash={setHash}
-                            fromAddress={fromAddress}
-                            setFromAddress={setFromAddress}
-                            note={note}
-                            setNote={setNote}
-                            locations={locations}
-                            fiatCurrencies={fiatCurrencies}
-                            cryptoCurrencies={cryptoCurrencies}
-                            transactionLabels={transactionLabelsOut}
-                            taxable={taxable}
-                            setTaxable={setTaxable}
-                        />
-                    ) : null}
-
-                    {type === TransactionType.SWAP ? (
-                        <Swap
-                            date={date}
-                            setDate={setDate}
-                            toCurrency={toCurrency}
-                            setToCurrency={setToCurrency}
-                            toQuantity={toQuantity}
-                            setToQuantity={setToQuantity}
-                            fromCurrency={fromCurrency}
-                            setFromCurrency={setFromCurrency}
-                            fromQuantity={fromQuantity}
-                            setFromQuantity={setFromQuantity}
-                            location={location}
-                            setLocation={setLocation}
-                            hash={hash}
-                            setHash={setHash}
-                            toAddress={toAddress}
-                            setToAddress={setToAddress}
-                            fromAddress={fromAddress}
-                            setFromAddress={setFromAddress}
-                            note={note}
-                            setNote={setNote}
-                            locations={locations}
-                            cryptoCurrencies={cryptoCurrencies}
-                        />
-                    ) : null}
+                    <div
+                        className={
+                            'flex flex-row gap-5 border-gray-300 border-b'
+                        }>
+                        <button
+                            type={'button'}
+                            className={
+                                'pb-1 px-2  ' +
+                                (activeTab === 'informations'
+                                    ? 'border-b-2 border-default-primary_dark text-default-primary_dark font-semibold'
+                                    : '')
+                            }
+                            onClick={() => setActiveTab('informations')}>
+                            Informations
+                        </button>
+                        <button
+                            type={'button'}
+                            className={
+                                'pb-1 px-2 ' +
+                                (activeTab === 'fees'
+                                    ? 'border-b-2 border-default-primary_dark text-default-primary_dark font-semibold'
+                                    : '')
+                            }
+                            onClick={() => setActiveTab('fees')}>
+                            Fees
+                        </button>
+                    </div>
+                    <div className={'px-4 py-4 bg-gray-50 rounded-b-md'}>
+                        {activeTab === 'informations' ? (
+                            type === TransactionType.IN ? (
+                                <In
+                                    date={date}
+                                    setDate={setDate}
+                                    transactionLabel={transactionLabel}
+                                    setTransactionLabel={setTransactionLabel}
+                                    toCurrency={toCurrency}
+                                    setToCurrency={setToCurrency}
+                                    toQuantity={toQuantity}
+                                    setToQuantity={setToQuantity}
+                                    fromCurrency={fromCurrency}
+                                    setFromCurrency={setFromCurrency}
+                                    fromQuantity={fromQuantity}
+                                    setFromQuantity={setFromQuantity}
+                                    location={location}
+                                    setLocation={setLocation}
+                                    hash={hash}
+                                    setHash={setHash}
+                                    toAddress={toAddress}
+                                    setToAddress={setToAddress}
+                                    note={note}
+                                    setNote={setNote}
+                                    locations={locations}
+                                    fiatCurrencies={fiatCurrencies}
+                                    cryptoCurrencies={cryptoCurrencies}
+                                    transactionLabels={transactionLabelsIn}
+                                />
+                            ) : type === TransactionType.OUT ? (
+                                <Out
+                                    date={date}
+                                    setDate={setDate}
+                                    transactionLabel={transactionLabel}
+                                    setTransactionLabel={setTransactionLabel}
+                                    toCurrency={toCurrency}
+                                    setToCurrency={setToCurrency}
+                                    toQuantity={toQuantity}
+                                    setToQuantity={setToQuantity}
+                                    fromCurrency={fromCurrency}
+                                    setFromCurrency={setFromCurrency}
+                                    fromQuantity={fromQuantity}
+                                    setFromQuantity={setFromQuantity}
+                                    location={location}
+                                    setLocation={setLocation}
+                                    hash={hash}
+                                    setHash={setHash}
+                                    fromAddress={fromAddress}
+                                    setFromAddress={setFromAddress}
+                                    note={note}
+                                    setNote={setNote}
+                                    locations={locations}
+                                    fiatCurrencies={fiatCurrencies}
+                                    cryptoCurrencies={cryptoCurrencies}
+                                    transactionLabels={transactionLabelsOut}
+                                    taxable={taxable}
+                                    setTaxable={setTaxable}
+                                />
+                            ) : type === TransactionType.SWAP ? (
+                                <Swap
+                                    date={date}
+                                    setDate={setDate}
+                                    toCurrency={toCurrency}
+                                    setToCurrency={setToCurrency}
+                                    toQuantity={toQuantity}
+                                    setToQuantity={setToQuantity}
+                                    fromCurrency={fromCurrency}
+                                    setFromCurrency={setFromCurrency}
+                                    fromQuantity={fromQuantity}
+                                    setFromQuantity={setFromQuantity}
+                                    location={location}
+                                    setLocation={setLocation}
+                                    hash={hash}
+                                    setHash={setHash}
+                                    toAddress={toAddress}
+                                    setToAddress={setToAddress}
+                                    fromAddress={fromAddress}
+                                    setFromAddress={setFromAddress}
+                                    note={note}
+                                    setNote={setNote}
+                                    locations={locations}
+                                    cryptoCurrencies={cryptoCurrencies}
+                                />
+                            ) : null
+                        ) : (
+                            <Fees
+                                fees={[
+                                    { quantity: 1, currencyId: 1 },
+                                    { quantity: 2, currencyId: 2 },
+                                ]}
+                                currencies={[
+                                    ...fiatCurrencies,
+                                    ...cryptoCurrencies,
+                                ]}
+                            />
+                        )}
+                    </div>
                 </div>
 
                 <div className={'flex flex-row justify-end'}>

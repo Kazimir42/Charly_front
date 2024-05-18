@@ -44,6 +44,8 @@ const CreateTransactionModal = ({
     const [note, setNote] = useState('')
     const [taxable, setTaxable] = useState(false)
 
+    const [fees, setFees] = useState([])
+
     const [locations, setLocations] = useState([])
     const [fiatCurrencies, setFiatCurrencies] = useState([])
     const [cryptoCurrencies, setCryptoCurrencies] = useState([])
@@ -291,10 +293,8 @@ const CreateTransactionModal = ({
                             ) : null
                         ) : activeTab === 'fees' ? (
                             <Fees
-                                fees={[
-                                    { quantity: 1, currencyId: 1 },
-                                    { quantity: 2, currencyId: 2 },
-                                ]}
+                                fees={fees}
+                                setFees={setFees}
                                 currencies={[
                                     ...fiatCurrencies,
                                     ...cryptoCurrencies,

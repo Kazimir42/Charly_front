@@ -15,6 +15,7 @@ import TransactionTypeBubble from '@/components/TransactionTypeBubble'
 import { useTransactionLabelData } from '@/hooks/transactionLabels'
 import Fees from '@/modals/Transaction/TransactionParts/Fees'
 import Tabs from '@/modals/Transaction/_components/Tabs'
+import Movements from '@/modals/Transaction/TransactionParts/Movements'
 
 const CreateTransactionModal = ({
     setIsOpen,
@@ -288,7 +289,7 @@ const CreateTransactionModal = ({
                                     cryptoCurrencies={cryptoCurrencies}
                                 />
                             ) : null
-                        ) : (
+                        ) : activeTab === 'fees' ? (
                             <Fees
                                 fees={[
                                     { quantity: 1, currencyId: 1 },
@@ -297,6 +298,26 @@ const CreateTransactionModal = ({
                                 currencies={[
                                     ...fiatCurrencies,
                                     ...cryptoCurrencies,
+                                ]}
+                            />
+                        ) : (
+                            <Movements
+                                movements={[
+                                    {
+                                        quantity: 1,
+                                        from_currency_id: 1,
+                                        to_currency_id: 2,
+                                    },
+                                    {
+                                        quantity: 2,
+                                        from_currency_id: 1,
+                                        to_currency_id: 2,
+                                    },
+                                    {
+                                        quantity: 3,
+                                        from_currency_id: 1,
+                                        to_currency_id: 2,
+                                    },
                                 ]}
                             />
                         )}

@@ -13,8 +13,8 @@ import Swap from '@/modals/Transaction/TransactionParts/Swap'
 import { useTransactionLabelData } from '@/hooks/transactionLabels'
 import TransactionTypeBubble from '@/components/TransactionTypeBubble'
 import Fees from '@/modals/Transaction/TransactionParts/Fees'
-import Tab from '@/components/Tab'
 import Tabs from '@/modals/Transaction/_components/Tabs'
+import Movements from '@/modals/Transaction/TransactionParts/Movements'
 
 const EditTransactionModal = ({
     transaction,
@@ -265,7 +265,7 @@ const EditTransactionModal = ({
                                     cryptoCurrencies={cryptoCurrencies}
                                 />
                             ) : null
-                        ) : (
+                        ) : activeTab === 'fees' ? (
                             <Fees
                                 fees={[
                                     { quantity: 1, currencyId: 1 },
@@ -274,6 +274,26 @@ const EditTransactionModal = ({
                                 currencies={[
                                     ...fiatCurrencies,
                                     ...cryptoCurrencies,
+                                ]}
+                            />
+                        ) : (
+                            <Movements
+                                movements={[
+                                    {
+                                        quantity: 1,
+                                        from_currency_id: 1,
+                                        to_currency_id: 2,
+                                    },
+                                    {
+                                        quantity: 2,
+                                        from_currency_id: 1,
+                                        to_currency_id: 2,
+                                    },
+                                    {
+                                        quantity: 3,
+                                        from_currency_id: 1,
+                                        to_currency_id: 2,
+                                    },
                                 ]}
                             />
                         )}

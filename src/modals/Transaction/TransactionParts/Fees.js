@@ -8,14 +8,14 @@ const Fees = ({ fees, setFees, currencies }) => {
     function addBlankFee() {
         setFees([
             ...fees,
-            { tempId: Date.now(), id: null, quantity: 0, currencyId: 0 },
+            { temp_id: Date.now(), id: null, quantity: 0, currency_id: 0 },
         ])
     }
 
     // Possibility to delete by tempId for fees not saved on database
     function removeFee(id, isTempId = false) {
         let newFees = fees.reduce((acc, cur) => {
-            if ((isTempId ? cur.tempId : cur.id) !== id) {
+            if ((isTempId ? cur.temp_id : cur.id) !== id) {
                 acc.push(cur)
             }
             return acc
@@ -27,7 +27,7 @@ const Fees = ({ fees, setFees, currencies }) => {
     // Possibility to update by tempId for fees not saved on database
     function updateFee(id, newFee, isTempId = false) {
         const newFees = fees.map(fee => {
-            if ((isTempId ? fee.tempId : fee.id) === id) {
+            if ((isTempId ? fee.temp_id : fee.id) === id) {
                 return { ...fee, ...newFee }
             }
             return fee
@@ -50,9 +50,9 @@ const Fees = ({ fees, setFees, currencies }) => {
                     value={fee?.quantity ?? 0}
                     onChange={event =>
                         updateFee(
-                            fee.id ?? fee.tempId,
+                            fee.id ?? fee.temp_id,
                             { quantity: event.target.value },
-                            !!fee.tempId,
+                            !!fee.temp_id,
                         )
                     }
                     className="block col-span-3"
@@ -62,12 +62,12 @@ const Fees = ({ fees, setFees, currencies }) => {
                         id="from_currency"
                         name="from_currency"
                         placeholder={'Asset'}
-                        selectedItem={fee?.currencyId ?? 0}
-                        setSelectedItem={currencyId =>
+                        selectedItem={fee?.currency_id ?? 0}
+                        setSelectedItem={currency_id =>
                             updateFee(
-                                fee.id ?? fee.tempId,
-                                { currencyId: currencyId },
-                                !!fee.tempId,
+                                fee.id ?? fee.temp_id,
+                                { currency_id: currency_id },
+                                !!fee.temp_id,
                             )
                         }
                         items={[
@@ -102,7 +102,7 @@ const Fees = ({ fees, setFees, currencies }) => {
                     type={'button'}
                     className="hover:text-gray-700 p-1 duration-100 transition text-gray-500 text-right"
                     onClick={() =>
-                        removeFee(fee.id ?? fee.tempId, !!fee.tempId)
+                        removeFee(fee.id ?? fee.temp_id, !!fee.temp_id)
                     }>
                     <TrashIcon className="h-5 w-5" />
                 </button>
@@ -112,9 +112,7 @@ const Fees = ({ fees, setFees, currencies }) => {
 
     return (
         <div className={'flex flex-col gap-2'}>
-            {fees.map((fee, i) => (
-                <Fee key={i} fee={fee} />
-            ))}
+            {fees ? fees.map((fee, i) => <Fee key={i} fee={fee} />) : null}
             <Button
                 type={'button'}
                 onClick={() => addBlankFee()}

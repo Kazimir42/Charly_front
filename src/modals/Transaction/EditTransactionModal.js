@@ -15,6 +15,7 @@ import TransactionTypeBubble from '@/components/TransactionTypeBubble'
 import Fees from '@/modals/Transaction/TransactionParts/Fees'
 import Tabs from '@/modals/Transaction/_components/Tabs'
 import Movements from '@/modals/Transaction/TransactionParts/Movements'
+import { useFeeData } from '@/hooks/fees'
 
 const EditTransactionModal = ({
     transaction,
@@ -25,6 +26,7 @@ const EditTransactionModal = ({
     const { getLocations } = useLocationData()
     const { getCurrencies } = useCurrencyData()
     const { getTransactionLabels } = useTransactionLabelData()
+    const { getFees, updateFee, createFee } = useFeeData()
 
     const [id, setId] = useState('')
     const [transactionLabel, setTransactionLabel] = useState(0)
@@ -40,6 +42,8 @@ const EditTransactionModal = ({
     const [toAddress, setToAddress] = useState('')
     const [note, setNote] = useState('')
     const [taxable, setTaxable] = useState(false)
+
+    const [fees, setFees] = useState([])
 
     const [locations, setLocations] = useState([])
     const [fiatCurrencies, setFiatCurrencies] = useState([])
@@ -66,24 +70,30 @@ const EditTransactionModal = ({
     }, [isOpen])
 
     useEffect(() => {
-        setId(transaction?.id ?? '')
-        setType(transaction?.type ?? '')
-        setTransactionLabel(transaction?.transaction_label_id ?? 0)
-        setDate(transaction?.date ?? '')
-        setToCurrency(transaction?.to_currency_id ?? 0)
-        setToQuantity(transaction?.to_quantity ?? 0)
-        setFromCurrency(transaction?.from_currency_id ?? 0)
-        setFromQuantity(transaction?.from_quantity ?? 0)
-        setLocation(transaction?.location_id ?? 0)
-        setHash(transaction?.hash ?? '')
-        setFromAddress(transaction?.from_address ?? '')
-        setToAddress(transaction?.to_address ?? '')
-        setNote(transaction?.note ?? '')
-        setTaxable(transaction?.taxable ?? false)
+        if (transaction) {
+            setId(transaction?.id ?? '')
+            setType(transaction?.type ?? '')
+            setTransactionLabel(transaction?.transaction_label_id ?? 0)
+            setDate(transaction?.date ?? '')
+            setToCurrency(transaction?.to_currency_id ?? 0)
+            setToQuantity(transaction?.to_quantity ?? 0)
+            setFromCurrency(transaction?.from_currency_id ?? 0)
+            setFromQuantity(transaction?.from_quantity ?? 0)
+            setLocation(transaction?.location_id ?? 0)
+            setHash(transaction?.hash ?? '')
+            setFromAddress(transaction?.from_address ?? '')
+            setToAddress(transaction?.to_address ?? '')
+            setNote(transaction?.note ?? '')
+            setTaxable(transaction?.taxable ?? false)
+
+            getFees(transaction?.id).then(data => setFees(data.data ?? []))
+        }
     }, [transaction])
 
     const submitForm = async event => {
         event.preventDefault()
+
+        console.log(fees)
 
         updateTransaction(id, {
             type,
@@ -100,6 +110,14 @@ const EditTransactionModal = ({
             from_address: fromAddress,
             note,
             taxable,
+        })
+
+        fees.forEach(fee => {
+            if (fee.id) {
+                updateFee(id, fee.id, fee)
+            } else {
+                createFee(id, fee)
+            }
         })
     }
 
@@ -267,10 +285,8 @@ const EditTransactionModal = ({
                             ) : null
                         ) : activeTab === 'fees' ? (
                             <Fees
-                                fees={[
-                                    { quantity: 1, currencyId: 1 },
-                                    { quantity: 2, currencyId: 2 },
-                                ]}
+                                fees={fees}
+                                setFees={setFees}
                                 currencies={[
                                     ...fiatCurrencies,
                                     ...cryptoCurrencies,

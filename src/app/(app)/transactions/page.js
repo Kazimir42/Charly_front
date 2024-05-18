@@ -19,6 +19,7 @@ import { useCurrencyData } from '@/hooks/currencies'
 import { useLocationData } from '@/hooks/locations'
 import TransactionTableHeader from '@/app/(app)/transactions/_components/TransactionTableHeader'
 import Input from '@/components/Input'
+import { useFeeData } from '@/hooks/fees'
 
 const Transactions = () => {
     const { user } = useAuth({ middleware: 'auth' })

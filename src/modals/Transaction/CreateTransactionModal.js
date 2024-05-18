@@ -92,6 +92,8 @@ const CreateTransactionModal = ({
     const submitForm = async event => {
         event.preventDefault()
 
+        console.log(fees)
+
         createTransaction({
             type,
             date,
@@ -107,6 +109,7 @@ const CreateTransactionModal = ({
             from_address: fromAddress,
             note,
             taxable,
+            fees,
         })
 
         openOrClose()

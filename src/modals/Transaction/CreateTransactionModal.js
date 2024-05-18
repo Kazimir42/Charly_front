@@ -14,6 +14,7 @@ import Swap from '@/modals/Transaction/TransactionParts/Swap'
 import TransactionTypeBubble from '@/components/TransactionTypeBubble'
 import { useTransactionLabelData } from '@/hooks/transactionLabels'
 import Fees from '@/modals/Transaction/TransactionParts/Fees'
+import Tabs from '@/modals/Transaction/_components/Tabs'
 
 const CreateTransactionModal = ({
     setIsOpen,
@@ -125,35 +126,6 @@ const CreateTransactionModal = ({
         setIsOpen(!isOpen)
     }
 
-    function Tabs() {
-        return (
-            <div className={'flex flex-row gap-5 border-gray-300 border-b'}>
-                <button
-                    type={'button'}
-                    className={
-                        'pb-1 px-2  ' +
-                        (activeTab === 'informations'
-                            ? 'border-b-2 border-default-primary_dark text-default-primary_dark font-semibold'
-                            : '')
-                    }
-                    onClick={() => setActiveTab('informations')}>
-                    Informations
-                </button>
-                <button
-                    type={'button'}
-                    className={
-                        'pb-1 px-2 ' +
-                        (activeTab === 'fees'
-                            ? 'border-b-2 border-default-primary_dark text-default-primary_dark font-semibold'
-                            : '')
-                    }
-                    onClick={() => setActiveTab('fees')}>
-                    Fees
-                </button>
-            </div>
-        )
-    }
-
     function Types() {
         return (
             <div>
@@ -231,7 +203,7 @@ const CreateTransactionModal = ({
             <form className={'flex flex-col gap-4'} onSubmit={submitForm}>
                 <Types />
                 <div>
-                    <Tabs />
+                    <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
                     <div className={'px-4 py-4 bg-gray-50 rounded-b-md'}>
                         {activeTab === 'informations' ? (
                             type === TransactionType.IN ? (

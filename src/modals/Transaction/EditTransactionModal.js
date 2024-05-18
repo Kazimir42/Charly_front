@@ -14,7 +14,7 @@ import { useTransactionLabelData } from '@/hooks/transactionLabels'
 import TransactionTypeBubble from '@/components/TransactionTypeBubble'
 import Fees from '@/modals/Transaction/TransactionParts/Fees'
 import Tab from '@/components/Tab'
-import Tabs from '@/modals/Transaction/components/Tabs'
+import Tabs from '@/modals/Transaction/_components/Tabs'
 
 const EditTransactionModal = ({
     transaction,

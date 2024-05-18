@@ -3,17 +3,17 @@ import Modal from '@/components/Modal'
 import Input from '@/components/Input'
 import Label from '@/components/Label'
 import Button from '@/components/Button'
-import In from '@/app/modals/TransactionParts/In'
-import Out from '@/app/modals/TransactionParts/Out'
+import In from '@/modals/Transaction/TransactionParts/In'
+import Out from '@/modals/Transaction/TransactionParts/Out'
 import { useLocationData } from '@/hooks/locations'
 import { useCurrencyData } from '@/hooks/currencies'
 import { CurrencyType } from '@/enums/CurrencyType'
 import { TransactionType } from '@/enums/TransactionType'
 import { useAuth } from '@/hooks/auth'
-import Swap from '@/app/modals/TransactionParts/Swap'
+import Swap from '@/modals/Transaction/TransactionParts/Swap'
 import TransactionTypeBubble from '@/components/TransactionTypeBubble'
 import { useTransactionLabelData } from '@/hooks/transactionLabels'
-import Fees from '@/app/modals/TransactionParts/Fees'
+import Fees from '@/modals/Transaction/TransactionParts/Fees'
 
 const CreateTransactionModal = ({
     setIsOpen,
@@ -125,6 +125,103 @@ const CreateTransactionModal = ({
         setIsOpen(!isOpen)
     }
 
+    function Tabs() {
+        return (
+            <div className={'flex flex-row gap-5 border-gray-300 border-b'}>
+                <button
+                    type={'button'}
+                    className={
+                        'pb-1 px-2  ' +
+                        (activeTab === 'informations'
+                            ? 'border-b-2 border-default-primary_dark text-default-primary_dark font-semibold'
+                            : '')
+                    }
+                    onClick={() => setActiveTab('informations')}>
+                    Informations
+                </button>
+                <button
+                    type={'button'}
+                    className={
+                        'pb-1 px-2 ' +
+                        (activeTab === 'fees'
+                            ? 'border-b-2 border-default-primary_dark text-default-primary_dark font-semibold'
+                            : '')
+                    }
+                    onClick={() => setActiveTab('fees')}>
+                    Fees
+                </button>
+            </div>
+        )
+    }
+
+    function Types() {
+        return (
+            <div>
+                <h4 className={'mb-2'}>Type of transaction*</h4>
+                <div className={'flex flex-row gap-4'}>
+                    <div
+                        className={
+                            'flex flex-row gap-1 bg-gray-100 items-center pl-3 pr-2 py-1.5 rounded-full'
+                        }>
+                        <Input
+                            id="in"
+                            type="radio"
+                            name={'type'}
+                            value={TransactionType.IN}
+                            className="cursor-pointer"
+                            onChange={event => setType(event.target.value)}
+                            checked={type === TransactionType.IN}
+                            required
+                        />
+                        <Label htmlFor="in" className={'cursor-pointer'}>
+                            <TransactionTypeBubble type={TransactionType.IN} />
+                        </Label>
+                    </div>
+
+                    <div
+                        className={
+                            'flex flex-row gap-1 bg-gray-100 items-center pl-3 pr-2 py-1.5 rounded-full'
+                        }>
+                        <Input
+                            id="out"
+                            type="radio"
+                            name={'type'}
+                            value={TransactionType.OUT}
+                            className="cursor-pointer"
+                            onChange={event => setType(event.target.value)}
+                            checked={type === TransactionType.OUT}
+                            required
+                        />
+                        <Label htmlFor="out" className={'cursor-pointer'}>
+                            <TransactionTypeBubble type={TransactionType.OUT} />
+                        </Label>
+                    </div>
+
+                    <div
+                        className={
+                            'flex flex-row gap-1 bg-gray-100 items-center pl-3 pr-2 py-1.5 rounded-full'
+                        }>
+                        <Input
+                            id="swap"
+                            type="radio"
+                            name={'type'}
+                            value={TransactionType.SWAP}
+                            className="cursor-pointer"
+                            onChange={event => setType(event.target.value)}
+                            checked={type === TransactionType.SWAP}
+                            required
+                        />
+                        <Label htmlFor="swap" className={'cursor-pointer'}>
+                            <TransactionTypeBubble
+                                type={TransactionType.SWAP}
+                            />
+                        </Label>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
     return (
         <Modal
             title={'New Transaction'}
@@ -132,102 +229,9 @@ const CreateTransactionModal = ({
             isOpen={isOpen}
             className={''}>
             <form className={'flex flex-col gap-4'} onSubmit={submitForm}>
+                <Types />
                 <div>
-                    <h4 className={'mb-2'}>Type of transaction*</h4>
-                    <div className={'flex flex-row gap-4'}>
-                        <div
-                            className={
-                                'flex flex-row gap-1 bg-gray-100 items-center pl-3 pr-2 py-1.5 rounded-full'
-                            }>
-                            <Input
-                                id="in"
-                                type="radio"
-                                name={'type'}
-                                value={TransactionType.IN}
-                                className="cursor-pointer"
-                                onChange={event => setType(event.target.value)}
-                                checked={type === TransactionType.IN}
-                                required
-                            />
-                            <Label htmlFor="in" className={'cursor-pointer'}>
-                                <TransactionTypeBubble
-                                    type={TransactionType.IN}
-                                />
-                            </Label>
-                        </div>
-
-                        <div
-                            className={
-                                'flex flex-row gap-1 bg-gray-100 items-center pl-3 pr-2 py-1.5 rounded-full'
-                            }>
-                            <Input
-                                id="out"
-                                type="radio"
-                                name={'type'}
-                                value={TransactionType.OUT}
-                                className="cursor-pointer"
-                                onChange={event => setType(event.target.value)}
-                                checked={type === TransactionType.OUT}
-                                required
-                            />
-                            <Label htmlFor="out" className={'cursor-pointer'}>
-                                <TransactionTypeBubble
-                                    type={TransactionType.OUT}
-                                />
-                            </Label>
-                        </div>
-
-                        <div
-                            className={
-                                'flex flex-row gap-1 bg-gray-100 items-center pl-3 pr-2 py-1.5 rounded-full'
-                            }>
-                            <Input
-                                id="swap"
-                                type="radio"
-                                name={'type'}
-                                value={TransactionType.SWAP}
-                                className="cursor-pointer"
-                                onChange={event => setType(event.target.value)}
-                                checked={type === TransactionType.SWAP}
-                                required
-                            />
-                            <Label htmlFor="swap" className={'cursor-pointer'}>
-                                <TransactionTypeBubble
-                                    type={TransactionType.SWAP}
-                                />
-                            </Label>
-                        </div>
-                    </div>
-                </div>
-
-                <div>
-                    <div
-                        className={
-                            'flex flex-row gap-5 border-gray-300 border-b'
-                        }>
-                        <button
-                            type={'button'}
-                            className={
-                                'pb-1 px-2  ' +
-                                (activeTab === 'informations'
-                                    ? 'border-b-2 border-default-primary_dark text-default-primary_dark font-semibold'
-                                    : '')
-                            }
-                            onClick={() => setActiveTab('informations')}>
-                            Informations
-                        </button>
-                        <button
-                            type={'button'}
-                            className={
-                                'pb-1 px-2 ' +
-                                (activeTab === 'fees'
-                                    ? 'border-b-2 border-default-primary_dark text-default-primary_dark font-semibold'
-                                    : '')
-                            }
-                            onClick={() => setActiveTab('fees')}>
-                            Fees
-                        </button>
-                    </div>
+                    <Tabs />
                     <div className={'px-4 py-4 bg-gray-50 rounded-b-md'}>
                         {activeTab === 'informations' ? (
                             type === TransactionType.IN ? (

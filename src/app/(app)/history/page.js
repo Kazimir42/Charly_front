@@ -4,7 +4,7 @@ import Header from '@/app/(app)/Header'
 import SimpleCard from '@/components/SimpleCard'
 import { useEffect, useState } from 'react'
 import { useHistoryData } from '@/hooks/history'
-import SoldCrypto from '@/app/(app)/SoldCrypto'
+import SoldCrypto from '@/app/(app)/history/_components/SoldCrypto'
 
 const History = () => {
     const [cardStats, setCardStats] = useState([])

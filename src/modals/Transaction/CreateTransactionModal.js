@@ -16,6 +16,7 @@ import { useTransactionLabelData } from '@/hooks/transactionLabels'
 import Fees from '@/modals/Transaction/TransactionParts/Fees'
 import Tabs from '@/modals/Transaction/_components/Tabs'
 import Movements from '@/modals/Transaction/TransactionParts/Movements'
+import { useTransactionData } from '@/hooks/transactions'
 
 const CreateTransactionModal = ({
     setIsOpen,
@@ -26,6 +27,8 @@ const CreateTransactionModal = ({
     const { getLocations } = useLocationData()
     const { getCurrencies } = useCurrencyData()
     const { getTransactionLabels } = useTransactionLabelData()
+    const { getMovementableTransactions } = useTransactionData()
+
     const { user } = useAuth({
         middleware: 'auth',
     })
@@ -88,7 +91,7 @@ const CreateTransactionModal = ({
             setToCurrency(0)
             setFromCurrency(0)
         }
-    }, [type])
+    }, [type, isOpen])
 
     const submitForm = async event => {
         event.preventDefault()
@@ -307,6 +310,12 @@ const CreateTransactionModal = ({
                             />
                         ) : (
                             <Movements
+                                type={type}
+                                quantity={fromQuantity}
+                                currency={cryptoCurrencies.find(
+                                    crypto => crypto.id == fromCurrency,
+                                )}
+                                getTransactions={geMovementableTransactions}
                                 movements={[
                                     {
                                         quantity: 1,

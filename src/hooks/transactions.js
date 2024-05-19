@@ -14,6 +14,18 @@ export const useTransactionData = () => {
             })
     }
 
+    const getMovementableTransactions = async (id, params) => {
+        return axios
+            .get('/api/transactions/' + id + '/movementables' + params)
+            .then(response => {
+                return response.data
+            })
+            .catch(error => {
+                toast.error(error.response.data.message)
+                throw error
+            })
+    }
+
     const createTransaction = async data => {
         return axios
             .post('/api/transactions', data)
@@ -58,5 +70,6 @@ export const useTransactionData = () => {
         createTransaction,
         updateTransaction,
         deleteTransaction,
+        getMovementableTransactions,
     }
 }

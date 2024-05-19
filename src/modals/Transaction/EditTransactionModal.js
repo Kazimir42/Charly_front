@@ -16,6 +16,7 @@ import Fees from '@/modals/Transaction/TransactionParts/Fees'
 import Tabs from '@/modals/Transaction/_components/Tabs'
 import Movements from '@/modals/Transaction/TransactionParts/Movements'
 import { useFeeData } from '@/hooks/fees'
+import { useMovementData } from '@/hooks/movements'
 
 const EditTransactionModal = ({
     transaction,
@@ -26,7 +27,8 @@ const EditTransactionModal = ({
     const { getLocations } = useLocationData()
     const { getCurrencies } = useCurrencyData()
     const { getTransactionLabels } = useTransactionLabelData()
-    const { getFees, updateFee, createFee } = useFeeData()
+    const { getFees } = useFeeData()
+    const { getMovements } = useMovementData()
 
     const [id, setId] = useState('')
     const [transactionLabel, setTransactionLabel] = useState(0)
@@ -44,6 +46,7 @@ const EditTransactionModal = ({
     const [taxable, setTaxable] = useState(false)
 
     const [fees, setFees] = useState([])
+    const [movements, setMovements] = useState([])
 
     const [locations, setLocations] = useState([])
     const [fiatCurrencies, setFiatCurrencies] = useState([])
@@ -86,38 +89,38 @@ const EditTransactionModal = ({
             setNote(transaction?.note ?? '')
             setTaxable(transaction?.taxable ?? false)
 
-            getFees(transaction?.id).then(data => setFees(data.data ?? []))
+            getFees(transaction?.id).then(data =>
+                setFees(data.debug ? [] : data ?? []),
+            )
+
+            getMovements(transaction?.id).then(data =>
+                setMovements(data.debug ? [] : data ?? []),
+            )
         }
     }, [transaction])
 
     const submitForm = async event => {
         event.preventDefault()
 
-        console.log(fees)
-
         updateTransaction(id, {
-            type,
-            date,
-            transaction_label_id:
-                transactionLabel > 0 ? transactionLabel : null,
-            from_currency_id: fromCurrency,
-            from_quantity: fromQuantity,
-            to_currency_id: toCurrency,
-            to_quantity: toQuantity,
-            location_id: location > 0 ? location : null,
-            hash,
-            to_address: toAddress,
-            from_address: fromAddress,
-            note,
-            taxable,
-        })
-
-        fees.forEach(fee => {
-            if (fee.id) {
-                updateFee(id, fee.id, fee)
-            } else {
-                createFee(id, fee)
-            }
+            transaction: {
+                type,
+                date,
+                transaction_label_id:
+                    transactionLabel > 0 ? transactionLabel : null,
+                from_currency_id: fromCurrency,
+                from_quantity: fromQuantity,
+                to_currency_id: toCurrency,
+                to_quantity: toQuantity,
+                location_id: location > 0 ? location : null,
+                hash,
+                to_address: toAddress,
+                from_address: fromAddress,
+                note,
+                taxable,
+            },
+            fees: fees,
+            movements: movements,
         })
     }
 

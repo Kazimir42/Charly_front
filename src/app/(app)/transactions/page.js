@@ -20,6 +20,7 @@ import { useLocationData } from '@/hooks/locations'
 import TransactionTableHeader from '@/app/(app)/transactions/_components/TransactionTableHeader'
 import Input from '@/components/Input'
 import { useFeeData } from '@/hooks/fees'
+import { useMovementData } from '@/hooks/movements'
 
 const Transactions = () => {
     const { user } = useAuth({ middleware: 'auth' })
@@ -32,6 +33,15 @@ const Transactions = () => {
         updateTransaction,
         deleteTransaction,
     } = useTransactionData()
+
+    const { getFees, createFee, updateFee, deleteFee } = useFeeData()
+
+    const {
+        getMovements,
+        createMovement,
+        updateMovement,
+        deleteMovement,
+    } = useMovementData()
 
     const { getCurrencies } = useCurrencyData()
 
@@ -270,13 +280,31 @@ const Transactions = () => {
         setTransactionDeleteModalIsOpen(!transactionDeleteModalIsOpen)
     }
 
-    function _updateTransaction(id, data) {
-        updateTransaction(id, data)
-            .then(() => {
-                refreshTransactions()
-                openOrCloseTransactionEditModal()
-            })
-            .catch(() => {})
+    async function _updateTransaction(id, data) {
+        await updateTransaction(id, data.transaction)
+
+        for (const fee of data.fees) {
+            if (fee.id) {
+                if (fee.is_deleted) {
+                    await deleteFee(id, fee.id)
+                } else {
+                    await updateFee(id, fee.id, fee)
+                }
+            } else {
+                await createFee(id, fee)
+            }
+        }
+
+        for (const movement of data.movements) {
+            if (movement.id) {
+                await updateMovement(id, movement.id, movement)
+            } else {
+                await createMovement(id, movement)
+            }
+        }
+
+        refreshTransactions()
+        openOrCloseTransactionEditModal()
     }
 
     function _deleteTransaction(id) {
@@ -288,13 +316,19 @@ const Transactions = () => {
             .catch(() => {})
     }
 
-    function _createTransaction(data) {
-        createTransaction(data)
-            .then(() => {
-                refreshTransactions()
-                openOrCloseTransactionCreateModal()
-            })
-            .catch(() => {})
+    async function _createTransaction(data) {
+        let createdTransaction = await createTransaction(data.transaction)
+
+        for (const fee of data.fees) {
+            await createFee(createdTransaction.id, fee)
+        }
+
+        for (const movement of data.movements) {
+            await createMovement(createdTransaction.id, movement)
+        }
+
+        refreshTransactions()
+        openOrCloseTransactionCreateModal()
     }
 
     function submitFormWithOrder(name) {

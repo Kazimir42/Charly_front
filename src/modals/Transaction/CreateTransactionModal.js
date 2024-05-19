@@ -45,6 +45,7 @@ const CreateTransactionModal = ({
     const [taxable, setTaxable] = useState(false)
 
     const [fees, setFees] = useState([])
+    const [movements, setMovements] = useState([])
 
     const [locations, setLocations] = useState([])
     const [fiatCurrencies, setFiatCurrencies] = useState([])
@@ -92,24 +93,25 @@ const CreateTransactionModal = ({
     const submitForm = async event => {
         event.preventDefault()
 
-        console.log(fees)
-
         createTransaction({
-            type,
-            date,
-            transaction_label_id:
-                transactionLabel > 0 ? transactionLabel : null,
-            from_currency_id: fromCurrency,
-            from_quantity: fromQuantity,
-            to_currency_id: toCurrency,
-            to_quantity: toQuantity,
-            location_id: location > 0 ? location : null,
-            hash,
-            to_address: toAddress,
-            from_address: fromAddress,
-            note,
-            taxable,
-            fees,
+            transaction: {
+                type,
+                date,
+                transaction_label_id:
+                    transactionLabel > 0 ? transactionLabel : null,
+                from_currency_id: fromCurrency,
+                from_quantity: fromQuantity,
+                to_currency_id: toCurrency,
+                to_quantity: toQuantity,
+                location_id: location > 0 ? location : null,
+                hash,
+                to_address: toAddress,
+                from_address: fromAddress,
+                note,
+                taxable,
+            },
+            fees: fees,
+            movements: movements,
         })
 
         openOrClose()

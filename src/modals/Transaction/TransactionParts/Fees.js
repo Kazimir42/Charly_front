@@ -8,18 +8,36 @@ const Fees = ({ fees, setFees, currencies }) => {
     function addBlankFee() {
         setFees([
             ...fees,
-            { temp_id: Date.now(), id: null, quantity: 0, currency_id: 0 },
+            {
+                temp_id: Date.now(),
+                id: null,
+                quantity: 0,
+                currency_id: 0,
+            },
         ])
     }
 
     // Possibility to delete by tempId for fees not saved on database
     function removeFee(id, isTempId = false) {
-        let newFees = fees.reduce((acc, cur) => {
-            if ((isTempId ? cur.temp_id : cur.id) !== id) {
-                acc.push(cur)
-            }
-            return acc
-        }, [])
+        let newFees = []
+
+        // Fee not add on database, we can remove it from array
+        if (isTempId) {
+            newFees = fees.reduce((acc, cur) => {
+                if (cur.temp_id !== id) {
+                    acc.push(cur)
+                }
+                return acc
+            }, [])
+        } else {
+            // Fee is on database, pass is_deleted to true
+            newFees = fees.map(fee => {
+                if (fee.id === id) {
+                    return { ...fee, is_deleted: true }
+                }
+                return fee
+            })
+        }
 
         setFees(newFees)
     }
@@ -112,7 +130,13 @@ const Fees = ({ fees, setFees, currencies }) => {
 
     return (
         <div className={'flex flex-col gap-2'}>
-            {fees ? fees.map((fee, i) => <Fee key={i} fee={fee} />) : null}
+            {fees
+                ? fees.map((fee, i) => {
+                      if (!fee.is_deleted) {
+                          return <Fee key={i} fee={fee} />
+                      }
+                  })
+                : null}
             <Button
                 type={'button'}
                 onClick={() => addBlankFee()}

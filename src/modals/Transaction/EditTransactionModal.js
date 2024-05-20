@@ -49,6 +49,7 @@ const EditTransactionModal = ({
 
     const [fees, setFees] = useState([])
     const [movements, setMovements] = useState([])
+    const [movementableTransactions, setMovementableTransactions] = useState([])
 
     const [locations, setLocations] = useState([])
     const [fiatCurrencies, setFiatCurrencies] = useState([])
@@ -100,6 +101,23 @@ const EditTransactionModal = ({
             )
         }
     }, [transaction])
+
+    // Fetch transactions movementables
+    useEffect(() => {
+        if (
+            fromQuantity &&
+            fromCurrency &&
+            type === TransactionType.OUT &&
+            date &&
+            activeTab === 'movements'
+        ) {
+            getMovementableTransactions({
+                date: date,
+                fromCurrencyId: fromCurrency,
+                fromQuantity: fromQuantity,
+            }).then(setMovementableTransactions)
+        }
+    }, [activeTab])
 
     const submitForm = async event => {
         event.preventDefault()
@@ -299,23 +317,18 @@ const EditTransactionModal = ({
                             />
                         ) : (
                             <Movements
-                                movements={[
-                                    {
-                                        quantity: 1,
-                                        from_currency_id: 1,
-                                        to_currency_id: 2,
-                                    },
-                                    {
-                                        quantity: 2,
-                                        from_currency_id: 1,
-                                        to_currency_id: 2,
-                                    },
-                                    {
-                                        quantity: 3,
-                                        from_currency_id: 1,
-                                        to_currency_id: 2,
-                                    },
-                                ]}
+                                type={type}
+                                quantity={fromQuantity}
+                                currency={cryptoCurrencies.find(
+                                    crypto =>
+                                        crypto.id === parseInt(fromCurrency),
+                                )}
+                                date={date}
+                                movementableTransactions={
+                                    movementableTransactions
+                                }
+                                movements={movements}
+                                setMovements={setMovements}
                             />
                         )}
                     </div>

@@ -14,9 +14,17 @@ export const useTransactionData = () => {
             })
     }
 
-    const getMovementableTransactions = async (id, params) => {
+    const getMovementableTransactions = async params => {
+        let stringedParams = ''
+        if (params) {
+            stringedParams = Object.entries(params).reduce((acc, param) => {
+                acc += (acc.length ? '&' : '?') + param[0] + '=' + param[1]
+                return acc
+            }, '')
+        }
+
         return axios
-            .get('/api/transactions/' + id + '/movementables' + params)
+            .get('/api/transactions/movementables' + stringedParams)
             .then(response => {
                 return response.data
             })

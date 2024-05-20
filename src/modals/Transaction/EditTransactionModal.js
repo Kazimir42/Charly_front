@@ -17,6 +17,7 @@ import Tabs from '@/modals/Transaction/_components/Tabs'
 import Movements from '@/modals/Transaction/TransactionParts/Movements'
 import { useFeeData } from '@/hooks/fees'
 import { useMovementData } from '@/hooks/movements'
+import { useTransactionData } from '@/hooks/transactions'
 
 const EditTransactionModal = ({
     transaction,
@@ -29,6 +30,7 @@ const EditTransactionModal = ({
     const { getTransactionLabels } = useTransactionLabelData()
     const { getFees } = useFeeData()
     const { getMovements } = useMovementData()
+    const { getMovementableTransactions } = useTransactionData()
 
     const [id, setId] = useState('')
     const [transactionLabel, setTransactionLabel] = useState(0)

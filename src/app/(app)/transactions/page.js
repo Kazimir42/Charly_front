@@ -297,7 +297,11 @@ const Transactions = () => {
 
         for (const movement of data.movements) {
             if (movement.id) {
-                await updateMovement(id, movement.id, movement)
+                if (movement.is_deleted) {
+                    await deleteMovement(id, movement.id)
+                } else {
+                    await updateMovement(id, movement.id, movement)
+                }
             } else {
                 await createMovement(id, movement)
             }

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { TransactionType } from '@/enums/TransactionType'
 import Button from '@/components/Button'
 import { Select } from '@/components/Select'
@@ -166,9 +166,11 @@ const Movements = ({
                             {quantity} {currency?.symbol}
                         </span>
                     </p>
-                    {movements.map((movement, i) => (
-                        <Movement key={i} movement={movement} />
-                    ))}
+                    {movements.map((movement, i) => {
+                        if (!movement.is_deleted) {
+                            return <Movement key={i} movement={movement} />
+                        }
+                    })}
                     <Button
                         type={'button'}
                         onClick={() => addBlankMovement()}

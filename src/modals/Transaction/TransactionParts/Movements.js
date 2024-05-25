@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { TransactionType } from '@/enums/TransactionType'
 import Button from '@/components/Button'
 import { Select } from '@/components/Select'
@@ -14,6 +14,7 @@ const Movements = ({
     currency,
     movements,
     setMovements,
+    toFillQuantity,
 }) => {
     function Movement(movement) {
         movement = movement.movement
@@ -163,7 +164,7 @@ const Movements = ({
                     <p className={'font-bold text-sm text-gray-500'}>
                         To fill :{' '}
                         <span className={'text-default-primary'}>
-                            {quantity} {currency?.symbol}
+                            {toFillQuantity} {currency?.symbol}
                         </span>
                     </p>
                     {movements.map((movement, i) => {

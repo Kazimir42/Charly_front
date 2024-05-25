@@ -144,6 +144,18 @@ const EditTransactionModal = ({
         })
     }
 
+    function getToFillQuantity() {
+        let quantityOnMovements = 0
+
+        movements.map(movement => {
+            if (!movement.is_deleted) {
+                quantityOnMovements += parseFloat(movement.quantity)
+            }
+        })
+
+        return fromQuantity - quantityOnMovements
+    }
+
     function Types() {
         return (
             <div>
@@ -329,6 +341,7 @@ const EditTransactionModal = ({
                                 }
                                 movements={movements}
                                 setMovements={setMovements}
+                                toFillQuantity={getToFillQuantity()}
                             />
                         )}
                     </div>

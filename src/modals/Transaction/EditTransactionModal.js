@@ -109,7 +109,8 @@ const EditTransactionModal = ({
             fromCurrency &&
             type === TransactionType.OUT &&
             date &&
-            activeTab === 'movements'
+            activeTab === 'movements' &&
+            isOpen
         ) {
             getMovementableTransactions({
                 date: date,
@@ -117,7 +118,7 @@ const EditTransactionModal = ({
                 fromQuantity: fromQuantity,
             }).then(setMovementableTransactions)
         }
-    }, [activeTab])
+    }, [activeTab, isOpen])
 
     const submitForm = async event => {
         event.preventDefault()
@@ -154,6 +155,11 @@ const EditTransactionModal = ({
         })
 
         return fromQuantity - quantityOnMovements
+    }
+
+    function _setIsOpen(transactionId = null) {
+        setActiveTab('informations')
+        setIsOpen(transactionId)
     }
 
     function Types() {
@@ -227,7 +233,7 @@ const EditTransactionModal = ({
     return (
         <Modal
             title={'Edit Transaction'}
-            setIsOpen={setIsOpen}
+            setIsOpen={_setIsOpen}
             isOpen={isOpen}
             className={''}>
             <form className={'flex flex-col gap-4'} onSubmit={submitForm}>

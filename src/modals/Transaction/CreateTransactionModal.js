@@ -152,6 +152,7 @@ const CreateTransactionModal = ({
         setToAddress('')
         setNote('')
         setTaxable(false)
+        setActiveTab('informations')
         setIsOpen(!isOpen)
     }
 

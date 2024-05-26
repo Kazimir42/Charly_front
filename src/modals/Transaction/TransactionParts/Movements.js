@@ -45,13 +45,17 @@ const Movements = ({
                                     ' ' +
                                     transaction.to_currency.symbol
 
+                                name +=
+                                    ' | FILLABLE QTY : ' +
+                                    transaction.movementable_quantity
+
                                 acc[transaction.id] = name
                                 return acc
                             },
                             {},
                         ),
                     }}
-                    className="block w-full col-span-7"
+                    className="block w-full col-span-8"
                     value={movement.from_transaction_id}
                     onChange={event =>
                         updateMovement(
@@ -78,7 +82,7 @@ const Movements = ({
                             !!movement.temp_id,
                         )
                     }
-                    className="block col-span-3"
+                    className="block col-span-2"
                 />
                 <button
                     type={'button'}

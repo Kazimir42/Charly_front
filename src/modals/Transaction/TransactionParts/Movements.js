@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { TransactionType } from '@/enums/TransactionType'
 import Button from '@/components/Button'
 import { Select } from '@/components/Select'

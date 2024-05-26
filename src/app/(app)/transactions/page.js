@@ -28,6 +28,7 @@ const Transactions = () => {
     const router = useRouter()
 
     const {
+        getTransaction,
         getTransactions,
         createTransaction,
         updateTransaction,
@@ -263,11 +264,12 @@ const Transactions = () => {
     }
 
     const openOrCloseTransactionEditModal = (transactionId = null) => {
-        setSelectedTransaction(
-            transactions.find(
-                transaction => transaction.id === transactionId,
-            ) || null,
-        )
+        if (!selectedTransaction) {
+            getTransaction(transactionId).then(setSelectedTransaction)
+        } else {
+            setSelectedTransaction(null)
+        }
+
         setTransactionEditModalIsOpen(!transactionEditModalIsOpen)
     }
 

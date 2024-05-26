@@ -2,6 +2,18 @@ import axios from '@/lib/axios'
 import { toast } from 'react-toastify'
 
 export const useTransactionData = () => {
+    const getTransaction = async id => {
+        return axios
+            .get('/api/transactions/' + id)
+            .then(response => {
+                return response.data
+            })
+            .catch(error => {
+                toast.error(error.response.data.message)
+                throw error
+            })
+    }
+
     const getTransactions = async params => {
         return axios
             .get('/api/transactions' + params)
@@ -74,6 +86,7 @@ export const useTransactionData = () => {
     }
 
     return {
+        getTransaction,
         getTransactions,
         createTransaction,
         updateTransaction,

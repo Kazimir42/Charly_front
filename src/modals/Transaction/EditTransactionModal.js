@@ -18,6 +18,8 @@ import Movements from '@/modals/Transaction/TransactionParts/Movements'
 import { useFeeData } from '@/hooks/fees'
 import { useMovementData } from '@/hooks/movements'
 import { useTransactionData } from '@/hooks/transactions'
+import { useAuth } from '@/hooks/auth'
+import { formatPrice } from '@/lib/utils'
 
 const EditTransactionModal = ({
     transaction,
@@ -25,6 +27,9 @@ const EditTransactionModal = ({
     isOpen,
     updateTransaction,
 }) => {
+    const { user } = useAuth({
+        middleware: 'auth',
+    })
     const { getLocations } = useLocationData()
     const { getCurrencies } = useCurrencyData()
     const { getTransactionLabels } = useTransactionLabelData()
@@ -348,6 +353,17 @@ const EditTransactionModal = ({
                                 movements={movements}
                                 setMovements={setMovements}
                                 toFillQuantity={getToFillQuantity()}
+                                unitPurchasePrice={
+                                    transaction?.unit_purchase_price
+                                        ? formatPrice(
+                                              transaction
+                                                  .unit_purchase_price_per_fiat_currencies[
+                                                  user.currency_symbol
+                                              ],
+                                              user.currency_symbol,
+                                          )
+                                        : null
+                                }
                             />
                         )}
                     </div>

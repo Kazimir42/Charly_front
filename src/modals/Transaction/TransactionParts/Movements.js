@@ -2,7 +2,7 @@ import React from 'react'
 import { TransactionType } from '@/enums/TransactionType'
 import Button from '@/components/Button'
 import { Select } from '@/components/Select'
-import { formatDate } from '@/lib/utils'
+import { formatDate, formatPrice } from '@/lib/utils'
 import Input from '@/components/Input'
 import { TrashIcon } from '@heroicons/react/24/outline'
 
@@ -15,6 +15,7 @@ const Movements = ({
     movements,
     setMovements,
     toFillQuantity,
+    unitPurchasePrice,
 }) => {
     function Movement(movement) {
         movement = movement.movement
@@ -171,6 +172,14 @@ const Movements = ({
                             {toFillQuantity} {currency?.symbol}
                         </span>
                     </p>
+                    {unitPurchasePrice ? (
+                        <p className={'font-bold text-sm text-gray-500'}>
+                            Unit purchase price fill :{' '}
+                            <span className={'text-default-primary'}>
+                                {unitPurchasePrice}
+                            </span>
+                        </p>
+                    ) : null}
                     {movements.map((movement, i) => {
                         if (!movement.is_deleted) {
                             return <Movement key={i} movement={movement} />

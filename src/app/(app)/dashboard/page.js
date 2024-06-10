@@ -18,6 +18,8 @@ import { useAuth } from '@/hooks/auth'
 import { formatPrice } from '@/lib/utils'
 import ProfitLossPrice from '@/components/ProfitLossPrice'
 import PercentageBubble from '@/components/PercentageBubble'
+import { useFeeData } from '@/hooks/fees'
+import { useMovementData } from '@/hooks/movements'
 
 const Dashboard = () => {
     const { user } = useAuth({
@@ -26,6 +28,8 @@ const Dashboard = () => {
     const { getDashboard } = useDashboardData()
     const { updateLocation, deleteLocation, createLocation } = useLocationData()
     const { createTransaction } = useTransactionData()
+    const { createFee } = useFeeData()
+    const { createMovement } = useMovementData()
 
     const [locationCreateModalIsOpen, setLocationCreateModalIsOpen] = useState(
         false,
@@ -60,16 +64,6 @@ const Dashboard = () => {
                         name: 'Total value invested',
                         value: formatPrice(
                             data.stats.total_value_invested
-                                .value_per_fiat_currencies[
-                                user.currency_symbol
-                            ],
-                            user.currency_symbol,
-                        ),
-                    },
-                    {
-                        name: 'Total value sold',
-                        value: formatPrice(
-                            data.stats.total_value_sold
                                 .value_per_fiat_currencies[
                                 user.currency_symbol
                             ],
@@ -190,13 +184,19 @@ const Dashboard = () => {
             .catch(() => {})
     }
 
-    function _createTransaction(data) {
-        createTransaction(data)
-            .then(() => {
-                refreshDashboard()
-                openOrCloseTransactionCreateModal()
-            })
-            .catch(() => {})
+    async function _createTransaction(data) {
+        let createdTransaction = await createTransaction(data.transaction)
+
+        for (const fee of data.fees) {
+            await createFee(createdTransaction.id, fee)
+        }
+
+        for (const movement of data.movements) {
+            await createMovement(createdTransaction.id, movement)
+        }
+
+        refreshDashboard()
+        openOrCloseTransactionCreateModal()
     }
 
     return (

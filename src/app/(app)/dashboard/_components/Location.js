@@ -18,6 +18,7 @@ const Location = ({
     const { user } = useAuth({ middleware: 'auth' })
 
     let formattedAssets = []
+
     location.assets.map(asset => {
         formattedAssets.push([
             <div key={asset.currency.name} className="inline-block w-[19%]">

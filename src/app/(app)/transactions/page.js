@@ -35,14 +35,9 @@ const Transactions = () => {
         deleteTransaction,
     } = useTransactionData()
 
-    const { getFees, createFee, updateFee, deleteFee } = useFeeData()
+    const { createFee, updateFee, deleteFee } = useFeeData()
 
-    const {
-        getMovements,
-        createMovement,
-        updateMovement,
-        deleteMovement,
-    } = useMovementData()
+    const { createMovement, updateMovement, deleteMovement } = useMovementData()
 
     const { getCurrencies } = useCurrencyData()
 

@@ -71,6 +71,16 @@ const Dashboard = () => {
                         ),
                     },
                     {
+                        name: 'Total acquisition cost',
+                        value: formatPrice(
+                            data.stats.total_acquisition_cost
+                                .value_per_fiat_currencies[
+                                user.currency_symbol
+                            ],
+                            user.currency_symbol,
+                        ),
+                    },
+                    {
                         name: 'Current total value',
                         value: formatPrice(
                             data.stats.current_total_value

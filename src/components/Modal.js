@@ -5,6 +5,12 @@ import { Transition } from '@headlessui/react'
 const Modal = ({ setIsOpen, isOpen, title, children, className }) => {
     const toggleModal = () => setIsOpen(!isOpen)
 
+    const handleBackgroundClick = event => {
+        if (event.target === event.currentTarget) {
+            toggleModal()
+        }
+    }
+
     return (
         <Transition show={isOpen} as={React.Fragment}>
             <div className="fixed inset-0 z-50 flex justify-center items-center">
@@ -18,7 +24,8 @@ const Modal = ({ setIsOpen, isOpen, title, children, className }) => {
                     leaveTo="opacity-0">
                     <div
                         className="fixed inset-0 bg-black bg-opacity-50"
-                        aria-hidden="true"></div>
+                        aria-hidden="true"
+                        onClick={handleBackgroundClick}></div>
                 </Transition.Child>
                 <Transition.Child
                     as={React.Fragment}

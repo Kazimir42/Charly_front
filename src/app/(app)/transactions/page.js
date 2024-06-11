@@ -21,6 +21,7 @@ import TransactionTableHeader from '@/app/(app)/transactions/_components/Transac
 import Input from '@/components/Input'
 import { useFeeData } from '@/hooks/fees'
 import { useMovementData } from '@/hooks/movements'
+import CsvTransactionModal from '@/modals/Transaction/CsvTransactionModal'
 
 const Transactions = () => {
     const { user } = useAuth({ middleware: 'auth' })
@@ -42,6 +43,10 @@ const Transactions = () => {
     const { getCurrencies } = useCurrencyData()
 
     const { getLocations } = useLocationData()
+
+    const [transactionCsvModalIsOpen, setTransactionCsvModalIsOpen] = useState(
+        false,
+    )
 
     const [
         transactionCreateModalIsOpen,
@@ -254,6 +259,10 @@ const Transactions = () => {
         setFormattedTransactions(formattedData)
     }
 
+    const openOrCloseTransactionCsvModal = () => {
+        setTransactionCsvModalIsOpen(!transactionCsvModalIsOpen)
+    }
+
     const openOrCloseTransactionCreateModal = () => {
         setTransactionCreateModalIsOpen(!transactionCreateModalIsOpen)
     }
@@ -327,6 +336,14 @@ const Transactions = () => {
         for (const movement of data.movements) {
             await createMovement(createdTransaction.id, movement)
         }
+
+        refreshTransactions()
+        openOrCloseTransactionCreateModal()
+    }
+
+    async function _sendCsv(data) {
+
+        // TODO
 
         refreshTransactions()
         openOrCloseTransactionCreateModal()
@@ -431,9 +448,14 @@ const Transactions = () => {
         <>
             <div className={'flex flex-row items-center justify-between mb-4'}>
                 <Header title="Transactions" />
-                <Button onClick={openOrCloseTransactionCreateModal}>
-                    + Add new
-                </Button>
+                <div className={'flex flex-row gap-2'}>
+                    <Button onClick={openOrCloseTransactionCsvModal}>
+                        Import CSV
+                    </Button>
+                    <Button onClick={openOrCloseTransactionCreateModal}>
+                        + Add new
+                    </Button>
+                </div>
             </div>
 
             <div className={'pb-6'}>
@@ -501,6 +523,12 @@ const Transactions = () => {
                     </div>
                 ) : null}
             </div>
+
+            <CsvTransactionModal
+                sendCsv={_sendCsv}
+                isOpen={transactionCsvModalIsOpen}
+                setIsOpen={openOrCloseTransactionCsvModal}
+            />
 
             <CreateTransactionModal
                 createTransaction={_createTransaction}

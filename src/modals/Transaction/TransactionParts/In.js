@@ -48,12 +48,12 @@ const In = ({
                 />
             </div>
             <div>
-                <Label htmlFor="transaction_type">Type</Label>
+                <Label htmlFor="transaction_label">Label</Label>
                 <Select
-                    id="transaction_type"
-                    name="transaction_type"
+                    id="transaction_label"
+                    name="transaction_label"
                     items={{
-                        0: 'Choose a type',
+                        0: 'Choose a label',
                         ...transactionLabels.reduce((acc, transactionLabel) => {
                             acc[transactionLabel.id] =
                                 transactionLabel.name +

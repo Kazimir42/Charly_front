@@ -15,12 +15,16 @@ const CsvTransactionModal = ({ sendCsv, setIsOpen, isOpen }) => {
     const submitForm = async event => {
         event.preventDefault()
 
-        // TODO : HERE
+        const formData = new FormData()
+        formData.append('file', uploadedFile)
+
+        sendCsv(formData, true)
 
         openOrClose()
     }
 
     function openOrClose() {
+        setUploadedFile(null)
         setIsOpen(!isOpen)
     }
 
@@ -51,7 +55,7 @@ const CsvTransactionModal = ({ sendCsv, setIsOpen, isOpen }) => {
 
     return (
         <Modal
-            title={'Import CSV'}
+            title={'CSV Import'}
             setIsOpen={openOrClose}
             isOpen={isOpen}
             className={''}>
@@ -59,7 +63,10 @@ const CsvTransactionModal = ({ sendCsv, setIsOpen, isOpen }) => {
                 You can download the CSV example file{' '}
                 <a
                     className={'text-default-primary underline'}
-                    href={''}
+                    href={
+                        process.env.NEXT_PUBLIC_BACKEND_URL +
+                        '/csv/import_example.csv'
+                    }
                     download>
                     here
                 </a>
@@ -72,7 +79,13 @@ const CsvTransactionModal = ({ sendCsv, setIsOpen, isOpen }) => {
                     onDragOver={handleDragOver}
                     onDragLeave={handleDragLeave}
                     onDrop={handleDrop}>
-                    <div className={'mt-2 flex justify-center rounded-lg border-2 border-dashed px-6 py-10 duration-100 ' + (dragActive ? 'border-default-primary bg-indigo-50' : 'border-gray-300')}>
+                    <div
+                        className={
+                            'mt-2 flex justify-center rounded-lg border-2 border-dashed px-6 py-10 duration-100 ' +
+                            (dragActive
+                                ? 'border-default-primary bg-indigo-50'
+                                : 'border-gray-300')
+                        }>
                         <div className="text-center">
                             <DocumentArrowDownIcon
                                 className="mx-auto h-12 w-12 text-gray-300"
@@ -95,7 +108,9 @@ const CsvTransactionModal = ({ sendCsv, setIsOpen, isOpen }) => {
                                 <span className="pl-1">or drag and drop</span>
                             </div>
                             {uploadedFile ? (
-                                <p className="mt-2 text-sm text-gray-500">{uploadedFile.name}</p>
+                                <p className="mt-2 text-sm text-gray-500">
+                                    {uploadedFile.name}
+                                </p>
                             ) : (
                                 <p className="text-xs leading-5 text-gray-600">
                                     CSV up to 10MB

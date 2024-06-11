@@ -85,12 +85,26 @@ export const useTransactionData = () => {
             })
     }
 
+    const simulateImport = async data => {
+        return axios
+            .post('/api/transactions/simulate-import', data)
+            .then(response => {
+                toast.success('Simulation OK!')
+                return response.data
+            })
+            .catch(error => {
+                toast.error(error.response.data.message)
+                throw error
+            })
+    }
+
     return {
         getTransaction,
         getTransactions,
         createTransaction,
         updateTransaction,
         deleteTransaction,
+        simulateImport,
         getMovementableTransactions,
     }
 }

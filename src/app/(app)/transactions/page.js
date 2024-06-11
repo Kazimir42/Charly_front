@@ -22,6 +22,7 @@ import Input from '@/components/Input'
 import { useFeeData } from '@/hooks/fees'
 import { useMovementData } from '@/hooks/movements'
 import CsvTransactionModal from '@/modals/Transaction/CsvTransactionModal'
+import CsvTransactionErrorsModal from '@/modals/Transaction/CsvTransactionErrorsModal'
 
 const Transactions = () => {
     const { user } = useAuth({ middleware: 'auth' })
@@ -34,6 +35,7 @@ const Transactions = () => {
         createTransaction,
         updateTransaction,
         deleteTransaction,
+        simulateImport,
     } = useTransactionData()
 
     const { createFee, updateFee, deleteFee } = useFeeData()
@@ -47,7 +49,10 @@ const Transactions = () => {
     const [transactionCsvModalIsOpen, setTransactionCsvModalIsOpen] = useState(
         false,
     )
-
+    const [
+        transactionCsvErrorsModalIsOpen,
+        setTransactionCsvErrorsModalIsOpen,
+    ] = useState(false)
     const [
         transactionCreateModalIsOpen,
         setTransactionCreateModalIsOpen,
@@ -70,6 +75,7 @@ const Transactions = () => {
         false,
     )
     const [selectedTransactionIds, setSelectedTransactionIds] = useState([])
+    const [csvErrors, setCsvErrors] = useState([])
 
     // Query params
     const [searchFromDate, setSearchFromDate] = useState('')
@@ -263,6 +269,10 @@ const Transactions = () => {
         setTransactionCsvModalIsOpen(!transactionCsvModalIsOpen)
     }
 
+    const openOrCloseTransactionCsvErrorsModal = () => {
+        setTransactionCsvErrorsModalIsOpen(!transactionCsvErrorsModalIsOpen)
+    }
+
     const openOrCloseTransactionCreateModal = () => {
         setTransactionCreateModalIsOpen(!transactionCreateModalIsOpen)
     }
@@ -341,12 +351,18 @@ const Transactions = () => {
         openOrCloseTransactionCreateModal()
     }
 
-    async function _sendCsv(data) {
-
-        // TODO
+    async function _sendCsv(data, isSimulation = true) {
+        if (isSimulation) {
+            await simulateImport(data)
+                .then()
+                .catch(error => {
+                    setCsvErrors(error.response.data)
+                    openOrCloseTransactionCsvErrorsModal()
+                })
+        }
 
         refreshTransactions()
-        openOrCloseTransactionCreateModal()
+        openOrCloseTransactionCsvModal()
     }
 
     function submitFormWithOrder(name) {
@@ -450,7 +466,7 @@ const Transactions = () => {
                 <Header title="Transactions" />
                 <div className={'flex flex-row gap-2'}>
                     <Button onClick={openOrCloseTransactionCsvModal}>
-                        Import CSV
+                        CSV Import
                     </Button>
                     <Button onClick={openOrCloseTransactionCreateModal}>
                         + Add new
@@ -528,6 +544,12 @@ const Transactions = () => {
                 sendCsv={_sendCsv}
                 isOpen={transactionCsvModalIsOpen}
                 setIsOpen={openOrCloseTransactionCsvModal}
+            />
+
+            <CsvTransactionErrorsModal
+                errors={csvErrors}
+                isOpen={transactionCsvErrorsModalIsOpen}
+                setIsOpen={openOrCloseTransactionCsvErrorsModal}
             />
 
             <CreateTransactionModal

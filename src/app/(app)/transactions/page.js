@@ -36,6 +36,7 @@ const Transactions = () => {
         updateTransaction,
         deleteTransaction,
         simulateImport,
+        realImport,
     } = useTransactionData()
 
     const { createFee, updateFee, deleteFee } = useFeeData()
@@ -76,6 +77,7 @@ const Transactions = () => {
     )
     const [selectedTransactionIds, setSelectedTransactionIds] = useState([])
     const [csvErrors, setCsvErrors] = useState([])
+    const [csvIsSimulation, setCsvIsSimulation] = useState(true)
 
     // Query params
     const [searchFromDate, setSearchFromDate] = useState('')
@@ -267,6 +269,7 @@ const Transactions = () => {
 
     const openOrCloseTransactionCsvModal = () => {
         setTransactionCsvModalIsOpen(!transactionCsvModalIsOpen)
+        setCsvIsSimulation(true)
     }
 
     const openOrCloseTransactionCsvErrorsModal = () => {
@@ -351,18 +354,34 @@ const Transactions = () => {
         openOrCloseTransactionCreateModal()
     }
 
-    async function _sendCsv(data, isSimulation = true) {
-        if (isSimulation) {
+    async function _sendCsv(data) {
+        if (csvIsSimulation) {
             await simulateImport(data)
-                .then()
+                .then(() => {
+                    setCsvIsSimulation(false)
+                })
                 .catch(error => {
                     setCsvErrors(error.response.data)
                     openOrCloseTransactionCsvErrorsModal()
                 })
+        } else {
+            await realImport(data)
+                .then(() => {
+                    refreshTransactions()
+                    openOrCloseTransactionCsvModal()
+                })
+                .catch(error => {
+                    // It's a caught error, display error modal
+                    if (error?.response?.data?.errors) {
+                        setCsvErrors(error.response.data)
+                        openOrCloseTransactionCsvErrorsModal()
+                    } else {
+                        // Not caught error (like 500)
+                        refreshTransactions()
+                        openOrCloseTransactionCsvModal()
+                    }
+                })
         }
-
-        refreshTransactions()
-        openOrCloseTransactionCsvModal()
     }
 
     function submitFormWithOrder(name) {
@@ -544,6 +563,7 @@ const Transactions = () => {
                 sendCsv={_sendCsv}
                 isOpen={transactionCsvModalIsOpen}
                 setIsOpen={openOrCloseTransactionCsvModal}
+                isSimulation={csvIsSimulation}
             />
 
             <CsvTransactionErrorsModal

@@ -98,6 +98,19 @@ export const useTransactionData = () => {
             })
     }
 
+    const realImport = async data => {
+        return axios
+            .post('/api/transactions/import', data)
+            .then(response => {
+                toast.success('Import OK!')
+                return response.data
+            })
+            .catch(error => {
+                toast.error(error.response.data.message)
+                throw error
+            })
+    }
+
     return {
         getTransaction,
         getTransactions,
@@ -105,6 +118,7 @@ export const useTransactionData = () => {
         updateTransaction,
         deleteTransaction,
         simulateImport,
+        realImport,
         getMovementableTransactions,
     }
 }

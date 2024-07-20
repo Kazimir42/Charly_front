@@ -17,17 +17,14 @@ const CsvTransactionErrorsModal = ({ errors, setIsOpen, isOpen }) => {
             setIsOpen={openOrClose}
             isOpen={isOpen}
             className={''}>
-            <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
+            <div className="overflow-hidden border-b border-gray-200">
                 <table className="min-w-full divide-y divide-gray-300">
-                    <thead className={'bg-red-400'}>
+                    <thead className={''}>
                         <tr>
-                            <th
-                                className={
-                                    'px-3 py-3.5 pl-5 text-left text-white'
-                                }>
+                            <th className={'px-3 py-2 text-left text-red-500'}>
                                 Row
                             </th>
-                            <th className={'px-3 py-3.5 text-left text-white'}>
+                            <th className={'px-3 py-2 text-left text-red-500'}>
                                 Errors
                             </th>
                         </tr>

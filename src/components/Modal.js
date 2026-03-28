@@ -1,6 +1,6 @@
 import React from 'react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
-import { Transition } from '@headlessui/react'
+import { Transition, TransitionChild } from '@headlessui/react'
 
 const Modal = ({ setIsOpen, isOpen, title, children, className }) => {
     const toggleModal = () => setIsOpen(!isOpen)
@@ -14,7 +14,7 @@ const Modal = ({ setIsOpen, isOpen, title, children, className }) => {
     return (
         <Transition show={isOpen} as={React.Fragment}>
             <div className="fixed inset-0 z-50 flex justify-center items-center">
-                <Transition.Child
+                <TransitionChild
                     as={React.Fragment}
                     enter="transition-opacity ease-out duration-300"
                     enterFrom="opacity-0"
@@ -25,9 +25,10 @@ const Modal = ({ setIsOpen, isOpen, title, children, className }) => {
                     <div
                         className="fixed inset-0 bg-black bg-opacity-50"
                         aria-hidden="true"
-                        onClick={handleBackgroundClick}></div>
-                </Transition.Child>
-                <Transition.Child
+                        onClick={handleBackgroundClick}
+                    />
+                </TransitionChild>
+                <TransitionChild
                     as={React.Fragment}
                     enter="transition ease-out duration-300"
                     enterFrom="opacity-0 scale-95"
@@ -55,7 +56,7 @@ const Modal = ({ setIsOpen, isOpen, title, children, className }) => {
                             <div className={`p-4 ${className}`}>{children}</div>
                         </div>
                     </div>
-                </Transition.Child>
+                </TransitionChild>
             </div>
         </Transition>
     )

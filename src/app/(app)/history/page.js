@@ -5,8 +5,13 @@ import SimpleCard from '@/components/SimpleCard'
 import { useEffect, useState } from 'react'
 import { useHistoryData } from '@/hooks/history'
 import SoldCrypto from '@/app/(app)/history/_components/SoldCrypto'
+import { useAuth } from '@/hooks/auth'
+import { formatPrice } from '@/lib/utils'
+import ProfitLossPrice from '@/components/ProfitLossPrice'
+import PercentageBubble from '@/components/PercentageBubble'
 
 const History = () => {
+    const { user } = useAuth({ middleware: 'auth' })
     const [cardStats, setCardStats] = useState([])
     const [cryptocurrencies, setCryptocurrencies] = useState([])
 
@@ -19,24 +24,53 @@ const History = () => {
     function refreshDashboard() {
         getHistory().then(data => {
             if (data) {
-                setCryptocurrencies(data)
-                // TODO
+                setCryptocurrencies(data.cryptocurrencies || [])
+                const stats = data.stats
                 setCardStats([
                     {
                         name: 'Total value invested',
-                        value: 'TODO €',
+                        value: formatPrice(
+                            stats.total_invested_value
+                                ?.value_per_fiat_currencies?.[
+                                user.currency_symbol
+                            ],
+                            user.currency_symbol,
+                        ),
                     },
                     {
                         name: 'Total value sold',
-                        value: 'TODO €',
+                        value: formatPrice(
+                            stats.total_sold_value?.value_per_fiat_currencies?.[
+                                user.currency_symbol
+                            ],
+                            user.currency_symbol,
+                        ),
                     },
                     {
                         name: 'Realized Profit / Loss',
-                        value: 'TODO €',
+                        value: (
+                            <ProfitLossPrice
+                                value={
+                                    stats.realized_profit_loss
+                                        ?.value_per_fiat_currencies?.[
+                                        user.currency_symbol
+                                    ]
+                                }
+                                symbol={user.currency_symbol}
+                            />
+                        ),
                     },
                     {
                         name: 'Realized Profit / Loss by %',
-                        value: 'TODO €',
+                        value: (
+                            <PercentageBubble
+                                className={''}
+                                withFont={false}
+                                value={
+                                    stats.realized_profit_loss_percentage?.value
+                                }
+                            />
+                        ),
                     },
                 ])
             }

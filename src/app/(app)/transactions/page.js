@@ -89,7 +89,7 @@ const Transactions = () => {
     const [searchUnitPrice, setSearchUnitPrice] = useState('')
     const [searchLocation, setSearchLocation] = useState('')
     const [searchTaxable, setSearchTaxable] = useState('')
-    const [page, setPage] = useState('')
+    const [, setPage] = useState('')
     const [orderBy, setOrderBy] = useState('')
     const [orderDirection, setOrderDirection] = useState('')
 
@@ -160,7 +160,7 @@ const Transactions = () => {
             currencyOut.quantity = line.from_quantity ?? 0
 
             return [
-                <div>
+                <div key={line.id}>
                     <Input
                         type={'checkbox'}
                         checked={

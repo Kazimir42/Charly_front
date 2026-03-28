@@ -1,6 +1,12 @@
 import { useEffect, useState } from 'react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/16/solid'
-import { Combobox } from '@headlessui/react'
+import {
+    Combobox,
+    ComboboxInput,
+    ComboboxButton,
+    ComboboxOptions,
+    ComboboxOption,
+} from '@headlessui/react'
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -48,7 +54,7 @@ export default function SelectCombobox({
                 setSelectedItem(item.id)
             }}>
             <div className={'relative ' + (contentClassName ?? '')}>
-                <Combobox.Input
+                <ComboboxInput
                     placeholder={placeholder}
                     id={id}
                     name={name}
@@ -60,17 +66,17 @@ export default function SelectCombobox({
                     onChange={event => setQuery(event.target.value)}
                     displayValue={item => item?.name}
                 />
-                <Combobox.Button className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
+                <ComboboxButton className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
                     <ChevronUpDownIcon
                         className="h-5 w-5 text-gray-400"
                         aria-hidden="true"
                     />
-                </Combobox.Button>
+                </ComboboxButton>
 
                 {filteredItems.length > 0 && (
-                    <Combobox.Options className="absolute z-10 mt-1 max-h-56 w-full text-sm overflow-auto rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <ComboboxOptions className="absolute z-10 mt-1 max-h-56 w-full text-sm overflow-auto rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                         {filteredItems.map(item => (
-                            <Combobox.Option
+                            <ComboboxOption
                                 key={item.id}
                                 value={item}
                                 className={({ active }) =>
@@ -119,9 +125,9 @@ export default function SelectCombobox({
                                         )}
                                     </>
                                 )}
-                            </Combobox.Option>
+                            </ComboboxOption>
                         ))}
-                    </Combobox.Options>
+                    </ComboboxOptions>
                 )}
             </div>
         </Combobox>

@@ -1,12 +1,7 @@
 import React from 'react'
 import Modal from '@/components/Modal'
-import { useAuth } from '@/hooks/auth'
 
 const CsvTransactionErrorsModal = ({ errors, setIsOpen, isOpen }) => {
-    const { user } = useAuth({
-        middleware: 'auth',
-    })
-
     function openOrClose() {
         setIsOpen(!isOpen)
     }

@@ -244,19 +244,18 @@ const Document2086 = ({ data }) => {
                             }>
                             224
                         </td>
-                        {data.transfers.map((item, index) =>
-                            index === data.transfers.length - 1 ? (
-                                <td
-                                    className={
-                                        'border border-gray-300 text-center text-sm text-gray-500'
-                                    }
-                                    key={index}>
-                                    todo
-                                </td>
-                            ) : (
-                                <td key={index}></td>
-                            ),
-                        )}
+                        {data.transfers.map((item, index) => (
+                            <td
+                                className={
+                                    'border border-gray-300 text-center text-sm font-semibold ' +
+                                    (parseFloat(item['224']) >= 0
+                                        ? 'text-green-600'
+                                        : 'text-red-600')
+                                }
+                                key={index}>
+                                {item['224']}
+                            </td>
+                        ))}
                     </tr>
                 </tbody>
             </table>

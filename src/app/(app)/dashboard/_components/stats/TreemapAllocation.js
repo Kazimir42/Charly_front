@@ -22,9 +22,7 @@ class CustomizedContent extends PureComponent {
             width,
             height,
             index,
-            payload,
             colors,
-            rank,
             name,
             description,
         } = this.props
@@ -90,7 +88,6 @@ class CustomizedContent extends PureComponent {
 }
 
 const TreemapAllocation = ({ allocations }) => {
-    const [allocationByAsset, setAllocationByAsset] = useState({})
     const [allocationByLocation, setAllocationByLocation] = useState([])
 
     const { user } = useAuth({ middleware: 'auth' })

@@ -1,14 +1,9 @@
 import React, { useState } from 'react'
 import Modal from '@/components/Modal'
 import Button from '@/components/Button'
-import { useAuth } from '@/hooks/auth'
 import { DocumentArrowDownIcon } from '@heroicons/react/24/solid'
 
 const CsvTransactionModal = ({ sendCsv, setIsOpen, isOpen, isSimulation }) => {
-    const { user } = useAuth({
-        middleware: 'auth',
-    })
-
     const [uploadedFile, setUploadedFile] = useState(null)
     const [dragActive, setDragActive] = useState(false)
 

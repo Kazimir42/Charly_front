@@ -27,7 +27,7 @@ export const useTaxReportData = () => {
             })
     }
 
-    const updateTaReport = async (year, data) => {
+    const updateTaxReport = async (year, data) => {
         return axios
             .put('/api/tax-reports/' + year, data)
             .then(response => {
@@ -53,5 +53,5 @@ export const useTaxReportData = () => {
             })
     }
 
-    return { getTaxReport, createTaxReport, updateTaReport, deleteTaxReport }
+    return { getTaxReport, createTaxReport, updateTaxReport, deleteTaxReport }
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Menu, Transition } from '@headlessui/react'
+import { Menu, MenuButton, MenuItems, Transition } from '@headlessui/react'
 
 const Dropdown = ({
     align = 'right',
@@ -48,7 +48,7 @@ const Dropdown = ({
         <Menu as="div" className="relative">
             {({ open }) => (
                 <>
-                    <Menu.Button as={React.Fragment}>{trigger}</Menu.Button>
+                    <MenuButton as={React.Fragment}>{trigger}</MenuButton>
 
                     <Transition
                         show={open}
@@ -58,19 +58,16 @@ const Dropdown = ({
                                 : ''
                         }
                         enterFrom={
-                            // Todo : fix me
                             openDirection === 'down'
                                 ? 'transform opacity-0 scale-95'
                                 : ''
                         }
                         enterTo={
-                            // Todo : fix me
                             openDirection === 'down'
                                 ? 'transform opacity-100 scale-100'
                                 : ''
                         }
                         leave={
-                            // Todo : fix me
                             openDirection === 'down'
                                 ? 'transition ease-in duration-75'
                                 : ''
@@ -79,11 +76,11 @@ const Dropdown = ({
                         leaveTo="transform opacity-0 scale-95">
                         <div
                             className={`absolute z-50 ${directionClasses} ${width} rounded-md shadow-lg ${alignmentClasses}`}>
-                            <Menu.Items
+                            <MenuItems
                                 className={`rounded-md focus:outline-none ring-1 ring-black ring-opacity-5 ${contentClasses}`}
                                 static>
                                 {children}
-                            </Menu.Items>
+                            </MenuItems>
                         </div>
                     </Transition>
                 </>

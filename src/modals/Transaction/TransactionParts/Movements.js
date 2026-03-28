@@ -2,7 +2,7 @@ import React from 'react'
 import { TransactionType } from '@/enums/TransactionType'
 import Button from '@/components/Button'
 import { Select } from '@/components/Select'
-import { formatDate, formatPrice } from '@/lib/utils'
+import { formatDate } from '@/lib/utils'
 import Input from '@/components/Input'
 import { TrashIcon } from '@heroicons/react/24/outline'
 

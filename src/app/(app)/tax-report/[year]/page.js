@@ -13,6 +13,7 @@ import Document2086 from '@/app/(app)/tax-report/_components/taxReportDocuments/
 import DocumentCard from '@/components/DocumentCard'
 import Document3916bis from '@/app/(app)/tax-report/_components/taxReportDocuments/FR/Document3916bis'
 import { formatPrice } from '@/lib/utils'
+import ProfitLossPrice from '@/components/ProfitLossPrice'
 
 const Page = ({ params }) => {
     const { user } = useAuth({ middleware: 'auth' })
@@ -31,7 +32,7 @@ const Page = ({ params }) => {
         e.preventDefault()
         createTaxReport({
             year: params.year,
-        }).then(r => refreshTaxReport())
+        }).then(() => refreshTaxReport())
     }
 
     function refreshTaxReport() {
@@ -50,11 +51,26 @@ const Page = ({ params }) => {
                     },
                     {
                         name: 'Total Profit / Loss',
-                        value: 'TODO €',
+                        value: (
+                            <ProfitLossPrice
+                                value={
+                                    result
+                                        .total_profit_loss_per_fiat_currencies?.[
+                                        user.currency_symbol
+                                    ]
+                                }
+                                symbol={user.currency_symbol}
+                            />
+                        ),
                     },
                     {
-                        name: 'Tax value',
-                        value: 'TODO €',
+                        name: 'Tax value (PFU 30%)',
+                        value: formatPrice(
+                            result.total_tax_value_per_fiat_currencies?.[
+                                user.currency_symbol
+                            ],
+                            user.currency_symbol,
+                        ),
                     },
                 ])
             }
@@ -98,7 +114,11 @@ const Page = ({ params }) => {
                                 lines={[
                                     {
                                         name: 'Accounts added',
-                                        value: 'todo',
+                                        value:
+                                            taxReport.number_taxable_transactions_done >
+                                            0
+                                                ? taxReport.number_taxable_transactions_done
+                                                : '0',
                                     },
                                     {
                                         name: 'Transactions over the year',
@@ -126,7 +146,7 @@ const Page = ({ params }) => {
                                     },
                                     {
                                         name: 'Calculation method',
-                                        value: 'todo',
+                                        value: 'PFU (Flat tax 30%)',
                                     },
                                     {
                                         name: 'Method of declaration',

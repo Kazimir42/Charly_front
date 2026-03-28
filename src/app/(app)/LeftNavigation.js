@@ -1,5 +1,10 @@
 import { Fragment, useState } from 'react'
-import { Dialog, Transition } from '@headlessui/react'
+import {
+    Dialog,
+    DialogPanel,
+    Transition,
+    TransitionChild,
+} from '@headlessui/react'
 import {
     Bars3Icon,
     ChartPieIcon,
@@ -67,12 +72,12 @@ const LeftNavigation = ({ user }) => {
 
     return (
         <>
-            <Transition.Root show={sidebarOpen} as={Fragment}>
+            <Transition show={sidebarOpen} as={Fragment}>
                 <Dialog
                     as="div"
                     className="relative z-50 lg:hidden"
                     onClose={setSidebarOpen}>
-                    <Transition.Child
+                    <TransitionChild
                         as={Fragment}
                         enter="transition-opacity ease-linear duration-300"
                         enterFrom="opacity-0"
@@ -81,10 +86,10 @@ const LeftNavigation = ({ user }) => {
                         leaveFrom="opacity-100"
                         leaveTo="opacity-0">
                         <div className="fixed inset-0 bg-gray-900/80" />
-                    </Transition.Child>
+                    </TransitionChild>
 
                     <div className="fixed inset-0 flex">
-                        <Transition.Child
+                        <TransitionChild
                             as={Fragment}
                             enter="transition ease-in-out duration-300 transform"
                             enterFrom="-translate-x-full"
@@ -92,8 +97,8 @@ const LeftNavigation = ({ user }) => {
                             leave="transition ease-in-out duration-300 transform"
                             leaveFrom="translate-x-0"
                             leaveTo="-translate-x-full">
-                            <Dialog.Panel className="relative mr-16 flex w-full max-w-xs flex-1">
-                                <Transition.Child
+                            <DialogPanel className="relative mr-16 flex w-full max-w-xs flex-1">
+                                <TransitionChild
                                     as={Fragment}
                                     enter="ease-in-out duration-300"
                                     enterFrom="opacity-0"
@@ -117,7 +122,7 @@ const LeftNavigation = ({ user }) => {
                                             />
                                         </button>
                                     </div>
-                                </Transition.Child>
+                                </TransitionChild>
                                 <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-white px-6 pb-2">
                                     <div className="flex h-16 shrink-0 items-center">
                                         <WalletIcon
@@ -200,11 +205,11 @@ const LeftNavigation = ({ user }) => {
                                         </ul>
                                     </nav>
                                 </div>
-                            </Dialog.Panel>
-                        </Transition.Child>
+                            </DialogPanel>
+                        </TransitionChild>
                     </div>
                 </Dialog>
-            </Transition.Root>
+            </Transition>
 
             <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
                 <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6">

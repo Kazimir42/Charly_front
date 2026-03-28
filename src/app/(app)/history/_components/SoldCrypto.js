@@ -13,10 +13,14 @@ const SoldCrypto = ({ cryptocurrency }) => {
             <div key={location.id} className="inline-block w-[52%]">
                 {location.name}
             </div>,
-            <div className="inline-block w-[15%] text-right">
+            <div
+                key={`${location.id}-qty`}
+                className="inline-block w-[15%] text-right">
                 {location.quantity}
             </div>,
-            <div className="inline-block w-[15%] text-right">
+            <div
+                key={`${location.id}-avg`}
+                className="inline-block w-[15%] text-right">
                 {formatPrice(
                     location.average_unit_price_per_fiat_currencies[
                         user.currency_symbol
@@ -24,7 +28,9 @@ const SoldCrypto = ({ cryptocurrency }) => {
                     user.currency_symbol,
                 )}
             </div>,
-            <div className="inline-block w-[15%] text-right">
+            <div
+                key={`${location.id}-total`}
+                className="inline-block w-[15%] text-right">
                 {formatPrice(
                     location.total_price_per_fiat_currencies[
                         user.currency_symbol
@@ -44,10 +50,14 @@ const SoldCrypto = ({ cryptocurrency }) => {
                         name={cryptocurrency.name}
                     />
                 </div>,
-                <div className="inline-block w-[15%] text-right">
+                <div
+                    key="header-qty"
+                    className="inline-block w-[15%] text-right">
                     {cryptocurrency.quantity}
                 </div>,
-                <div className="inline-block w-[15%] text-right">
+                <div
+                    key="header-avg"
+                    className="inline-block w-[15%] text-right">
                     {formatPrice(
                         cryptocurrency.average_unit_price_per_fiat_currencies[
                             user.currency_symbol
@@ -55,7 +65,9 @@ const SoldCrypto = ({ cryptocurrency }) => {
                         user.currency_symbol,
                     )}
                 </div>,
-                <div className="inline-block w-[15%] text-right font-semibold">
+                <div
+                    key="header-total"
+                    className="inline-block w-[15%] text-right font-semibold">
                     {formatPrice(
                         cryptocurrency.total_price_per_fiat_currencies[
                             user.currency_symbol

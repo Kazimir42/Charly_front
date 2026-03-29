@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import {
     Dialog,
     DialogPanel,
@@ -16,6 +16,7 @@ import {
 } from '@heroicons/react/24/outline'
 
 import { useAuth } from '@/hooks/auth'
+import { useAssetData } from '@/hooks/assets'
 import Dropdown from '@/components/Dropdown'
 import DropdownLink, { DropdownButton } from '@/components/DropdownLink'
 import { usePathname } from 'next/navigation'
@@ -30,7 +31,28 @@ const LeftNavigation = ({ user }) => {
     const pathname = usePathname()
     const { logout } = useAuth()
 
+    const { getAssets } = useAssetData()
+
     const [sidebarOpen, setSidebarOpen] = useState(false)
+    const [assets, setAssets] = useState([])
+
+    useEffect(() => {
+        getAssets().then(data => {
+            if (!data) return
+            const grouped = {}
+            data.forEach(asset => {
+                const symbol = asset.currency?.symbol
+                if (symbol && !grouped[symbol]) {
+                    grouped[symbol] = {
+                        id: asset.id,
+                        name: asset.currency?.name,
+                        initial: symbol,
+                    }
+                }
+            })
+            setAssets(Object.values(grouped))
+        })
+    }, [])
 
     const navigation = [
         {
@@ -63,11 +85,6 @@ const LeftNavigation = ({ user }) => {
             icon: ChartPieIcon,
             current: pathname === '/stats',
         },
-    ]
-    const assets = [
-        { id: 1, name: 'Bitcoin', href: '#', initial: 'BTC', current: false },
-        { id: 2, name: 'Ethereum', href: '#', initial: 'ETH', current: false },
-        { id: 3, name: 'Cosmos', href: '#', initial: 'ATOM', current: false },
     ]
 
     return (
@@ -171,35 +188,35 @@ const LeftNavigation = ({ user }) => {
                                                 <ul
                                                     role="list"
                                                     className="-mx-2 mt-2 space-y-1">
-                                                    {assets.map(asset => (
-                                                        <li key={asset.name}>
+                                                    {assets.map(asset => {
+                                                        const href = '/assets/' + asset.id
+                                                        const isCurrent = pathname === href
+                                                        return (
+                                                        <li key={asset.initial}>
                                                             <Link
-                                                                href={
-                                                                    asset.href
-                                                                }
+                                                                href={href}
                                                                 className={classNames(
-                                                                    asset.current
+                                                                    isCurrent
                                                                         ? 'bg-gray-50 text-default-primary'
                                                                         : 'text-gray-700 hover:text-default-primary hover:bg-gray-50',
                                                                     'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold',
                                                                 )}>
                                                                 <span
                                                                     className={classNames(
-                                                                        asset.current
+                                                                        isCurrent
                                                                             ? 'text-default-primary border-default-primary'
                                                                             : 'text-gray-400 border-gray-200 group-hover:border-default-primary group-hover:text-default-primary',
                                                                         'flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border text-[0.625rem] font-medium bg-white',
                                                                     )}>
-                                                                    {
-                                                                        asset.initial
-                                                                    }
+                                                                    {asset.initial}
                                                                 </span>
                                                                 <span className="truncate">
                                                                     {asset.name}
                                                                 </span>
                                                             </Link>
                                                         </li>
-                                                    ))}
+                                                        )
+                                                    })}
                                                 </ul>
                                             </li>
                                         </ul>
@@ -262,21 +279,24 @@ const LeftNavigation = ({ user }) => {
                                 <ul
                                     role="list"
                                     className="-mx-2 mt-2 space-y-1">
-                                    {assets.map(asset => (
+                                    {assets.map(asset => {
+                                        const href = '/assets/' + asset.id
+                                        const isCurrent = pathname === href
+                                        return (
                                         <li
-                                            key={asset.name}
+                                            key={asset.initial}
                                             className={'flex w-full'}>
-                                            <a
-                                                href={asset.href}
+                                            <Link
+                                                href={href}
                                                 className={classNames(
-                                                    asset.current
+                                                    isCurrent
                                                         ? 'bg-gray-50 text-default-primary'
                                                         : 'text-gray-700 hover:text-default-primary hover:bg-gray-50',
                                                     'group grow flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold',
                                                 )}>
                                                 <span
                                                     className={classNames(
-                                                        asset.current
+                                                        isCurrent
                                                             ? 'text-default-primary border-default-primary'
                                                             : 'text-gray-400 border-gray-200 group-hover:border-default-primary group-hover:text-default-primary',
                                                         'flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border text-[0.625rem] font-medium bg-white',
@@ -286,9 +306,10 @@ const LeftNavigation = ({ user }) => {
                                                 <span className="truncate content-center">
                                                     {asset.name}
                                                 </span>
-                                            </a>
+                                            </Link>
                                         </li>
-                                    ))}
+                                        )
+                                    })}
                                 </ul>
                             </li>
                             <li className="-mx-6 mt-auto">

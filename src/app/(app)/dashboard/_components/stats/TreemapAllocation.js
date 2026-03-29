@@ -113,7 +113,7 @@ const TreemapAllocation = ({ allocations }) => {
                     children: [
                         {
                             name: location.name,
-                            size: location.total_value,
+                            size: parseFloat(location.total_value) || 0,
                         },
                     ],
                 })

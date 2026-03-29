@@ -22,7 +22,7 @@ const TotalValueHistory = ({ totalValues }) => {
             totalValues.yearly.forEach(item => {
                 values.push({
                     date: formatDate(item.date, false, 'fr-FR'),
-                    value: item.value_per_fiat_currencies[user.currency_symbol],
+                    value: parseFloat(item.value_per_fiat_currencies[user.currency_symbol]) || 0,
                 })
             })
             setTotalValuesYearly(values)

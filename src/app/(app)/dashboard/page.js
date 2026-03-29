@@ -61,59 +61,63 @@ const Dashboard = () => {
                 // TODO
                 setCardStats([
                     {
-                        name: 'Total value invested',
-                        value: formatPrice(
-                            data.stats.total_value_invested
-                                .value_per_fiat_currencies[
-                                user.currency_symbol
-                            ],
-                            user.currency_symbol,
-                        ),
-                    },
-                    {
-                        name: 'Total acquisition cost',
-                        value: formatPrice(
-                            data.stats.total_acquisition_cost
-                                .value_per_fiat_currencies[
-                                user.currency_symbol
-                            ],
-                            user.currency_symbol,
-                        ),
-                    },
-                    {
                         name: 'Current total value',
                         value: formatPrice(
                             data.stats.current_total_value
-                                .value_per_fiat_currencies[
+                                ?.value_per_fiat_currencies?.[
                                 user.currency_symbol
                             ],
                             user.currency_symbol,
                         ),
                     },
                     {
-                        name: 'Current Profit / Loss',
+                        name: 'Total invested',
+                        value: formatPrice(
+                            data.stats.total_value_invested
+                                ?.value_per_fiat_currencies?.[
+                                user.currency_symbol
+                            ],
+                            user.currency_symbol,
+                        ),
+                    },
+                    {
+                        name: 'Unrealized P/L',
+                        value: (
+                            <div>
+                                <ProfitLossPrice
+                                    value={
+                                        data.stats.unrealized_profit_loss
+                                            ?.value_per_fiat_currencies?.[
+                                            user.currency_symbol
+                                        ]
+                                    }
+                                    symbol={user.currency_symbol}
+                                />
+                                <span className="text-sm font-medium">
+                                    <PercentageBubble
+                                        className={''}
+                                        withFont={true}
+                                        value={
+                                            data.stats
+                                                .unrealized_profit_loss_percentage
+                                                ?.value
+                                        }
+                                    />
+                                </span>
+                            </div>
+                        ),
+                    },
+                    {
+                        name: 'Realized P/L',
                         value: (
                             <ProfitLossPrice
                                 value={
-                                    data.stats.current_profit_loss
-                                        .value_per_fiat_currencies[
+                                    data.stats.realized_profit_loss
+                                        ?.value_per_fiat_currencies?.[
                                         user.currency_symbol
                                     ]
                                 }
                                 symbol={user.currency_symbol}
-                            />
-                        ),
-                    },
-                    {
-                        name: 'Current Profit / Loss by %',
-                        value: (
-                            <PercentageBubble
-                                className={''}
-                                withFont={false}
-                                value={
-                                    data.stats.current_profit_loss_percentage
-                                        .value
-                                }
                             />
                         ),
                     },

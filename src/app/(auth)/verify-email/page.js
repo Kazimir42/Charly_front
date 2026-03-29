@@ -14,7 +14,7 @@ const Page = () => {
 
     return (
         <>
-            <div className="mb-4 text-sm text-gray-600">
+            <div className="mb-4 text-sm text-slate-500">
                 Thanks for signing up! Before getting started, could you verify
                 your email address by clicking on the link we just emailed to
                 emailed to you? If you didn't receive the email, we will gladly
@@ -35,7 +35,7 @@ const Page = () => {
 
                 <button
                     type="button"
-                    className="underline text-sm text-gray-600 hover:text-gray-900"
+                    className="underline text-sm text-slate-500 hover:text-slate-700"
                     onClick={logout}>
                     Logout
                 </button>

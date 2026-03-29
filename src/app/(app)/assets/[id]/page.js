@@ -174,7 +174,8 @@ const Page = ({ params }) => {
                         {
                             name: 'Total acquisition cost',
                             value: formatPrice(
-                                summary.total_acquisition_cost_per_fiat_currencies?.[
+                                summary
+                                    .total_acquisition_cost_per_fiat_currencies?.[
                                     sym
                                 ],
                                 sym,

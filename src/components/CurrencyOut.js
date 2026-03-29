@@ -5,7 +5,7 @@ const CurrencyIn = ({ className, symbol, quantity }) => {
     return (
         <div
             className={
-                'flex flex-row gap-1.5 items-center bg-red-100 rounded-full pl-2 pr-2 py-1 w-fit ' +
+                'flex flex-row gap-1.5 items-center bg-red-50 rounded-full pl-2 pr-2 py-1 w-fit ' +
                 className
             }>
             <CurrencyLogo className={'h-7 w-7'} symbol={symbol} />

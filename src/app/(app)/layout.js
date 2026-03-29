@@ -13,14 +13,16 @@ const AppLayout = ({ children }) => {
     }
 
     return (
-        <div className="min-h-screen bg-gray-100">
+        <div className="min-h-screen bg-slate-50">
             <Banner className={'lg:hidden flex'} />
 
             <LeftNavigation user={user} />
 
             <main className="lg:pl-72 lg:py-0 py-10">
                 <Banner className={'mb-10 hidden lg:flex'} />
-                <div className="px-4 sm:px-6 lg:px-8">{children}</div>
+                <div className="max-w-7xl mx-auto px-6 lg:px-10">
+                    {children}
+                </div>
             </main>
         </div>
     )

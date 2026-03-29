@@ -23,7 +23,7 @@ const Modal = ({ setIsOpen, isOpen, title, children, className }) => {
                     leaveFrom="opacity-100"
                     leaveTo="opacity-0">
                     <div
-                        className="fixed inset-0 bg-black bg-opacity-50"
+                        className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm"
                         aria-hidden="true"
                         onClick={handleBackgroundClick}
                     />
@@ -37,14 +37,14 @@ const Modal = ({ setIsOpen, isOpen, title, children, className }) => {
                     leaveFrom="opacity-100 scale-100"
                     leaveTo="opacity-0 scale-95">
                     <div className="relative p-4 w-full max-w-3xl max-h-full">
-                        <div className="relative bg-white rounded-lg shadow">
-                            <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
+                        <div className="relative bg-white rounded-2xl border border-slate-200">
+                            <div className="flex items-center justify-between p-4 md:p-5 border-b border-slate-100 rounded-t">
                                 <h3 className="text-lg font-semibold text-gray-900">
                                     {title}
                                 </h3>
                                 <button
                                     type="button"
-                                    className="hover:bg-gray-50 hover:text-default-primary rounded-lg p-1"
+                                    className="hover:bg-slate-100 rounded-lg p-1"
                                     onClick={toggleModal}>
                                     <span className="sr-only">Close modal</span>
                                     <XMarkIcon

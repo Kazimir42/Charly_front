@@ -75,8 +75,8 @@ const Pagination = ({ paginationData }) => {
                                     className={
                                         'relative z-10 inline-flex items-center px-4 py-2 text-sm font-semibold ' +
                                         (link.active
-                                            ? 'bg-default-primary text-white'
-                                            : 'text-gray-900 hover:bg-gray-100 ring-1 ring-inset ring-gray-300 ') +
+                                            ? 'bg-slate-900 text-white'
+                                            : 'text-gray-900 hover:bg-slate-50 ring-1 ring-inset ring-slate-200 ') +
                                         ' ' +
                                         (index === 0 ? 'rounded-l-md' : '') +
                                         ' ' +

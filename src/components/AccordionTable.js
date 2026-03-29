@@ -12,10 +12,10 @@ const AccordionTable = ({ header, headerContent, content }) => {
             <h2 id="accordion-collapse-heading-1">
                 <div
                     className={
-                        'flex items-center hover:cursor-pointer bg-white justify-between w-full px-5 py-3 font-medium rtl:text-right border-gray-200 focus:ring-2 focus:ring-gray-200 gap-3 ' +
+                        'flex items-center hover:cursor-pointer bg-white justify-between w-full px-5 py-3 font-medium rtl:text-right border-slate-200 focus:ring-2 focus:ring-slate-200 gap-3 ' +
                         (isOpen
                             ? 'border-t border-l border-r rounded-t-lg'
-                            : 'border rounded-lg')
+                            : 'border rounded-xl')
                     }
                     onClick={toggleAccordion}
                     aria-expanded={isOpen}
@@ -26,7 +26,7 @@ const AccordionTable = ({ header, headerContent, content }) => {
                         }>
                         <div className="inline-block w-[3%]">
                             <svg
-                                className={`w-3 h-3 shrink-0 text-gray-500 ${
+                                className={`w-3 h-3 shrink-0 text-slate-500 ${
                                     isOpen ? '' : 'rotate-180'
                                 }`}
                                 aria-hidden="true"
@@ -51,12 +51,12 @@ const AccordionTable = ({ header, headerContent, content }) => {
                 id="accordion-collapse-body-1"
                 className={`${isOpen ? '' : 'hidden'}`}
                 aria-labelledby="accordion-collapse-heading-1">
-                <div className="border rounded-b-lg border-gray-200 bg-white">
+                <div className="border rounded-b-lg border-slate-200 bg-white">
                     <div className="w-full text-left">
                         {headerContent ? (
                             <div
                                 className={
-                                    'px-5 py-2 border-b border-gray-100 bg-gray-50 text-xs font-semibold text-gray-500'
+                                    'px-5 py-2 border-b border-slate-100 bg-slate-50 text-xs font-semibold text-slate-500'
                                 }>
                                 <div className="inline-block w-[3%]" />
                                 {headerContent.map((item, index) => (
@@ -73,7 +73,7 @@ const AccordionTable = ({ header, headerContent, content }) => {
                             content.map((items, index) => (
                                 <div
                                     className={
-                                        'flex flex-row items-center px-5 py-2 border-b border-gray-100 text-sm text-gray-700'
+                                        'flex flex-row items-center px-5 py-2 border-b border-slate-100 text-sm text-slate-600'
                                     }
                                     key={index}>
                                     <div className="inline-block w-[3%]" />
@@ -87,7 +87,7 @@ const AccordionTable = ({ header, headerContent, content }) => {
                         ) : (
                             <div
                                 className={
-                                    'flex flex-row items-center px-5 py-2 border-b border-gray-100 text-sm text-gray-700'
+                                    'flex flex-row items-center px-5 py-2 border-b border-slate-100 text-sm text-slate-600'
                                 }>
                                 <div className="inline-block w-[3%]" />
                                 <div className={'inline-block'}>Empty :(</div>

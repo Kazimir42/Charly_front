@@ -73,7 +73,7 @@ const TransactionTableHeader = ({
                 <th className={'px-3 py-3.5 pl-5 text-left'}></th>
                 <th
                     className={
-                        'px-3 py-3.5 text-left text-sm font-semibold text-gray-900'
+                        'px-3 py-3.5 text-left text-sm font-semibold text-slate-900'
                     }>
                     <div
                         key={'searchDate'}
@@ -98,7 +98,7 @@ const TransactionTableHeader = ({
                 </th>
                 <th
                     className={
-                        'px-3 py-3.5 text-left text-sm font-semibold text-gray-900'
+                        'px-3 py-3.5 text-left text-sm font-semibold text-slate-900'
                     }>
                     <Select
                         key={'searchType'}
@@ -115,7 +115,7 @@ const TransactionTableHeader = ({
                 </th>
                 <th
                     className={
-                        'px-3 py-3.5 text-left text-sm font-semibold text-gray-900'
+                        'px-3 py-3.5 text-left text-sm font-semibold text-slate-900'
                     }>
                     <SelectCombobox
                         key={'searchFromAsset'}
@@ -137,7 +137,7 @@ const TransactionTableHeader = ({
                                                 'flex flex-row justify-between gap-1.5'
                                             }>
                                             <span>{currency.name}</span>
-                                            <span className={'text-gray-400'}>
+                                            <span className={'text-slate-400'}>
                                                 {currency.symbol}
                                             </span>
                                         </div>
@@ -155,7 +155,7 @@ const TransactionTableHeader = ({
                 </th>
                 <th
                     className={
-                        'px-3 py-3.5 text-left text-sm font-semibold text-gray-900'
+                        'px-3 py-3.5 text-left text-sm font-semibold text-slate-900'
                     }>
                     <SelectCombobox
                         key={'searchToAsset'}
@@ -178,7 +178,7 @@ const TransactionTableHeader = ({
                                                 'flex flex-row justify-between gap-1.5'
                                             }>
                                             <span>{currency.name}</span>
-                                            <span className={'text-gray-400'}>
+                                            <span className={'text-slate-400'}>
                                                 {currency.symbol}
                                             </span>
                                         </div>
@@ -196,7 +196,7 @@ const TransactionTableHeader = ({
                 </th>
                 <th
                     className={
-                        'px-3 py-3.5 text-left text-sm font-semibold text-gray-900'
+                        'px-3 py-3.5 text-left text-sm font-semibold text-slate-900'
                     }>
                     <Input
                         key={'searchTotalPrice'}
@@ -209,7 +209,7 @@ const TransactionTableHeader = ({
                 </th>
                 <th
                     className={
-                        'px-3 py-3.5 text-left text-sm font-semibold text-gray-900'
+                        'px-3 py-3.5 text-left text-sm font-semibold text-slate-900'
                     }>
                     <Input
                         key={'searchUnitPrice'}
@@ -222,7 +222,7 @@ const TransactionTableHeader = ({
                 </th>
                 <th
                     className={
-                        'px-3 py-3.5 text-left text-sm font-semibold text-gray-900'
+                        'px-3 py-3.5 text-left text-sm font-semibold text-slate-900'
                     }>
                     <Select
                         key={'searchLocation'}
@@ -240,7 +240,7 @@ const TransactionTableHeader = ({
                 </th>
                 <th
                     className={
-                        'px-3 py-3.5 text-left text-sm font-semibold text-gray-900'
+                        'px-3 py-3.5 text-left text-sm font-semibold text-slate-900'
                     }>
                     <Input
                         key={'searchTaxable'}
@@ -256,7 +256,7 @@ const TransactionTableHeader = ({
                 </th>
                 <th
                     className={
-                        'px-3 py-3.5 text-left text-sm font-semibold text-gray-900 pr-5'
+                        'px-3 py-3.5 text-left text-sm font-semibold text-slate-900 pr-5'
                     }>
                     <form
                         key={'filterForm'}
@@ -265,12 +265,12 @@ const TransactionTableHeader = ({
                         onSubmit={submitForm}>
                         <Link
                             href={'/transactions'}
-                            className="hover:text-gray-700 text-gray-500 p-1 duration-100 transition">
+                            className="hover:text-slate-700 text-slate-500 p-1 duration-100 transition">
                             <CloseIcon className="h-6 w-6" />
                         </Link>
                         <button
                             type={'submit'}
-                            className="hover:text-gray-700 text-gray-500 p-1 duration-100 transition">
+                            className="hover:text-slate-700 text-slate-500 p-1 duration-100 transition">
                             <MagnifyingGlassIcon className="h-6 w-6" />
                         </button>
                     </form>
@@ -287,19 +287,19 @@ const TransactionTableHeader = ({
                 </th>
                 <th
                     className={
-                        'px-3 py-3.5 text-left text-sm font-semibold text-gray-900 '
+                        'px-3 py-3.5 text-left text-sm font-semibold text-slate-900 '
                     }>
                     <HeaderTitle key={'date'} title={'Date'} name={'date'} />
                 </th>
                 <th
                     className={
-                        'px-3 py-3.5 text-left text-sm font-semibold text-gray-900'
+                        'px-3 py-3.5 text-left text-sm font-semibold text-slate-900'
                     }>
                     <HeaderTitle key={'type'} title={'Type'} name={'type'} />
                 </th>
                 <th
                     className={
-                        'px-3 py-3.5 text-left text-sm font-semibold text-gray-900'
+                        'px-3 py-3.5 text-left text-sm font-semibold text-slate-900'
                     }>
                     <HeaderTitle
                         key={'from_quantity'}
@@ -310,7 +310,7 @@ const TransactionTableHeader = ({
                 </th>
                 <th
                     className={
-                        'px-3 py-3.5 text-left text-sm font-semibold text-gray-900'
+                        'px-3 py-3.5 text-left text-sm font-semibold text-slate-900'
                     }>
                     <HeaderTitle
                         key={'to_quantity'}
@@ -320,7 +320,7 @@ const TransactionTableHeader = ({
                 </th>
                 <th
                     className={
-                        'px-3 py-3.5 text-left text-sm font-semibold text-gray-900'
+                        'px-3 py-3.5 text-left text-sm font-semibold text-slate-900'
                     }>
                     <HeaderTitle
                         key={'total_price'}
@@ -330,7 +330,7 @@ const TransactionTableHeader = ({
                 </th>
                 <th
                     className={
-                        'px-3 py-3.5 text-left text-sm font-semibold text-gray-900'
+                        'px-3 py-3.5 text-left text-sm font-semibold text-slate-900'
                     }>
                     <HeaderTitle
                         key={'unit_price'}
@@ -340,7 +340,7 @@ const TransactionTableHeader = ({
                 </th>
                 <th
                     className={
-                        'px-3 py-3.5 text-left text-sm font-semibold text-gray-900'
+                        'px-3 py-3.5 text-left text-sm font-semibold text-slate-900'
                     }>
                     <HeaderTitle
                         key={'location_id'}
@@ -350,7 +350,7 @@ const TransactionTableHeader = ({
                 </th>
                 <th
                     className={
-                        'px-3 py-3.5 text-left text-sm font-semibold text-gray-900'
+                        'px-3 py-3.5 text-left text-sm font-semibold text-slate-900'
                     }>
                     <HeaderTitle
                         key={'taxable'}
@@ -360,7 +360,7 @@ const TransactionTableHeader = ({
                 </th>
                 <th
                     className={
-                        'px-3 py-3.5 text-left text-sm font-semibold text-gray-900 pr-5'
+                        'px-3 py-3.5 text-left text-sm font-semibold text-slate-900 pr-5'
                     }></th>
             </tr>
         </>

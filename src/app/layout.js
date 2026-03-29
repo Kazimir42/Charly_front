@@ -8,7 +8,7 @@ export const metadata = {
 const RootLayout = ({ children }) => {
     return (
         <html lang="en">
-            <body className="antialiased">
+            <body className="font-sans antialiased">
                 {children}
                 <ToastContainer />
             </body>

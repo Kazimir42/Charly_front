@@ -8,7 +8,7 @@ const YearSwitcher = ({ backLink, nextLink, backTitle, nextTitle }) => {
             <Link
                 href={backLink}
                 className={
-                    'flex flex-row items-center hover:text-default-primary_dark transition duration-100'
+                    'flex flex-row items-center hover:text-blue-500 transition duration-100'
                 }>
                 <ChevronLeftIcon className={'h-6 w-6 font-black'} />
                 <span className={'font-bold'}>{backTitle}</span>
@@ -16,7 +16,7 @@ const YearSwitcher = ({ backLink, nextLink, backTitle, nextTitle }) => {
             <Link
                 href={nextLink}
                 className={
-                    'flex flex-row items-center hover:text-default-primary_dark transition duration-100'
+                    'flex flex-row items-center hover:text-blue-500 transition duration-100'
                 }>
                 <span className={'font-bold'}>{nextTitle}</span>
                 <ChevronRightIcon className={'h-6 w-6'} />

@@ -4,12 +4,12 @@ import { formatPercentage, formatPrice } from '@/lib/utils'
 import { useAuth } from '@/hooks/auth'
 
 const COLORS = [
-    '#8889DD',
-    '#9597E4',
-    '#8DC77B',
-    '#A5D297',
-    '#E2CF45',
-    '#F8C12D',
+    '#3B82F6',
+    '#60A5FA',
+    '#10B981',
+    '#34D399',
+    '#F59E0B',
+    '#FBBF24',
 ]
 
 class CustomizedContent extends PureComponent {
@@ -33,7 +33,7 @@ class CustomizedContent extends PureComponent {
             fontWeight: 'normal',
             fontSize: '14px',
             fontFamily:
-                'Nunito, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
+                'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
         }
 
         const descriptionStyle = {
@@ -42,7 +42,7 @@ class CustomizedContent extends PureComponent {
             fontWeight: 'lighter',
             fontSize: '13px',
             fontFamily:
-                'Nunito, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
+                'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
         }
 
         return (

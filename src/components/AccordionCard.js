@@ -12,10 +12,10 @@ const AccordionTable = ({ header, children }) => {
             <h2 id="accordion-collapse-heading-1">
                 <div
                     className={
-                        'flex items-center hover:cursor-pointer bg-white justify-between w-full px-5 py-3 font-medium rtl:text-right border-gray-200 focus:ring-2 focus:ring-gray-200 gap-3 ' +
+                        'flex items-center hover:cursor-pointer bg-white justify-between w-full px-5 py-3 font-medium rtl:text-right border-slate-200 focus:ring-2 focus:ring-slate-200 gap-3 ' +
                         (isOpen
                             ? 'border-t border-l border-r rounded-t-lg'
-                            : 'border rounded-lg')
+                            : 'border rounded-xl')
                     }
                     onClick={toggleAccordion}
                     aria-expanded={isOpen}
@@ -26,7 +26,7 @@ const AccordionTable = ({ header, children }) => {
                         }>
                         <div className="inline-block">
                             <svg
-                                className={`w-3 h-3 shrink-0 text-gray-500 ${
+                                className={`w-3 h-3 shrink-0 text-slate-500 ${
                                     isOpen ? '' : 'rotate-180'
                                 }`}
                                 aria-hidden="true"
@@ -49,7 +49,7 @@ const AccordionTable = ({ header, children }) => {
                 id="accordion-collapse-body-1"
                 className={`${isOpen ? '' : 'hidden'}`}
                 aria-labelledby="accordion-collapse-heading-1">
-                <div className="border rounded-b-lg border-gray-200 bg-white">
+                <div className="border rounded-b-lg border-slate-200 bg-white">
                     <div className="w-full text-left">{children}</div>
                 </div>
             </div>

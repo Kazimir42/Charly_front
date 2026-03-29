@@ -1,7 +1,7 @@
 import React from 'react'
 
 const TableHeader = ({ children }) => {
-    return <thead className="bg-gray-50">{children}</thead>
+    return <thead className="bg-slate-50">{children}</thead>
 }
 
 export default TableHeader

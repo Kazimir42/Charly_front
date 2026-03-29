@@ -92,13 +92,13 @@ const Login = () => {
                             id="remember_me"
                             type="checkbox"
                             name="remember"
-                            className="rounded border-gray-300 text-default-primary shadow-sm focus:border-default-primary_lightest focus:ring focus:ring-default-primary_lightest focus:ring-opacity-50"
+                            className="rounded border-slate-200 text-slate-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
                             onChange={event =>
                                 setShouldRemember(event.target.checked)
                             }
                         />
 
-                        <span className="ml-2 text-sm text-gray-600">
+                        <span className="ml-2 text-sm text-slate-500">
                             Remember me
                         </span>
                     </label>
@@ -107,7 +107,7 @@ const Login = () => {
                 <div className="flex items-center justify-end mt-4">
                     <Link
                         href="/forgot-password"
-                        className="underline text-sm text-gray-600 hover:text-gray-900">
+                        className="underline text-sm text-slate-500 hover:text-slate-700">
                         Forgot your password?
                     </Link>
 

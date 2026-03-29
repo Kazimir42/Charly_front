@@ -140,12 +140,10 @@ const LeftNavigation = ({ user }) => {
                                         </button>
                                     </div>
                                 </TransitionChild>
-                                <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-white px-6 pb-2">
+                                <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-slate-900 px-6 pb-2">
                                     <div className="flex h-16 shrink-0 items-center">
                                         <WalletIcon
-                                            className={
-                                                'h-8 w-8 text-default-primary'
-                                            }
+                                            className={'h-8 w-8 text-white'}
                                         />
                                     </div>
                                     <nav className="flex flex-1 flex-col">
@@ -162,15 +160,15 @@ const LeftNavigation = ({ user }) => {
                                                                 href={item.href}
                                                                 className={classNames(
                                                                     item.current
-                                                                        ? 'bg-gray-50 text-default-primary'
-                                                                        : 'text-gray-700 hover:text-default-primary hover:bg-gray-50',
+                                                                        ? 'bg-slate-800 text-white'
+                                                                        : 'text-slate-400 hover:text-white hover:bg-slate-800',
                                                                     'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold',
                                                                 )}>
                                                                 <item.icon
                                                                     className={classNames(
                                                                         item.current
-                                                                            ? 'text-default-primary'
-                                                                            : 'text-gray-400 group-hover:text-default-primary',
+                                                                            ? 'text-white'
+                                                                            : 'text-slate-500 group-hover:text-white',
                                                                         'h-6 w-6 shrink-0',
                                                                     )}
                                                                     aria-hidden="true"
@@ -182,39 +180,49 @@ const LeftNavigation = ({ user }) => {
                                                 </ul>
                                             </li>
                                             <li>
-                                                <div className="text-xs font-semibold leading-6 text-gray-400">
+                                                <div className="text-xs font-semibold leading-6 text-slate-500">
                                                     Locations
                                                 </div>
                                                 <ul
                                                     role="list"
                                                     className="-mx-2 mt-2 space-y-1">
                                                     {assets.map(asset => {
-                                                        const href = '/assets/' + asset.id
-                                                        const isCurrent = pathname === href
+                                                        const href =
+                                                            '/assets/' +
+                                                            asset.id
+                                                        const isCurrent =
+                                                            pathname === href
                                                         return (
-                                                        <li key={asset.initial}>
-                                                            <Link
-                                                                href={href}
-                                                                className={classNames(
-                                                                    isCurrent
-                                                                        ? 'bg-gray-50 text-default-primary'
-                                                                        : 'text-gray-700 hover:text-default-primary hover:bg-gray-50',
-                                                                    'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold',
-                                                                )}>
-                                                                <span
+                                                            <li
+                                                                key={
+                                                                    asset.initial
+                                                                }>
+                                                                <Link
+                                                                    href={href}
                                                                     className={classNames(
                                                                         isCurrent
-                                                                            ? 'text-default-primary border-default-primary'
-                                                                            : 'text-gray-400 border-gray-200 group-hover:border-default-primary group-hover:text-default-primary',
-                                                                        'flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border text-[0.625rem] font-medium bg-white',
+                                                                            ? 'bg-slate-800 text-white'
+                                                                            : 'text-slate-400 hover:text-white hover:bg-slate-800',
+                                                                        'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold',
                                                                     )}>
-                                                                    {asset.initial}
-                                                                </span>
-                                                                <span className="truncate">
-                                                                    {asset.name}
-                                                                </span>
-                                                            </Link>
-                                                        </li>
+                                                                    <span
+                                                                        className={classNames(
+                                                                            isCurrent
+                                                                                ? 'text-blue-400 border-blue-400'
+                                                                                : 'text-slate-400 border-slate-600 group-hover:border-blue-400 group-hover:text-blue-400',
+                                                                            'flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border text-[0.625rem] font-medium',
+                                                                        )}>
+                                                                        {
+                                                                            asset.initial
+                                                                        }
+                                                                    </span>
+                                                                    <span className="truncate">
+                                                                        {
+                                                                            asset.name
+                                                                        }
+                                                                    </span>
+                                                                </Link>
+                                                            </li>
                                                         )
                                                     })}
                                                 </ul>
@@ -229,15 +237,10 @@ const LeftNavigation = ({ user }) => {
             </Transition>
 
             <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
-                <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6">
+                <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-slate-900 px-6">
                     <div className="flex h-16 shrink-0 items-center gap-2">
-                        <WalletIcon
-                            className={'h-8 w-8 text-default-primary'}
-                        />
-                        <span
-                            className={
-                                'text-default-primary font-bold text-xl'
-                            }>
+                        <WalletIcon className={'h-8 w-8 text-white'} />
+                        <span className={'text-white font-bold text-xl'}>
                             Charly
                         </span>
                     </div>
@@ -253,15 +256,15 @@ const LeftNavigation = ({ user }) => {
                                                 href={item.href}
                                                 className={classNames(
                                                     item.current
-                                                        ? 'bg-gray-50 text-default-primary'
-                                                        : 'text-gray-700 hover:text-default-primary hover:bg-gray-50',
+                                                        ? 'bg-slate-800 text-white'
+                                                        : 'text-slate-400 hover:text-white hover:bg-slate-800',
                                                     'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold',
                                                 )}>
                                                 <item.icon
                                                     className={classNames(
                                                         item.current
-                                                            ? 'text-default-primary'
-                                                            : 'text-gray-400 group-hover:text-default-primary',
+                                                            ? 'text-white'
+                                                            : 'text-slate-500 group-hover:text-white',
                                                         'h-6 w-6 shrink-0',
                                                     )}
                                                     aria-hidden="true"
@@ -273,7 +276,7 @@ const LeftNavigation = ({ user }) => {
                                 </ul>
                             </li>
                             <li>
-                                <div className="text-xs font-semibold leading-6 text-gray-400">
+                                <div className="text-xs font-semibold leading-6 text-slate-500">
                                     Your assets
                                 </div>
                                 <ul
@@ -283,31 +286,31 @@ const LeftNavigation = ({ user }) => {
                                         const href = '/assets/' + asset.id
                                         const isCurrent = pathname === href
                                         return (
-                                        <li
-                                            key={asset.initial}
-                                            className={'flex w-full'}>
-                                            <Link
-                                                href={href}
-                                                className={classNames(
-                                                    isCurrent
-                                                        ? 'bg-gray-50 text-default-primary'
-                                                        : 'text-gray-700 hover:text-default-primary hover:bg-gray-50',
-                                                    'group grow flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold',
-                                                )}>
-                                                <span
+                                            <li
+                                                key={asset.initial}
+                                                className={'flex w-full'}>
+                                                <Link
+                                                    href={href}
                                                     className={classNames(
                                                         isCurrent
-                                                            ? 'text-default-primary border-default-primary'
-                                                            : 'text-gray-400 border-gray-200 group-hover:border-default-primary group-hover:text-default-primary',
-                                                        'flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border text-[0.625rem] font-medium bg-white',
+                                                            ? 'bg-slate-800 text-white'
+                                                            : 'text-slate-400 hover:text-white hover:bg-slate-800',
+                                                        'group grow flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold',
                                                     )}>
-                                                    {asset.initial}
-                                                </span>
-                                                <span className="truncate content-center">
-                                                    {asset.name}
-                                                </span>
-                                            </Link>
-                                        </li>
+                                                    <span
+                                                        className={classNames(
+                                                            isCurrent
+                                                                ? 'text-blue-400 border-blue-400'
+                                                                : 'text-slate-400 border-slate-600 group-hover:border-blue-400 group-hover:text-blue-400',
+                                                            'flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border text-[0.625rem] font-medium',
+                                                        )}>
+                                                        {asset.initial}
+                                                    </span>
+                                                    <span className="truncate content-center">
+                                                        {asset.name}
+                                                    </span>
+                                                </Link>
+                                            </li>
                                         )
                                     })}
                                 </ul>
@@ -318,7 +321,7 @@ const LeftNavigation = ({ user }) => {
                                     width="48"
                                     openDirection="up"
                                     trigger={
-                                        <button className="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-50 w-full ">
+                                        <button className="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-slate-300 hover:bg-slate-800 w-full ">
                                             <span className="sr-only">
                                                 Your profile
                                             </span>

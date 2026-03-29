@@ -22,7 +22,12 @@ const TotalValueHistory = ({ totalValues }) => {
             totalValues.yearly.forEach(item => {
                 values.push({
                     date: formatDate(item.date, false, 'fr-FR'),
-                    value: parseFloat(item.value_per_fiat_currencies[user.currency_symbol]) || 0,
+                    value:
+                        parseFloat(
+                            item.value_per_fiat_currencies[
+                                user.currency_symbol
+                            ],
+                        ) || 0,
                 })
             })
             setTotalValuesYearly(values)
@@ -43,7 +48,7 @@ const TotalValueHistory = ({ totalValues }) => {
                     left: 20,
                     bottom: 5,
                 }}>
-                <CartesianGrid strokeDasharray="3 3" />
+                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
                 <XAxis dataKey="date" tick={{ fontSize: 12 }} />
                 <YAxis
                     tick={{ fontSize: 12 }}
@@ -59,7 +64,7 @@ const TotalValueHistory = ({ totalValues }) => {
                         lineHeight: '1rem',
                     }}
                 />
-                <Line type="monotone" dataKey="value" stroke="#5046e5" />
+                <Line type="monotone" dataKey="value" stroke="#3B82F6" />
             </LineChart>
         </ResponsiveContainer>
     )

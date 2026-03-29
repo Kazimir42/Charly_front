@@ -8,7 +8,7 @@ const DocumentCard = ({ title, form, children }) => {
                 <div className={'flex flex-row items-baseline gap-2 py-3'}>
                     <span
                         className={
-                            'font-bold bg-default-primary_lightest rounded-full px-3 py-0.5 text-white'
+                            'font-bold bg-blue-500 rounded-full px-3 py-0.5 text-white'
                         }>
                         {form}
                     </span>

@@ -108,7 +108,7 @@ const Page = () => {
             <div className="flex items-center justify-end mt-4">
                 <Link
                     href="/login"
-                    className="underline text-sm text-gray-600 hover:text-gray-900">
+                    className="underline text-sm text-slate-500 hover:text-slate-700">
                     Already registered?
                 </Link>
 

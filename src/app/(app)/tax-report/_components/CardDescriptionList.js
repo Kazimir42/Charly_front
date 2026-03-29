@@ -2,7 +2,7 @@ import React from 'react'
 
 const CardDescriptionList = ({ title, titleDesc, lines }) => {
     return (
-        <div className="overflow-hidden bg-white shadow rounded-lg">
+        <div className="overflow-hidden bg-white border border-slate-200 rounded-xl">
             {title || titleDesc ? (
                 <div className="px-4 py-6 sm:px-6">
                     <h3 className="text-base font-semibold leading-7 text-gray-900">
@@ -15,8 +15,8 @@ const CardDescriptionList = ({ title, titleDesc, lines }) => {
             ) : (
                 ''
             )}
-            <div className="border-t border-gray-100">
-                <dl className="divide-y divide-gray-100">
+            <div className="border-t border-slate-100">
+                <dl className="divide-y divide-slate-100">
                     {lines.map((line, i) => (
                         <div
                             key={i}

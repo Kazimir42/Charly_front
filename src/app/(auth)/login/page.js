@@ -122,6 +122,31 @@ const Login = () => {
                     </Link>
                 </p>
             </form>
+
+            <div className="mt-6 rounded-lg border border-dashed border-slate-200 bg-slate-50 p-4">
+                <p className="text-xs font-medium uppercase tracking-wider text-slate-400 mb-2">
+                    Compte démo
+                </p>
+                <div className="space-y-1 text-sm text-slate-600">
+                    <p>
+                        <span className="text-slate-400">Email :</span>{' '}
+                        <span className="font-mono">demo@example.com</span>
+                    </p>
+                    <p>
+                        <span className="text-slate-400">Mot de passe :</span>{' '}
+                        <span className="font-mono">password</span>
+                    </p>
+                </div>
+                <button
+                    type="button"
+                    onClick={() => {
+                        setEmail('demo@example.com')
+                        setPassword('password')
+                    }}
+                    className="mt-3 w-full rounded-md border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-600 hover:bg-slate-100 transition-colors">
+                    Remplir automatiquement
+                </button>
+            </div>
         </>
     )
 }

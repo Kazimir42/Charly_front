@@ -36,24 +36,26 @@ export default function Home() {
                     <div className="mx-auto max-w-7xl px-6 lg:px-8">
                         <div className="mx-auto max-w-2xl text-center">
                             <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-                                Master your cryptos, maximize your future.
+                                Maîtrisez vos cryptos, maximisez votre avenir.
                             </h1>
                             <p className="mt-6 text-lg leading-8 text-gray-600">
-                                Manage your cryptos securely and simply. Our
-                                platform also simplifies your tax filings.
+                                Gérez vos cryptos en toute sécurité et
+                                simplicité. Notre plateforme simplifie aussi vos
+                                déclarations fiscales.
                             </p>
                             <div className="mt-10 flex items-center justify-center gap-x-6">
                                 <a
                                     href="/dashboard"
                                     className="rounded-md bg-slate-900 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-slate-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900">
-                                    Get started
+                                    Commencer
                                 </a>
                                 <a
                                     href="https://www.remi-champlon.fr/"
                                     target={'_blank'}
                                     rel={'noreferrer'}
                                     className="text-sm font-semibold leading-6 text-gray-900">
-                                    Learn more <span aria-hidden="true">→</span>
+                                    En savoir plus{' '}
+                                    <span aria-hidden="true">→</span>
                                 </a>
                             </div>
                         </div>
@@ -61,7 +63,7 @@ export default function Home() {
                             <div className="-m-2  ">
                                 <img
                                     src="/preview.png"
-                                    alt="App screenshot"
+                                    alt="Aperçu de l'application"
                                     className="rounded-xl shadow-2xl border border-gray-300"
                                 />
                             </div>

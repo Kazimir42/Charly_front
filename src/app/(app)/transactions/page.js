@@ -254,7 +254,7 @@ const Transactions = () => {
         if (!transactions.length) {
             formattedData = [
                 [
-                    'No transactions found :(',
+                    'Aucune transaction trouvée :(',
                     '',
                     '',
                     '',
@@ -492,10 +492,10 @@ const Transactions = () => {
                 <Header title="Transactions" />
                 <div className={'flex flex-row gap-2'}>
                     <Button onClick={openOrCloseTransactionCsvModal}>
-                        CSV Import
+                        Import CSV
                     </Button>
                     <Button onClick={openOrCloseTransactionCreateModal}>
-                        + Add new
+                        + Ajouter
                     </Button>
                 </div>
             </div>
@@ -551,7 +551,7 @@ const Transactions = () => {
                             }>
                             <p className={'mb-2 text-gray-500 text-sm'}>
                                 {selectedTransactionIds.length} transactions
-                                selected
+                                sélectionnées
                             </p>
                             <Button
                                 onClick={deleteAll}
@@ -559,7 +559,7 @@ const Transactions = () => {
                                     'flex flex-row gap-1 bg-red-500 hover:bg-red-600'
                                 }>
                                 <TrashIcon className={'h-5 w-5'} />
-                                <p>Delete</p>
+                                <p>Supprimer</p>
                             </Button>
                         </div>
                     </div>
@@ -596,8 +596,8 @@ const Transactions = () => {
                 deleteObject={_deleteTransaction}
                 isOpen={transactionDeleteModalIsOpen}
                 setIsOpen={openOrCloseTransactionDeleteModal}
-                title={'Delete transaction'}
-                content={'Care, you cannot restore it'}
+                title={'Supprimer la transaction'}
+                content={'Attention, cette action est irréversible'}
             />
         </>
     )

@@ -30,7 +30,7 @@ const Page = ({ params }) => {
 
     function formatTransactionRows() {
         if (!asset?.transactions?.length) {
-            return [['No transactions found', '', '', '', '', '']]
+            return [['Aucune transaction trouvée', '', '', '', '', '']]
         }
 
         return asset.transactions.map(tx => {
@@ -86,7 +86,7 @@ const Page = ({ params }) => {
     }
 
     if (!asset) {
-        return <p>Asset not found.</p>
+        return <p>Actif introuvable.</p>
     }
 
     const summary = asset.summary
@@ -105,19 +105,19 @@ const Page = ({ params }) => {
             </div>
 
             <div className={'flex flex-row gap-4 mb-6'}>
-                <SimpleCard className={'grow'} name={'Quantity'}>
+                <SimpleCard className={'grow'} name={'Quantité'}>
                     {parseFloat(summary.quantity).toLocaleString(undefined, {
                         maximumFractionDigits: 8,
                     })}{' '}
                     {asset.currency?.symbol}
                 </SimpleCard>
-                <SimpleCard className={'grow'} name={'Current value'}>
+                <SimpleCard className={'grow'} name={'Valeur actuelle'}>
                     {formatPrice(
                         summary.total_value_per_fiat_currencies?.[sym],
                         sym,
                     )}
                 </SimpleCard>
-                <SimpleCard className={'grow'} name={'Average buy price'}>
+                <SimpleCard className={'grow'} name={"Prix moyen d'achat"}>
                     {formatPrice(
                         summary.average_buy_price_per_fiat_currencies?.[sym],
                         sym,
@@ -125,7 +125,7 @@ const Page = ({ params }) => {
                 </SimpleCard>
                 <SimpleCard
                     className={'grow'}
-                    name={'Unrealized P/L'}
+                    name={'P/L non réalisé'}
                     childrenClass={'flex flex-row items-baseline gap-2'}>
                     <ProfitLossPrice
                         value={summary.profit_loss_per_fiat_currencies?.[sym]}
@@ -146,15 +146,15 @@ const Page = ({ params }) => {
             </div>
 
             <div className={'mb-6'}>
-                <h3 className={'font-semibold text-xl mb-2'}>Details</h3>
+                <h3 className={'font-semibold text-xl mb-2'}>Détails</h3>
                 <CardDescriptionList
                     lines={[
                         {
-                            name: 'Location',
+                            name: 'Plateforme',
                             value: asset.location?.name,
                         },
                         {
-                            name: 'Total invested',
+                            name: 'Total investi',
                             value: formatPrice(
                                 summary.total_invested_per_fiat_currencies?.[
                                     sym
@@ -163,7 +163,7 @@ const Page = ({ params }) => {
                             ),
                         },
                         {
-                            name: 'Total proceeds',
+                            name: 'Total des ventes',
                             value: formatPrice(
                                 summary.total_proceeds_per_fiat_currencies?.[
                                     sym
@@ -172,7 +172,7 @@ const Page = ({ params }) => {
                             ),
                         },
                         {
-                            name: 'Total acquisition cost',
+                            name: "Coût total d'acquisition",
                             value: formatPrice(
                                 summary
                                     .total_acquisition_cost_per_fiat_currencies?.[
@@ -203,22 +203,22 @@ const Page = ({ params }) => {
                             <th
                                 scope="col"
                                 className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                Out
+                                Sortie
                             </th>
                             <th
                                 scope="col"
                                 className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                In
+                                Entrée
                             </th>
                             <th
                                 scope="col"
                                 className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                Total price
+                                Prix total
                             </th>
                             <th
                                 scope="col"
                                 className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                Unit price
+                                Prix unitaire
                             </th>
                         </tr>
                     }

@@ -77,23 +77,23 @@ const SoldCrypto = ({ cryptocurrency }) => {
                 </div>,
             ]}
             headerContent={[
-                <div key={'Location'} className="inline-block w-[52%]">
-                    Location
+                <div key={'Plateforme'} className="inline-block w-[52%]">
+                    Plateforme
                 </div>,
                 <div
-                    key={'Quantity sold'}
+                    key={'Quantité vendue'}
                     className="inline-block w-[15%] text-right">
-                    Quantity sold
+                    Quantité vendue
                 </div>,
                 <div
-                    key={'In unit price'}
+                    key={'Prix de vente unitaire'}
                     className="inline-block w-[15%] text-right">
-                    Sold unit price
+                    Prix de vente unitaire
                 </div>,
                 <div
-                    key={'Total value'}
+                    key={'Total vendu'}
                     className="inline-block w-[15%] text-right">
-                    Total sold
+                    Total vendu
                 </div>,
             ]}
             content={formattedAssets}

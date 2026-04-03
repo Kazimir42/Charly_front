@@ -12,20 +12,20 @@ const LoginLinks = () => {
                 <Link
                     href="/dashboard"
                     className="ml-4 text-sm font-semibold leading-6 text-gray-900">
-                    Dashboard
+                    Tableau de bord
                 </Link>
             ) : (
                 <>
                     <Link
                         href="/login"
                         className="text-sm font-semibold leading-6 text-gray-90">
-                        Login
+                        Connexion
                     </Link>
 
                     <Link
                         href="/register"
                         className="ml-4 text-sm font-semibold leading-6 text-gray-90">
-                        Register
+                        Inscription
                     </Link>
                 </>
             )}

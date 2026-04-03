@@ -5,13 +5,14 @@ const CreateTaxReportForm = ({ submitCreateForm }) => {
     return (
         <form onSubmit={submitCreateForm} className={'flex flex-col'}>
             <h3 className={'font-semibold text-xl mb-2'}>
-                Not tax report found
+                Aucun rapport fiscal trouvé
             </h3>
             <p className={'block font-medium text-sm text-gray-700 mb-4'}>
-                The tax report is based on transactions completed in the
-                selected year for the tax residency specified in the profile.
+                Le rapport fiscal est basé sur les transactions effectuées dans
+                l'année sélectionnée pour la résidence fiscale indiquée dans le
+                profil.
             </p>
-            <Button className={'w-fit'}>Create report</Button>
+            <Button className={'w-fit'}>Créer le rapport</Button>
         </form>
     )
 }

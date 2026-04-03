@@ -156,54 +156,54 @@ const Location = ({
                                         location.id,
                                     ) + e.stopPropagation()
                                 }>
-                                Delete
+                                Supprimer
                             </DropdownButton>
                             <DropdownButton
                                 onClick={e =>
                                     openOrCloseLocationEditModal(location.id) +
                                     e.stopPropagation()
                                 }>
-                                Edit
+                                Modifier
                             </DropdownButton>
                             <DropdownButton
                                 onClick={e =>
                                     openNewTransactionModal(location.id) +
                                     e.stopPropagation()
                                 }>
-                                New transaction
+                                Nouvelle transaction
                             </DropdownButton>
                         </Dropdown>
                     </div>
                 </div>,
             ]}
             headerContent={[
-                <div key={'Coin'} className="inline-block w-[19%]">
-                    Coin
+                <div key={'Crypto'} className="inline-block w-[19%]">
+                    Crypto
                 </div>,
                 <div
-                    key={'Quantity'}
+                    key={'Quantité'}
                     className="inline-block w-[15%] text-right">
-                    Quantity
+                    Quantité
                 </div>,
                 <div
-                    key={'In unit price'}
+                    key={"Prix d'achat unitaire"}
                     className="inline-block w-[15%] text-right">
-                    Buy unit price
+                    Prix d'achat unitaire
                 </div>,
                 <div
-                    key={'Current price'}
+                    key={'Prix actuel'}
                     className="inline-block w-[15%] text-right">
-                    Current price
+                    Prix actuel
                 </div>,
                 <div
-                    key={'Total value'}
+                    key={'Valeur totale'}
                     className="inline-block w-[15%] text-right">
-                    Total value
+                    Valeur totale
                 </div>,
                 <div
-                    key={'+/- value'}
+                    key={'+/- valeur'}
                     className="inline-block w-[15%] text-right">
-                    +/- value
+                    +/- valeur
                 </div>,
             ]}
             content={formattedAssets}

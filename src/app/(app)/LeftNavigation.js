@@ -56,7 +56,7 @@ const LeftNavigation = ({ user }) => {
 
     const navigation = [
         {
-            name: 'Dashboard',
+            name: 'Tableau de bord',
             href: '/dashboard',
             icon: HomeIcon,
             current: pathname === '/dashboard',
@@ -68,19 +68,19 @@ const LeftNavigation = ({ user }) => {
             current: pathname === '/transactions',
         },
         {
-            name: 'History',
+            name: 'Historique',
             href: '/history',
             icon: MagnifyingGlassIcon,
             current: pathname === '/history',
         },
         {
-            name: 'Tax report',
+            name: 'Rapport fiscal',
             href: '/tax-report/' + (new Date().getFullYear() - 1),
             icon: DocumentTextIcon,
             current: pathname.includes('/tax-report/'),
         },
         {
-            name: 'Stats',
+            name: 'Statistiques',
             href: '/stats',
             icon: ChartPieIcon,
             current: pathname === '/stats',
@@ -131,7 +131,7 @@ const LeftNavigation = ({ user }) => {
                                                 setSidebarOpen(false)
                                             }>
                                             <span className="sr-only">
-                                                Close sidebar
+                                                Fermer le menu
                                             </span>
                                             <XMarkIcon
                                                 className="h-6 w-6 text-white"
@@ -181,7 +181,7 @@ const LeftNavigation = ({ user }) => {
                                             </li>
                                             <li>
                                                 <div className="text-xs font-semibold leading-6 text-slate-500">
-                                                    Locations
+                                                    Plateformes
                                                 </div>
                                                 <ul
                                                     role="list"
@@ -277,7 +277,7 @@ const LeftNavigation = ({ user }) => {
                             </li>
                             <li>
                                 <div className="text-xs font-semibold leading-6 text-slate-500">
-                                    Your assets
+                                    Vos actifs
                                 </div>
                                 <ul
                                     role="list"
@@ -323,7 +323,7 @@ const LeftNavigation = ({ user }) => {
                                     trigger={
                                         <button className="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-slate-300 hover:bg-slate-800 w-full ">
                                             <span className="sr-only">
-                                                Your profile
+                                                Votre profil
                                             </span>
                                             <span aria-hidden="true">
                                                 {user?.name}
@@ -344,10 +344,10 @@ const LeftNavigation = ({ user }) => {
                                         </button>
                                     }>
                                     <DropdownLink href={'/my-account'}>
-                                        My account
+                                        Mon compte
                                     </DropdownLink>
                                     <DropdownButton onClick={logout}>
-                                        Logout
+                                        Déconnexion
                                     </DropdownButton>
                                 </Dropdown>
                             </li>
@@ -361,11 +361,11 @@ const LeftNavigation = ({ user }) => {
                     type="button"
                     className="-m-2.5 p-2.5 text-gray-700 lg:hidden"
                     onClick={() => setSidebarOpen(true)}>
-                    <span className="sr-only">Open sidebar</span>
+                    <span className="sr-only">Ouvrir le menu</span>
                     <Bars3Icon className="h-6 w-6" aria-hidden="true" />
                 </button>
                 <div className="flex-1 text-sm font-semibold leading-6 text-gray-900">
-                    Dashboard
+                    Tableau de bord
                 </div>
                 <Dropdown
                     align="right"
@@ -388,8 +388,10 @@ const LeftNavigation = ({ user }) => {
                             </div>
                         </button>
                     }>
-                    <DropdownLink href={'/my-account'}>My account</DropdownLink>
-                    <DropdownButton onClick={logout}>Logout</DropdownButton>
+                    <DropdownLink href={'/my-account'}>Mon compte</DropdownLink>
+                    <DropdownButton onClick={logout}>
+                        Déconnexion
+                    </DropdownButton>
                 </Dropdown>
             </div>
         </>

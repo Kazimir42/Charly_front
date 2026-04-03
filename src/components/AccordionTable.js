@@ -98,7 +98,7 @@ const AccordionTable = ({ header, headerContent, content }) => {
                                     'flex flex-row items-center px-5 py-2 border-b border-slate-100 text-sm text-slate-600'
                                 }>
                                 <div className="inline-block w-[3%]" />
-                                <div className={'inline-block'}>Empty :(</div>
+                                <div className={'inline-block'}>Vide :(</div>
                             </div>
                         )}
                     </div>

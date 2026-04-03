@@ -52,13 +52,13 @@ const CsvTransactionModal = ({ sendCsv, setIsOpen, isOpen, isSimulation }) => {
 
     return (
         <Modal
-            title={'CSV Import'}
+            title={'Import CSV'}
             setIsOpen={openOrClose}
             isOpen={isOpen}
             className={''}>
             {isSimulation ? (
                 <p className={'text-gray-600'}>
-                    You can download the CSV example file{' '}
+                    Vous pouvez télécharger le fichier CSV d'exemple{' '}
                     <a
                         className={'text-default-primary underline'}
                         href={
@@ -66,12 +66,12 @@ const CsvTransactionModal = ({ sendCsv, setIsOpen, isOpen, isSimulation }) => {
                             '/csv/import_example.csv'
                         }
                         download>
-                        here
+                        ici
                     </a>
                 </p>
             ) : (
                 <p className={'text-gray-600'}>
-                    Simulation OK you can now send it to the server.
+                    Simulation OK, vous pouvez maintenant envoyer le fichier.
                 </p>
             )}
             <form className={'flex flex-col gap-4'} onSubmit={submitForm}>
@@ -101,7 +101,7 @@ const CsvTransactionModal = ({ sendCsv, setIsOpen, isOpen, isSimulation }) => {
                                     <label
                                         htmlFor="file-upload"
                                         className="inline cursor-pointer font-semibold text-default-primary hover:text-default-primary_dark hover:underline">
-                                        <span>Upload a file</span>
+                                        <span>Importer un fichier</span>
                                         <input
                                             id="file-upload"
                                             name="file-upload"
@@ -112,7 +112,7 @@ const CsvTransactionModal = ({ sendCsv, setIsOpen, isOpen, isSimulation }) => {
                                         />
                                     </label>
                                     <span className="pl-1">
-                                        or drag and drop
+                                        ou glisser-déposer
                                     </span>
                                 </div>
                                 {uploadedFile ? (
@@ -121,7 +121,7 @@ const CsvTransactionModal = ({ sendCsv, setIsOpen, isOpen, isSimulation }) => {
                                     </p>
                                 ) : (
                                     <p className="text-xs leading-5 text-gray-600">
-                                        CSV up to 10MB
+                                        CSV jusqu'à 10 Mo
                                     </p>
                                 )}
                             </div>
@@ -135,7 +135,7 @@ const CsvTransactionModal = ({ sendCsv, setIsOpen, isOpen, isSimulation }) => {
 
                 <div className={'flex flex-row justify-end'}>
                     <Button type="submit">
-                        {isSimulation ? 'Simulate' : 'Send'}
+                        {isSimulation ? 'Simuler' : 'Envoyer'}
                     </Button>
                 </div>
             </form>

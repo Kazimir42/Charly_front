@@ -50,12 +50,12 @@ const Out = ({
                 />
             </div>
             <div>
-                <Label htmlFor="transaction_label">Label</Label>
+                <Label htmlFor="transaction_label">Libellé</Label>
                 <Select
                     id="transaction_label"
                     name="transaction_label"
                     items={{
-                        0: 'Choose a label',
+                        0: 'Choisir un libellé',
                         ...transactionLabels.reduce((acc, transactionLabel) => {
                             acc[transactionLabel.id] =
                                 transactionLabel.name +
@@ -72,7 +72,7 @@ const Out = ({
             <div className={'grid grid-cols-11 gap-2 items-center'}>
                 <div className={'col-span-5'}>
                     <h3 className={'font-medium text-sm text-gray-700'}>
-                        Sent*
+                        Envoyé*
                     </h3>
                     <div className={'flex flex-row gap-2'}>
                         <Input
@@ -81,7 +81,7 @@ const Out = ({
                             type="number"
                             step={'0.01'}
                             min={'0'}
-                            placeholder={'Quantity'}
+                            placeholder={'Quantité'}
                             value={fromQuantity}
                             className="block w-1/3"
                             onChange={event =>
@@ -93,7 +93,7 @@ const Out = ({
                             id="from_currency"
                             name="from_currency"
                             required={true}
-                            placeholder={'Asset'}
+                            placeholder={'Actif'}
                             selectedItem={fromCurrency}
                             setSelectedItem={setFromCurrency}
                             items={[
@@ -146,7 +146,7 @@ const Out = ({
                 </div>
                 <div className={'col-span-5'}>
                     <h3 className={'font-medium text-sm text-gray-700'}>
-                        Received
+                        Reçu
                     </h3>
                     <div className={'flex flex-row gap-2'}>
                         <Input
@@ -155,7 +155,7 @@ const Out = ({
                             type="number"
                             step={'0.01'}
                             min={'0'}
-                            placeholder={'Quantity'}
+                            placeholder={'Quantité'}
                             value={toQuantity}
                             className="block w-1/3"
                             onChange={event =>
@@ -165,7 +165,7 @@ const Out = ({
                         <SelectCombobox
                             id="to_currency"
                             name="to_currency"
-                            placeholder={'Asset'}
+                            placeholder={'Actif'}
                             selectedItem={toCurrency}
                             setSelectedItem={setToCurrency}
                             items={[
@@ -211,12 +211,12 @@ const Out = ({
                 </div>
             </div>
             <div>
-                <Label htmlFor="location">Location</Label>
+                <Label htmlFor="location">Plateforme</Label>
                 <Select
                     id="location"
                     name="location"
                     items={{
-                        0: 'Choose a location',
+                        0: 'Choisir une plateforme',
                         ...locations.reduce((acc, location) => {
                             acc[location.id] = location.name
                             return acc
@@ -241,7 +241,7 @@ const Out = ({
                     />
                 </div>
                 <div>
-                    <Label htmlFor="from_address">Departure address</Label>
+                    <Label htmlFor="from_address">Adresse de départ</Label>
                     <Input
                         id="from_address"
                         name="from_address"
@@ -271,7 +271,7 @@ const Out = ({
                     onChange={event => setTaxable(event.target.checked)}
                 />
                 <Label htmlFor="taxable" className={'cursor-pointer'}>
-                    Taxable
+                    Imposable
                 </Label>
             </div>
         </div>

@@ -4,6 +4,7 @@ import Button from '@/components/Button'
 import Input from '@/components/Input'
 import InputError from '@/components/InputError'
 import Label from '@/components/Label'
+import Link from 'next/link'
 import { useAuth } from '@/hooks/auth'
 import { useState } from 'react'
 import AuthSessionStatus from '@/app/(auth)/AuthSessionStatus'
@@ -26,17 +27,19 @@ const Page = () => {
 
     return (
         <>
-            <div className="mb-4 text-sm text-slate-500">
-                Forgot your password? No problem. Just let us know your email
-                email address and we will email you a password reset link that
-                that will allow you to choose a new one.
+            <div className="mb-6">
+                <h2 className="text-xl font-semibold text-slate-900">
+                    Mot de passe oublié
+                </h2>
+                <p className="mt-1 text-sm text-slate-500">
+                    Indiquez votre adresse email et nous vous enverrons un lien
+                    de réinitialisation.
+                </p>
             </div>
 
-            {/* Session Status */}
             <AuthSessionStatus className="mb-4" status={status} />
 
-            <form onSubmit={submitForm}>
-                {/* Email Address */}
+            <form onSubmit={submitForm} className="space-y-4">
                 <div>
                     <Label htmlFor="email">Email</Label>
                     <Input
@@ -44,18 +47,26 @@ const Page = () => {
                         type="email"
                         name="email"
                         value={email}
-                        className="block mt-1 w-full"
+                        placeholder="vous@exemple.com"
+                        className="block mt-1.5 w-full"
                         onChange={event => setEmail(event.target.value)}
                         required
                         autoFocus
                     />
-
-                    <InputError messages={errors.email} className="mt-2" />
+                    <InputError messages={errors.email} className="mt-1.5" />
                 </div>
 
-                <div className="flex items-center justify-end mt-4">
-                    <Button>Email Password Reset Link</Button>
-                </div>
+                <Button className="w-full">
+                    Envoyer le lien de réinitialisation
+                </Button>
+
+                <p className="text-center text-sm text-slate-500">
+                    <Link
+                        href="/login"
+                        className="text-blue-500 hover:text-blue-600 font-medium">
+                        Retour à la connexion
+                    </Link>
+                </p>
             </form>
         </>
     )

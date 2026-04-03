@@ -30,7 +30,7 @@ const DeleteModal = ({
                     <Button
                         type="submit"
                         className={'bg-red-500 hover:bg-red-600'}>
-                        Delete
+                        Supprimer
                     </Button>
                 </div>
             </form>

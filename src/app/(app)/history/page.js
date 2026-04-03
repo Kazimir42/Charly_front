@@ -30,7 +30,7 @@ const History = () => {
                 const stats = data.stats
                 setCardStats([
                     {
-                        name: 'Total value invested',
+                        name: 'Total investi',
                         value: formatPrice(
                             stats.total_invested_value
                                 ?.value_per_fiat_currencies?.[
@@ -40,7 +40,7 @@ const History = () => {
                         ),
                     },
                     {
-                        name: 'Total value sold',
+                        name: 'Total vendu',
                         value: formatPrice(
                             stats.total_sold_value?.value_per_fiat_currencies?.[
                                 user.currency_symbol
@@ -49,7 +49,7 @@ const History = () => {
                         ),
                     },
                     {
-                        name: 'Realized Profit / Loss',
+                        name: 'Profit / Perte réalisé',
                         value: (
                             <ProfitLossPrice
                                 value={
@@ -63,7 +63,7 @@ const History = () => {
                         ),
                     },
                     {
-                        name: 'Realized Profit / Loss by %',
+                        name: 'Profit / Perte réalisé en %',
                         value: (
                             <PercentageBubble
                                 className={''}
@@ -86,7 +86,7 @@ const History = () => {
 
     return (
         <>
-            <Header title="History" className={'mb-4'} />
+            <Header title="Historique" className={'mb-4'} />
 
             <div className={'pb-6'}>
                 <div className={'flex flex-row gap-4 mb-4'}>
@@ -102,9 +102,7 @@ const History = () => {
             </div>
 
             <div className={'pb-6'}>
-                <h3 className={'font-semibold text-xl mb-2'}>
-                    Cryptocurrencies
-                </h3>
+                <h3 className={'font-semibold text-xl mb-2'}>Cryptomonnaies</h3>
                 <div className="grid 2xl:grid-cols-2 gap-2">
                     {cryptocurrencies.map((cryptocurrency, index) => (
                         <SoldCrypto

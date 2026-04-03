@@ -65,7 +65,7 @@ const Dashboard = () => {
                 // TODO
                 setCardStats([
                     {
-                        name: 'Current total value',
+                        name: 'Valeur totale actuelle',
                         value: formatPrice(
                             data.stats.current_total_value
                                 ?.value_per_fiat_currencies?.[
@@ -75,7 +75,7 @@ const Dashboard = () => {
                         ),
                     },
                     {
-                        name: 'Total invested',
+                        name: 'Total investi',
                         value: formatPrice(
                             data.stats.total_value_invested
                                 ?.value_per_fiat_currencies?.[
@@ -85,7 +85,7 @@ const Dashboard = () => {
                         ),
                     },
                     {
-                        name: 'Unrealized P/L',
+                        name: 'P/L non réalisé',
                         value: (
                             <div>
                                 <ProfitLossPrice
@@ -112,7 +112,7 @@ const Dashboard = () => {
                         ),
                     },
                     {
-                        name: 'Realized P/L',
+                        name: 'P/L réalisé',
                         value: (
                             <ProfitLossPrice
                                 value={
@@ -234,7 +234,7 @@ const Dashboard = () => {
 
     return (
         <>
-            <Header title="Dashboard" className={'mb-4'} />
+            <Header title="Tableau de bord" className={'mb-4'} />
 
             <div className={'pb-6'}>
                 <div className={'flex flex-row flex-wrap gap-4 mb-4'}>
@@ -251,14 +251,14 @@ const Dashboard = () => {
                     <SimpleCard
                         className={'col-span-1 lg:col-span-2'}
                         childrenClass={'h-[400px]'}
-                        name={'Total value history'}>
+                        name={'Historique de la valeur totale'}>
                         <TotalValueHistory
                             totalValues={totalValueHistoryStats}
                         />
                     </SimpleCard>
                     <SimpleCard
                         className={'col-span-1'}
-                        name={'Allocation'}
+                        name={'Répartition'}
                         childrenClass={'h-[400px]'}>
                         <TreemapAllocation allocations={allocationStats} />
                     </SimpleCard>
@@ -270,9 +270,9 @@ const Dashboard = () => {
                     className={
                         'flex flex-row items-center mb-2 justify-between'
                     }>
-                    <h3 className={'font-semibold text-xl'}>Locations</h3>
+                    <h3 className={'font-semibold text-xl'}>Plateformes</h3>
                     <Button onClick={openOrCloseLocationCreateModal}>
-                        + Add new
+                        + Ajouter
                     </Button>
                 </div>
                 <div className="flex flex-col gap-2">
@@ -310,9 +310,9 @@ const Dashboard = () => {
                 deleteObject={_deleteLocation}
                 isOpen={locationDeleteModalIsOpen}
                 setIsOpen={openOrCloseLocationDeleteModal}
-                title={'Delete location: ' + selectedLocation?.name}
+                title={'Supprimer la plateforme : ' + selectedLocation?.name}
                 content={
-                    'By deleted a location it will delete the child assets and remove the location from the transactions (but the transactions will not be deleted)'
+                    'En supprimant une plateforme, les actifs associés seront supprimés et la plateforme sera retirée des transactions (mais les transactions ne seront pas supprimées)'
                 }
             />
             <CreateTransactionModal

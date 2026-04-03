@@ -27,13 +27,13 @@ const EditLocationModal = ({ location, setIsOpen, isOpen, updateLocation }) => {
 
     return (
         <Modal
-            title={'Edit Location'}
+            title={'Modifier la plateforme'}
             setIsOpen={setIsOpen}
             isOpen={isOpen}
             className={''}>
             <form className={'flex flex-col gap-4'} onSubmit={submitForm}>
                 <div>
-                    <Label htmlFor="name">Name*</Label>
+                    <Label htmlFor="name">Nom*</Label>
                     <Input
                         id="name"
                         type="text"
@@ -55,7 +55,7 @@ const EditLocationModal = ({ location, setIsOpen, isOpen, updateLocation }) => {
                     />
                 </div>
                 <div className={'flex flex-row justify-end'}>
-                    <Button type="submit">Save</Button>
+                    <Button type="submit">Enregistrer</Button>
                 </div>
             </form>
         </Modal>

@@ -38,68 +38,68 @@ const PasswordReset = () => {
 
     return (
         <>
-            {/* Session Status */}
+            <div className="mb-6">
+                <h2 className="text-xl font-semibold text-slate-900">
+                    Nouveau mot de passe
+                </h2>
+                <p className="mt-1 text-sm text-slate-500">
+                    Choisissez un nouveau mot de passe pour votre compte
+                </p>
+            </div>
+
             <AuthSessionStatus className="mb-4" status={status} />
 
-            <form onSubmit={submitForm}>
-                {/* Email Address */}
+            <form onSubmit={submitForm} className="space-y-4">
                 <div>
                     <Label htmlFor="email">Email</Label>
-
                     <Input
                         id="email"
                         type="email"
                         value={email}
-                        className="block mt-1 w-full"
+                        className="block mt-1.5 w-full"
                         onChange={event => setEmail(event.target.value)}
                         required
                         autoFocus
                     />
-
-                    <InputError messages={errors.email} className="mt-2" />
+                    <InputError messages={errors.email} className="mt-1.5" />
                 </div>
 
-                {/* Password */}
-                <div className="mt-4">
-                    <Label htmlFor="password">Password</Label>
+                <div>
+                    <Label htmlFor="password">Mot de passe</Label>
                     <Input
                         id="password"
                         type="password"
                         value={password}
-                        className="block mt-1 w-full"
+                        className="block mt-1.5 w-full"
                         onChange={event => setPassword(event.target.value)}
                         required
                     />
-
-                    <InputError messages={errors.password} className="mt-2" />
+                    <InputError messages={errors.password} className="mt-1.5" />
                 </div>
 
-                {/* Confirm Password */}
-                <div className="mt-4">
+                <div>
                     <Label htmlFor="passwordConfirmation">
-                        Confirm Password
+                        Confirmer le mot de passe
                     </Label>
-
                     <Input
                         id="passwordConfirmation"
                         type="password"
                         value={passwordConfirmation}
-                        className="block mt-1 w-full"
+                        className="block mt-1.5 w-full"
                         onChange={event =>
                             setPasswordConfirmation(event.target.value)
                         }
                         required
                     />
-
                     <InputError
                         messages={errors.password_confirmation}
-                        className="mt-2"
+                        className="mt-1.5"
                     />
                 </div>
 
-                <div className="flex items-center justify-end mt-4">
-                    <Button>Reset Password</Button>
-                </div>
+                <Button className="w-full">
+                    Réinitialiser le mot de passe
+                </Button>
             </form>
         </>
     )

@@ -26,7 +26,7 @@ const Movements = ({
                     id={'transaction_' + movement.id ?? movement.temp_id}
                     name={'transaction_' + movement.id ?? movement.temp_id}
                     items={{
-                        0: 'Choose a transaction',
+                        0: 'Choisir une transaction',
                         ...movementableTransactions.reduce(
                             (acc, transaction) => {
                                 let name =
@@ -47,7 +47,7 @@ const Movements = ({
                                     transaction.to_currency.symbol
 
                                 name +=
-                                    ' | FILLABLE QTY : ' +
+                                    ' | QTÉ DISPONIBLE : ' +
                                     transaction.movementable_quantity
 
                                 acc[transaction.id] = name
@@ -74,7 +74,7 @@ const Movements = ({
                     type="number"
                     step={'0.01'}
                     min={'0'}
-                    placeholder={'Quantity'}
+                    placeholder={'Quantité'}
                     value={movement?.quantity ?? 0}
                     onChange={event =>
                         updateMovement(
@@ -153,28 +153,29 @@ const Movements = ({
         <div className={'flex flex-col gap-2'}>
             {type !== TransactionType.OUT ? (
                 <p className={'text-gray-500 text-sm'}>
-                    This transaction type is not support movements yet.
+                    Ce type de transaction ne supporte pas encore les
+                    mouvements.
                 </p>
             ) : !quantity || !currency || !date ? (
                 <p className={'text-gray-500 text-sm'}>
-                    Tou should set date, sold currency and quantity of the
-                    currency to add movements.{' '}
+                    Vous devez renseigner la date, la devise vendue et la
+                    quantité pour ajouter des mouvements.{' '}
                 </p>
             ) : (
                 <>
                     <p className={'text-gray-500 text-sm'}>
-                        Here you can link other transactions to calculate the
-                        average purchase price
+                        Ici vous pouvez lier d'autres transactions pour calculer
+                        le prix d'achat moyen
                     </p>
                     <p className={'font-bold text-sm text-gray-500'}>
-                        To fill :{' '}
+                        À compléter :{' '}
                         <span className={'text-default-primary'}>
                             {toFillQuantity} {currency?.symbol}
                         </span>
                     </p>
                     {unitPurchasePrice ? (
                         <p className={'font-bold text-sm text-gray-500'}>
-                            Unit purchase price fill :{' '}
+                            Prix d'achat unitaire renseigné :{' '}
                             <span className={'text-default-primary'}>
                                 {unitPurchasePrice}
                             </span>
@@ -189,7 +190,7 @@ const Movements = ({
                         type={'button'}
                         onClick={() => addBlankMovement()}
                         className={'w-fit'}>
-                        + Add movements
+                        + Ajouter des mouvements
                     </Button>
                 </>
             )}

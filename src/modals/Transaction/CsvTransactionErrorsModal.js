@@ -8,7 +8,7 @@ const CsvTransactionErrorsModal = ({ errors, setIsOpen, isOpen }) => {
 
     return (
         <Modal
-            title={'CSV Import Errors'}
+            title={"Erreurs d'import CSV"}
             setIsOpen={openOrClose}
             isOpen={isOpen}
             className={''}>
@@ -17,10 +17,10 @@ const CsvTransactionErrorsModal = ({ errors, setIsOpen, isOpen }) => {
                     <thead className={''}>
                         <tr>
                             <th className={'px-3 py-2 text-left text-red-500'}>
-                                Row
+                                Ligne
                             </th>
                             <th className={'px-3 py-2 text-left text-red-500'}>
-                                Errors
+                                Erreurs
                             </th>
                         </tr>
                     </thead>

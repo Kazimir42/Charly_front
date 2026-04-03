@@ -171,7 +171,7 @@ const CreateTransactionModal = ({
     function Types() {
         return (
             <div>
-                <h4 className={'mb-2'}>Type of transaction*</h4>
+                <h4 className={'mb-2'}>Type de transaction*</h4>
                 <div className={'flex flex-row gap-4'}>
                     <div
                         className={
@@ -238,7 +238,7 @@ const CreateTransactionModal = ({
 
     return (
         <Modal
-            title={'New Transaction'}
+            title={'Nouvelle transaction'}
             setIsOpen={openOrClose}
             isOpen={isOpen}
             className={''}>
@@ -360,7 +360,7 @@ const CreateTransactionModal = ({
                 </div>
 
                 <div className={'flex flex-row justify-end'}>
-                    <Button type="submit">Save</Button>
+                    <Button type="submit">Enregistrer</Button>
                 </div>
             </form>
         </Modal>

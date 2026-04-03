@@ -32,7 +32,7 @@ const Stats = () => {
 
                 const cards = [
                     {
-                        name: 'Total invested',
+                        name: 'Total investi',
                         value: formatPrice(
                             ds.total_value_invested
                                 ?.value_per_fiat_currencies?.[
@@ -42,7 +42,7 @@ const Stats = () => {
                         ),
                     },
                     {
-                        name: 'Current value',
+                        name: 'Valeur actuelle',
                         value: formatPrice(
                             ds.current_total_value?.value_per_fiat_currencies?.[
                                 user.currency_symbol
@@ -51,7 +51,7 @@ const Stats = () => {
                         ),
                     },
                     {
-                        name: 'Unrealized P/L',
+                        name: 'P/L non réalisé',
                         value: (
                             <ProfitLossPrice
                                 value={
@@ -65,7 +65,7 @@ const Stats = () => {
                         ),
                     },
                     {
-                        name: 'Unrealized P/L %',
+                        name: 'P/L non réalisé %',
                         value: (
                             <PercentageBubble
                                 className={''}
@@ -79,7 +79,7 @@ const Stats = () => {
                 if (history?.stats) {
                     const hs = history.stats
                     cards.splice(1, 0, {
-                        name: 'Total sold',
+                        name: 'Total vendu',
                         value: formatPrice(
                             hs.total_sold_value?.value_per_fiat_currencies?.[
                                 user.currency_symbol
@@ -88,7 +88,7 @@ const Stats = () => {
                         ),
                     })
                     cards.push({
-                        name: 'Realized P/L',
+                        name: 'P/L réalisé',
                         value: (
                             <ProfitLossPrice
                                 value={
@@ -117,7 +117,7 @@ const Stats = () => {
 
     return (
         <>
-            <Header title="Stats" className={'mb-4'} />
+            <Header title="Statistiques" className={'mb-4'} />
 
             <div className={'pb-6'}>
                 <div className={'flex flex-row flex-wrap gap-4 mb-4'}>
@@ -134,14 +134,14 @@ const Stats = () => {
                     <SimpleCard
                         className={'col-span-1 lg:col-span-2'}
                         childrenClass={'h-[300px]'}
-                        name={'Total value history'}>
+                        name={'Historique de la valeur totale'}>
                         <TotalValueHistory
                             totalValues={totalValueHistoryStats}
                         />
                     </SimpleCard>
                     <SimpleCard
                         className={'col-span-1'}
-                        name={'Allocation by location'}
+                        name={'Répartition par plateforme'}
                         childrenClass={'h-[300px]'}>
                         <TreemapAllocation allocations={allocationStats} />
                     </SimpleCard>

@@ -64,7 +64,7 @@ const Fees = ({ fees, setFees, currencies }) => {
                     type="number"
                     step={'0.01'}
                     min={'0'}
-                    placeholder={'Quantity'}
+                    placeholder={'Quantité'}
                     value={fee?.quantity ?? 0}
                     onChange={event =>
                         updateFee(
@@ -79,7 +79,7 @@ const Fees = ({ fees, setFees, currencies }) => {
                     <SelectCombobox
                         id="from_currency"
                         name="from_currency"
-                        placeholder={'Asset'}
+                        placeholder={'Actif'}
                         selectedItem={fee?.currency_id ?? 0}
                         setSelectedItem={currency_id =>
                             updateFee(
@@ -141,7 +141,7 @@ const Fees = ({ fees, setFees, currencies }) => {
                 type={'button'}
                 onClick={() => addBlankFee()}
                 className={'w-fit'}>
-                + Add fees
+                + Ajouter des frais
             </Button>
         </div>
     )

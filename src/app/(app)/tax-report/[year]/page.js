@@ -41,7 +41,7 @@ const Page = ({ params }) => {
                 setTaxReport(result)
                 setCardStats([
                     {
-                        name: 'Total value sold',
+                        name: 'Total vendu',
                         value: formatPrice(
                             result.total_sold_value_per_fiat_currencies[
                                 user.currency_symbol
@@ -50,7 +50,7 @@ const Page = ({ params }) => {
                         ),
                     },
                     {
-                        name: 'Total Profit / Loss',
+                        name: 'Profit / Perte total',
                         value: (
                             <ProfitLossPrice
                                 value={
@@ -64,7 +64,7 @@ const Page = ({ params }) => {
                         ),
                     },
                     {
-                        name: 'Tax value (PFU 30%)',
+                        name: 'Valeur fiscale (PFU 30%)',
                         value: formatPrice(
                             result.total_tax_value_per_fiat_currencies?.[
                                 user.currency_symbol
@@ -81,7 +81,7 @@ const Page = ({ params }) => {
     return (
         <>
             <div className={'flex flex-row items-center justify-between mb-4'}>
-                <Header title={'Tax report for ' + params.year} />
+                <Header title={'Rapport fiscal pour ' + params.year} />
                 <YearSwitcher
                     backLink={'/tax-report/' + (parseInt(params.year) - 1)}
                     nextLink={'/tax-report/' + (parseInt(params.year) + 1)}
@@ -108,12 +108,12 @@ const Page = ({ params }) => {
                     <div className={'grid grid-cols-2 gap-4 pb-6'}>
                         <div className={''}>
                             <h3 className={'font-semibold text-xl mb-2'}>
-                                Information
+                                Informations
                             </h3>
                             <CardDescriptionList
                                 lines={[
                                     {
-                                        name: 'Accounts added',
+                                        name: 'Comptes ajoutés',
                                         value:
                                             taxReport.number_taxable_transactions_done >
                                             0
@@ -121,13 +121,13 @@ const Page = ({ params }) => {
                                                 : '0',
                                     },
                                     {
-                                        name: 'Transactions over the year',
+                                        name: "Transactions sur l'année",
                                         value:
                                             taxReport.number_transactions_done,
                                     },
                                     {
                                         name:
-                                            'Taxable transactions over the year',
+                                            "Transactions imposables sur l'année",
                                         value:
                                             taxReport.number_taxable_transactions_done,
                                     },
@@ -141,15 +141,15 @@ const Page = ({ params }) => {
                             <CardDescriptionList
                                 lines={[
                                     {
-                                        name: 'Tax residence',
+                                        name: 'Résidence fiscale',
                                         value: taxReport.country.name,
                                     },
                                     {
-                                        name: 'Calculation method',
+                                        name: 'Méthode de calcul',
                                         value: 'PFU (Flat tax 30%)',
                                     },
                                     {
-                                        name: 'Method of declaration',
+                                        name: 'Méthode de déclaration',
                                         value: 'Flat tax 30%',
                                     },
                                 ]}
@@ -163,14 +163,16 @@ const Page = ({ params }) => {
                         {taxReport.country.iso_code === 'FR' ? (
                             <div className={'flex flex-col gap-4'}>
                                 <DocumentCard
-                                    title={'Report my taxable transactions'}
+                                    title={
+                                        'Déclarer mes transactions imposables'
+                                    }
                                     form={'2086'}>
                                     <Document2086
                                         data={taxReport.documents['2086']}
                                     />
                                 </DocumentCard>
                                 <DocumentCard
-                                    title={'Declare my accounts abroad'}
+                                    title={"Déclarer mes comptes à l'étranger"}
                                     form={'3916 bis'}>
                                     <Document3916bis />
                                 </DocumentCard>

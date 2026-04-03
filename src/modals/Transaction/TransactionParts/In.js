@@ -48,12 +48,12 @@ const In = ({
                 />
             </div>
             <div>
-                <Label htmlFor="transaction_label">Label</Label>
+                <Label htmlFor="transaction_label">Libellé</Label>
                 <Select
                     id="transaction_label"
                     name="transaction_label"
                     items={{
-                        0: 'Choose a label',
+                        0: 'Choisir un libellé',
                         ...transactionLabels.reduce((acc, transactionLabel) => {
                             acc[transactionLabel.id] =
                                 transactionLabel.name +
@@ -70,7 +70,7 @@ const In = ({
             <div className={'grid grid-cols-11 gap-2 items-center'}>
                 <div className={'col-span-5'}>
                     <h3 className={'font-medium text-sm text-gray-700'}>
-                        Sent
+                        Envoyé
                     </h3>
                     <div className={'flex flex-row gap-2'}>
                         <Input
@@ -79,7 +79,7 @@ const In = ({
                             type="number"
                             step={'0.01'}
                             min={'0'}
-                            placeholder={'Quantity'}
+                            placeholder={'Quantité'}
                             value={fromQuantity}
                             className="block w-1/3"
                             onChange={event =>
@@ -89,7 +89,7 @@ const In = ({
                         <SelectCombobox
                             id="from_currency"
                             name="from_currency"
-                            placeholder={'Asset'}
+                            placeholder={'Actif'}
                             selectedItem={fromCurrency}
                             setSelectedItem={setFromCurrency}
                             items={[
@@ -142,7 +142,7 @@ const In = ({
                 </div>
                 <div className={'col-span-5'}>
                     <h3 className={'font-medium text-sm text-gray-700'}>
-                        Received*
+                        Reçu*
                     </h3>
                     <div className={'flex flex-row gap-2'}>
                         <Input
@@ -151,7 +151,7 @@ const In = ({
                             type="number"
                             step={'0.01'}
                             min={'0'}
-                            placeholder={'Quantity'}
+                            placeholder={'Quantité'}
                             value={toQuantity}
                             className="block w-1/3"
                             onChange={event =>
@@ -163,7 +163,7 @@ const In = ({
                             id="to_currency"
                             name="to_currency"
                             required={true}
-                            placeholder={'Asset'}
+                            placeholder={'Actif'}
                             selectedItem={toCurrency}
                             setSelectedItem={setToCurrency}
                             items={[
@@ -210,12 +210,12 @@ const In = ({
             </div>
 
             <div>
-                <Label htmlFor="location">Location</Label>
+                <Label htmlFor="location">Plateforme</Label>
                 <Select
                     id="location"
                     name="location"
                     items={{
-                        0: 'Choose a location',
+                        0: 'Choisir une plateforme',
                         ...locations.reduce((acc, location) => {
                             acc[location.id] = location.name
                             return acc
@@ -240,7 +240,7 @@ const In = ({
                     />
                 </div>
                 <div>
-                    <Label htmlFor="to_address">Reception address</Label>
+                    <Label htmlFor="to_address">Adresse de réception</Label>
                     <Input
                         id="to_address"
                         name="to_address"

@@ -33,88 +33,91 @@ const Page = () => {
     }
 
     return (
-        <form onSubmit={submitForm}>
-            {/* Name */}
-            <div>
-                <Label htmlFor="name">Name</Label>
-
-                <Input
-                    id="name"
-                    type="text"
-                    value={name}
-                    className="block mt-1 w-full"
-                    onChange={event => setName(event.target.value)}
-                    required
-                    autoFocus
-                />
-
-                <InputError messages={errors.name} className="mt-2" />
+        <>
+            <div className="mb-6">
+                <h2 className="text-xl font-semibold text-slate-900">
+                    Inscription
+                </h2>
+                <p className="mt-1 text-sm text-slate-500">
+                    Créez votre compte pour commencer
+                </p>
             </div>
 
-            {/* Email Address */}
-            <div className="mt-4">
-                <Label htmlFor="email">Email</Label>
+            <form onSubmit={submitForm} className="space-y-4">
+                <div>
+                    <Label htmlFor="name">Nom</Label>
+                    <Input
+                        id="name"
+                        type="text"
+                        value={name}
+                        className="block mt-1.5 w-full"
+                        onChange={event => setName(event.target.value)}
+                        required
+                        autoFocus
+                    />
+                    <InputError messages={errors.name} className="mt-1.5" />
+                </div>
 
-                <Input
-                    id="email"
-                    type="email"
-                    value={email}
-                    className="block mt-1 w-full"
-                    onChange={event => setEmail(event.target.value)}
-                    required
-                />
+                <div>
+                    <Label htmlFor="email">Email</Label>
+                    <Input
+                        id="email"
+                        type="email"
+                        value={email}
+                        placeholder="vous@exemple.com"
+                        className="block mt-1.5 w-full"
+                        onChange={event => setEmail(event.target.value)}
+                        required
+                    />
+                    <InputError messages={errors.email} className="mt-1.5" />
+                </div>
 
-                <InputError messages={errors.email} className="mt-2" />
-            </div>
+                <div>
+                    <Label htmlFor="password">Mot de passe</Label>
+                    <Input
+                        id="password"
+                        type="password"
+                        value={password}
+                        className="block mt-1.5 w-full"
+                        onChange={event => setPassword(event.target.value)}
+                        required
+                        autoComplete="new-password"
+                    />
+                    <InputError messages={errors.password} className="mt-1.5" />
+                </div>
 
-            {/* Password */}
-            <div className="mt-4">
-                <Label htmlFor="password">Password</Label>
+                <div>
+                    <Label htmlFor="passwordConfirmation">
+                        Confirmer le mot de passe
+                    </Label>
+                    <Input
+                        id="passwordConfirmation"
+                        type="password"
+                        value={passwordConfirmation}
+                        className="block mt-1.5 w-full"
+                        onChange={event =>
+                            setPasswordConfirmation(event.target.value)
+                        }
+                        required
+                    />
+                    <InputError
+                        messages={errors.password_confirmation}
+                        className="mt-1.5"
+                    />
+                </div>
 
-                <Input
-                    id="password"
-                    type="password"
-                    value={password}
-                    className="block mt-1 w-full"
-                    onChange={event => setPassword(event.target.value)}
-                    required
-                    autoComplete="new-password"
-                />
+                <Button className="w-full mt-2">Inscription</Button>
 
-                <InputError messages={errors.password} className="mt-2" />
-            </div>
-
-            {/* Confirm Password */}
-            <div className="mt-4">
-                <Label htmlFor="passwordConfirmation">Confirm Password</Label>
-
-                <Input
-                    id="passwordConfirmation"
-                    type="password"
-                    value={passwordConfirmation}
-                    className="block mt-1 w-full"
-                    onChange={event =>
-                        setPasswordConfirmation(event.target.value)
-                    }
-                    required
-                />
-
-                <InputError
-                    messages={errors.password_confirmation}
-                    className="mt-2"
-                />
-            </div>
-
-            <div className="flex items-center justify-end mt-4">
-                <Link
-                    href="/login"
-                    className="underline text-sm text-slate-500 hover:text-slate-700">
-                    Already registered?
-                </Link>
-
-                <Button className="ml-4">Register</Button>
-            </div>
-        </form>
+                <p className="text-center text-sm text-slate-500">
+                    Déjà inscrit ?{' '}
+                    <Link
+                        href="/login"
+                        className="text-blue-500 hover:text-blue-600 font-medium">
+                        Se connecter
+                    </Link>
+                </p>
+            </form>
+        </>
     )
 }
 

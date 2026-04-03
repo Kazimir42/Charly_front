@@ -70,14 +70,14 @@ const MyAccount = () => {
 
     return (
         <>
-            <Header title="My account" className={'mb-4'} />
+            <Header title="Mon compte" className={'mb-4'} />
 
             <div className={'pb-6 max-w-3xl'}>
-                <h3 className={'font-semibold text-xl mb-2'}>Profile</h3>
+                <h3 className={'font-semibold text-xl mb-2'}>Profil</h3>
 
                 <form className={'flex flex-col gap-4'} onSubmit={submitForm}>
                     <div>
-                        <Label htmlFor="name">Name*</Label>
+                        <Label htmlFor="name">Nom*</Label>
                         <Input
                             id="name"
                             type="text"
@@ -104,22 +104,22 @@ const MyAccount = () => {
                     </div>
 
                     <div className={'flex flex-row justify-end'}>
-                        <Button type="submit">Save</Button>
+                        <Button type="submit">Enregistrer</Button>
                     </div>
                 </form>
             </div>
 
             <div className={'pb-6 max-w-3xl'}>
-                <h3 className={'font-semibold text-xl mb-2'}>Settings</h3>
+                <h3 className={'font-semibold text-xl mb-2'}>Paramètres</h3>
 
                 <form className={'flex flex-col gap-4'} onSubmit={submitForm}>
                     <div>
-                        <Label htmlFor="currency">Default currency*</Label>
+                        <Label htmlFor="currency">Devise par défaut*</Label>
                         <Select
                             id="from_currency"
                             name="from_currency"
                             items={{
-                                0: 'Choose an asset',
+                                0: 'Choisir un actif',
                                 ...fiatCurrencies.reduce(
                                     (acc, fiatCurrency) => {
                                         acc[fiatCurrency.id] = fiatCurrency.name
@@ -137,12 +137,12 @@ const MyAccount = () => {
                     </div>
 
                     <div>
-                        <Label htmlFor="currency">Tax residence*</Label>
+                        <Label htmlFor="currency">Résidence fiscale*</Label>
                         <Select
                             id="tax_residence"
                             name="tax_residence"
                             items={{
-                                0: 'Choose a country',
+                                0: 'Choisir un pays',
                                 ...countries.reduce((acc, country) => {
                                     acc[country.id] = country.name
                                     return acc
@@ -159,7 +159,7 @@ const MyAccount = () => {
                     </div>
 
                     <div className={'flex flex-row justify-end'}>
-                        <Button type="submit">Save</Button>
+                        <Button type="submit">Enregistrer</Button>
                     </div>
                 </form>
             </div>

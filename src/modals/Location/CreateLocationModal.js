@@ -29,13 +29,13 @@ const CreateLocationModal = ({ setIsOpen, isOpen, createLocation }) => {
 
     return (
         <Modal
-            title={'New Location'}
+            title={'Nouvelle plateforme'}
             setIsOpen={openOrClose}
             isOpen={isOpen}
             className={''}>
             <form className={'flex flex-col gap-4'} onSubmit={submitForm}>
                 <div>
-                    <Label htmlFor="name">Name*</Label>
+                    <Label htmlFor="name">Nom*</Label>
                     <Input
                         id="name"
                         type="text"
@@ -57,7 +57,7 @@ const CreateLocationModal = ({ setIsOpen, isOpen, createLocation }) => {
                     />
                 </div>
                 <div className={'flex flex-row justify-end'}>
-                    <Button type="submit">Save</Button>
+                    <Button type="submit">Enregistrer</Button>
                 </div>
             </form>
         </Modal>

@@ -14,30 +14,37 @@ const Page = () => {
 
     return (
         <>
-            <div className="mb-4 text-sm text-slate-500">
-                Thanks for signing up! Before getting started, could you verify
-                your email address by clicking on the link we just emailed to
-                emailed to you? If you didn't receive the email, we will gladly
-                send you another.
+            <div className="mb-6">
+                <h2 className="text-xl font-semibold text-slate-900">
+                    Vérification de l'email
+                </h2>
+                <p className="mt-1 text-sm text-slate-500">
+                    Merci pour votre inscription ! Veuillez vérifier votre
+                    adresse email en cliquant sur le lien que nous venons de
+                    vous envoyer. Si vous n'avez pas reçu l'email, nous vous en
+                    enverrons un autre.
+                </p>
             </div>
 
             {status === 'verification-link-sent' && (
-                <div className="mb-4 font-medium text-sm text-green-600">
-                    A new verification link has been sent to the email address
-                    you provided during registration.
+                <div className="mb-4 rounded-lg bg-green-50 p-3 text-sm font-medium text-green-700">
+                    Un nouveau lien de vérification a été envoyé à l'adresse
+                    email fournie lors de l'inscription.
                 </div>
             )}
 
-            <div className="mt-4 flex items-center justify-between">
-                <Button onClick={() => resendEmailVerification({ setStatus })}>
-                    Resend Verification Email
+            <div className="flex flex-col gap-3">
+                <Button
+                    className="w-full"
+                    onClick={() => resendEmailVerification({ setStatus })}>
+                    Renvoyer l'email de vérification
                 </Button>
 
                 <button
                     type="button"
-                    className="underline text-sm text-slate-500 hover:text-slate-700"
+                    className="text-sm text-slate-500 hover:text-slate-700 text-center"
                     onClick={logout}>
-                    Logout
+                    Déconnexion
                 </button>
             </div>
         </>

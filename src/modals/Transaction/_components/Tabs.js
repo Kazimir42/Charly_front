@@ -10,12 +10,12 @@ const Tabs = ({ activeTab, setActiveTab }) => {
                 setIsActive={() => setActiveTab('informations')}
             />
             <Tab
-                title={'Fees'}
+                title={'Frais'}
                 isActive={activeTab === 'fees'}
                 setIsActive={() => setActiveTab('fees')}
             />
             <Tab
-                title={'Movements'}
+                title={'Mouvements'}
                 isActive={activeTab === 'movements'}
                 setIsActive={() => setActiveTab('movements')}
             />

@@ -22,11 +22,11 @@ const Page = ({ params }) => {
     const [asset, setAsset] = useState(null)
 
     useEffect(() => {
-        getAsset(params.id).then(data => {
+        getAsset(params.code).then(data => {
             setAsset(data)
             setIsLoading(false)
         })
-    }, [params.id])
+    }, [params.code])
 
     function formatTransactionRows() {
         if (!asset?.transactions?.length) {

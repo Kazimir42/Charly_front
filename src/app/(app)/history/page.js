@@ -3,6 +3,7 @@
 import Header from '@/app/(app)/Header'
 import SimpleCard from '@/components/SimpleCard'
 import { useEffect, useState } from 'react'
+import Loading from '@/app/(app)/Loading'
 import { useHistoryData } from '@/hooks/history'
 import SoldCrypto from '@/app/(app)/history/_components/SoldCrypto'
 import { useAuth } from '@/hooks/auth'
@@ -14,6 +15,7 @@ const History = () => {
     const { user } = useAuth({ middleware: 'auth' })
     const [cardStats, setCardStats] = useState([])
     const [cryptocurrencies, setCryptocurrencies] = useState([])
+    const [isLoading, setIsLoading] = useState(true)
 
     const { getHistory } = useHistoryData()
 
@@ -73,8 +75,13 @@ const History = () => {
                         ),
                     },
                 ])
+                setIsLoading(false)
             }
         })
+    }
+
+    if (isLoading) {
+        return <Loading fullHeight={false} />
     }
 
     return (

@@ -11,6 +11,7 @@ import { useAuth } from '@/hooks/auth'
 
 const Location = ({
     location,
+    color,
     openOrCloseLocationEditModal,
     openNewTransactionModal,
     openOrCloseLocationDeleteModal,
@@ -86,7 +87,15 @@ const Location = ({
         <AccordionTable
             header={[
                 <div key={location.name} className="inline-block w-[64%]">
-                    {location.name}
+                    <span className="flex items-center gap-2">
+                        {color && (
+                            <span
+                                className="inline-block h-3 w-3 shrink-0 rounded-full"
+                                style={{ backgroundColor: color }}
+                            />
+                        )}
+                        {location.name}
+                    </span>
                 </div>,
                 <div
                     key={

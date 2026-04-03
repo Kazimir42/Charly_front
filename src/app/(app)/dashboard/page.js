@@ -2,7 +2,8 @@
 
 import Header from '@/app/(app)/Header'
 import { useDashboardData } from '@/hooks/dashboard'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
+import Loading from '@/app/(app)/Loading'
 import Location from '@/app/(app)/dashboard/_components/Location'
 import SimpleCard from '@/components/SimpleCard'
 import EditLocationModal from '@/modals/Location/EditLocationModal'
@@ -20,6 +21,7 @@ import ProfitLossPrice from '@/components/ProfitLossPrice'
 import PercentageBubble from '@/components/PercentageBubble'
 import { useFeeData } from '@/hooks/fees'
 import { useMovementData } from '@/hooks/movements'
+import { getAllocationColor } from '@/lib/allocationColors'
 
 const Dashboard = () => {
     const { user } = useAuth({
@@ -49,6 +51,8 @@ const Dashboard = () => {
     const [cardStats, setCardStats] = useState([])
     const [allocationStats, setAllocationStats] = useState([])
     const [totalValueHistoryStats, setTotalValueHistoryStats] = useState([])
+    const [locationColorMap, setLocationColorMap] = useState({})
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
         refreshDashboard()
@@ -124,6 +128,17 @@ const Dashboard = () => {
                 ])
                 setAllocationStats(data.stats.allocation)
                 setTotalValueHistoryStats(data.stats.total_value_history)
+
+                // Build location → color map from allocation order
+                if (data.stats.allocation?.locations) {
+                    const ids = Object.keys(data.stats.allocation.locations)
+                    const colorMap = {}
+                    ids.forEach((id, index) => {
+                        colorMap[id] = getAllocationColor(index, ids.length)
+                    })
+                    setLocationColorMap(colorMap)
+                }
+                setIsLoading(false)
             }
         })
     }
@@ -213,6 +228,10 @@ const Dashboard = () => {
         openOrCloseTransactionCreateModal()
     }
 
+    if (isLoading) {
+        return <Loading fullHeight={false} />
+    }
+
     return (
         <>
             <Header title="Dashboard" className={'mb-4'} />
@@ -231,7 +250,7 @@ const Dashboard = () => {
                 <div className={'grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4'}>
                     <SimpleCard
                         className={'col-span-1 lg:col-span-2'}
-                        childrenClass={'h-[200px]'}
+                        childrenClass={'h-[400px]'}
                         name={'Total value history'}>
                         <TotalValueHistory
                             totalValues={totalValueHistoryStats}
@@ -240,7 +259,7 @@ const Dashboard = () => {
                     <SimpleCard
                         className={'col-span-1'}
                         name={'Allocation'}
-                        childrenClass={'h-[200px]'}>
+                        childrenClass={'h-[400px]'}>
                         <TreemapAllocation allocations={allocationStats} />
                     </SimpleCard>
                 </div>
@@ -261,6 +280,7 @@ const Dashboard = () => {
                         <Location
                             key={index}
                             location={location}
+                            color={locationColorMap[location.id]}
                             openOrCloseLocationEditModal={
                                 openOrCloseLocationEditModal
                             }

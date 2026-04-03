@@ -2,6 +2,7 @@
 
 import Header from '@/app/(app)/Header'
 import { useEffect, useState } from 'react'
+import Loading from '@/app/(app)/Loading'
 import { useStatsData } from '@/hooks/stats'
 import { useAuth } from '@/hooks/auth'
 import { formatPrice } from '@/lib/utils'
@@ -18,6 +19,7 @@ const Stats = () => {
     const [cardStats, setCardStats] = useState([])
     const [allocationStats, setAllocationStats] = useState([])
     const [totalValueHistoryStats, setTotalValueHistoryStats] = useState([])
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
         refreshStats()
@@ -104,8 +106,13 @@ const Stats = () => {
                 setCardStats(cards)
                 setAllocationStats(ds.allocation)
                 setTotalValueHistoryStats(ds.total_value_history)
+                setIsLoading(false)
             }
         })
+    }
+
+    if (isLoading) {
+        return <Loading fullHeight={false} />
     }
 
     return (

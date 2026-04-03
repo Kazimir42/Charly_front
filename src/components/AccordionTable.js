@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 
 const AccordionTable = ({ header, headerContent, content }) => {
     const [isOpen, setIsOpen] = useState(false)
+    const contentRef = useRef(null)
 
     const toggleAccordion = () => {
         setIsOpen(!isOpen)
@@ -12,7 +13,7 @@ const AccordionTable = ({ header, headerContent, content }) => {
             <h2 id="accordion-collapse-heading-1">
                 <div
                     className={
-                        'flex items-center hover:cursor-pointer bg-white justify-between w-full px-5 py-3 font-medium rtl:text-right border-slate-200 focus:ring-2 focus:ring-slate-200 gap-3 ' +
+                        'flex items-center hover:cursor-pointer bg-white justify-between w-full px-5 py-3 font-medium rtl:text-right border-slate-200 focus:ring-2 focus:ring-slate-200 gap-3 transition-[border-radius] duration-200 ' +
                         (isOpen
                             ? 'border-t border-l border-r rounded-t-lg'
                             : 'border rounded-xl')
@@ -26,7 +27,7 @@ const AccordionTable = ({ header, headerContent, content }) => {
                         }>
                         <div className="inline-block w-[3%]">
                             <svg
-                                className={`w-3 h-3 shrink-0 text-slate-500 ${
+                                className={`w-3 h-3 shrink-0 text-slate-500 transition-transform duration-200 ${
                                     isOpen ? '' : 'rotate-180'
                                 }`}
                                 aria-hidden="true"
@@ -49,7 +50,14 @@ const AccordionTable = ({ header, headerContent, content }) => {
             </h2>
             <div
                 id="accordion-collapse-body-1"
-                className={`${isOpen ? '' : 'hidden'}`}
+                ref={contentRef}
+                className="overflow-hidden transition-[max-height,opacity] duration-300 ease-in-out"
+                style={{
+                    maxHeight: isOpen
+                        ? contentRef.current?.scrollHeight + 'px'
+                        : '0px',
+                    opacity: isOpen ? 1 : 0,
+                }}
                 aria-labelledby="accordion-collapse-heading-1">
                 <div className="border rounded-b-lg border-slate-200 bg-white">
                     <div className="w-full text-left">

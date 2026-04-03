@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import {
+    Area,
+    AreaChart,
     CartesianGrid,
-    Line,
-    LineChart,
     ResponsiveContainer,
     Tooltip,
     XAxis,
@@ -36,36 +36,91 @@ const TotalValueHistory = ({ totalValues }) => {
 
     const currencyFormatter = value => formatPrice(value, user.currency_symbol)
 
+    const CustomTooltip = ({ active, payload, label }) => {
+        if (active && payload && payload.length) {
+            return (
+                <div className="rounded-lg border border-slate-200 bg-white px-3 py-2 shadow-sm">
+                    <p className="text-xs font-medium text-slate-500">
+                        {label}
+                    </p>
+                    <p className="text-sm font-semibold text-slate-900">
+                        {currencyFormatter(payload[0].value)}
+                    </p>
+                </div>
+            )
+        }
+        return null
+    }
+
     return (
         <ResponsiveContainer width="100%" height="100%">
-            <LineChart
-                width={500}
-                height={300}
+            <AreaChart
                 data={totalValuesYearly}
                 margin={{
-                    top: 5,
-                    right: 30,
-                    left: 20,
-                    bottom: 5,
+                    top: 10,
+                    right: 10,
+                    left: 10,
+                    bottom: 0,
                 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-                <XAxis dataKey="date" tick={{ fontSize: 12 }} />
+                <defs>
+                    <linearGradient
+                        id="valueGradient"
+                        x1="0"
+                        y1="0"
+                        x2="0"
+                        y2="1">
+                        <stop
+                            offset="0%"
+                            stopColor="#3B82F6"
+                            stopOpacity={0.15}
+                        />
+                        <stop
+                            offset="100%"
+                            stopColor="#3B82F6"
+                            stopOpacity={0}
+                        />
+                    </linearGradient>
+                </defs>
+                <CartesianGrid
+                    strokeDasharray="none"
+                    stroke="#f1f5f9"
+                    vertical={false}
+                />
+                <XAxis
+                    dataKey="date"
+                    axisLine={false}
+                    tickLine={false}
+                    tick={{ fontSize: 11, fill: '#94a3b8' }}
+                    dy={10}
+                    interval={'preserveStartEnd'}
+                    minTickGap={40}
+                />
                 <YAxis
-                    tick={{ fontSize: 12 }}
+                    axisLine={false}
+                    tickLine={false}
+                    tick={{ fontSize: 11, fill: '#94a3b8' }}
                     tickFormatter={currencyFormatter}
+                    dx={-5}
                 />
                 <Tooltip
-                    formatter={value => [currencyFormatter(value), '']}
-                    labelFormatter={label => label}
-                    contentStyle={{
-                        fontSize: '1rem',
-                        color: '#333',
-                        background: '#fff',
-                        lineHeight: '1rem',
+                    content={<CustomTooltip />}
+                    cursor={{ stroke: '#cbd5e1', strokeDasharray: '4 4' }}
+                />
+                <Area
+                    type="monotone"
+                    dataKey="value"
+                    stroke="#3B82F6"
+                    strokeWidth={2}
+                    fill="url(#valueGradient)"
+                    dot={false}
+                    activeDot={{
+                        r: 4,
+                        fill: '#3B82F6',
+                        stroke: '#fff',
+                        strokeWidth: 2,
                     }}
                 />
-                <Line type="monotone" dataKey="value" stroke="#3B82F6" />
-            </LineChart>
+            </AreaChart>
         </ResponsiveContainer>
     )
 }

@@ -189,7 +189,7 @@ const LeftNavigation = ({ user }) => {
                                                     {assets.map(asset => {
                                                         const href =
                                                             '/assets/' +
-                                                            asset.id
+                                                            asset.initial
                                                         const isCurrent =
                                                             pathname === href
                                                         return (
@@ -283,7 +283,7 @@ const LeftNavigation = ({ user }) => {
                                     role="list"
                                     className="-mx-2 mt-2 space-y-1">
                                     {assets.map(asset => {
-                                        const href = '/assets/' + asset.id
+                                        const href = '/assets/' + asset.initial
                                         const isCurrent = pathname === href
                                         return (
                                             <li

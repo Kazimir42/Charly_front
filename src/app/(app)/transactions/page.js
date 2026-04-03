@@ -2,6 +2,7 @@
 
 import Header from '@/app/(app)/Header'
 import { useEffect, useState } from 'react'
+import Loading from '@/app/(app)/Loading'
 import { useTransactionData } from '@/hooks/transactions'
 import Table from '@/components/Table'
 import Button from '@/components/Button'
@@ -78,6 +79,7 @@ const Transactions = () => {
     const [selectedTransactionIds, setSelectedTransactionIds] = useState([])
     const [csvErrors, setCsvErrors] = useState([])
     const [csvIsSimulation, setCsvIsSimulation] = useState(true)
+    const [isLoading, setIsLoading] = useState(true)
 
     // Query params
     const [searchFromDate, setSearchFromDate] = useState('')
@@ -132,6 +134,7 @@ const Transactions = () => {
                     next_page_url: data.next_page_url,
                     current_query: paramsWithoutPage.toString(),
                 })
+                setIsLoading(false)
             }
         })
         getCurrencies().then(setCurrencies)
@@ -477,6 +480,10 @@ const Transactions = () => {
             })
         })
         setSelectedTransactionIds([])
+    }
+
+    if (isLoading) {
+        return <Loading fullHeight={false} />
     }
 
     return (

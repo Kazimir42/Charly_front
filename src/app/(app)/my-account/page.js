@@ -6,6 +6,7 @@ import Input from '@/components/Input'
 import Button from '@/components/Button'
 import { useAuth } from '@/hooks/auth'
 import { useEffect, useState } from 'react'
+import Loading from '@/app/(app)/Loading'
 import { useRouter } from 'next/navigation'
 import { useUserData } from '@/hooks/users'
 import { CurrencyType } from '@/enums/CurrencyType'
@@ -29,6 +30,7 @@ const MyAccount = () => {
 
     const [fiatCurrencies, setFiatCurrencies] = useState([])
     const [countries, setCountries] = useState([])
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
         setName(user.name)
@@ -38,8 +40,10 @@ const MyAccount = () => {
     }, [])
 
     useEffect(() => {
-        getCurrencies({ type: CurrencyType.FIAT }).then(setFiatCurrencies)
-        getCountries().then(setCountries)
+        Promise.all([
+            getCurrencies({ type: CurrencyType.FIAT }).then(setFiatCurrencies),
+            getCountries().then(setCountries),
+        ]).then(() => setIsLoading(false))
     }, [])
 
     function submitForm(event) {
@@ -58,6 +62,10 @@ const MyAccount = () => {
 
     function refreshAccount() {
         router.refresh()
+    }
+
+    if (isLoading) {
+        return <Loading fullHeight={false} />
     }
 
     return (

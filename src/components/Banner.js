@@ -9,9 +9,10 @@ const Banner = ({ className }) => {
             }>
             <p className="text-sm leading-6 text-amber-950">
                 <a href="#">
-                    <strong className="font-semibold">
-                        C'est une alpha :)
-                    </strong>
+                    <strong className="font-semibold">Version alpha</strong>
+                    <span className="ml-1">
+                        — Certaines fonctionnalités peuvent évoluer.
+                    </span>
                 </a>
             </p>
             <div className="flex flex-1 justify-end" />

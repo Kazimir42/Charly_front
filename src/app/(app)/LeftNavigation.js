@@ -6,11 +6,14 @@ import {
     TransitionChild,
 } from '@headlessui/react'
 import {
+    ArrowRightOnRectangleIcon,
     Bars3Icon,
     ChartPieIcon,
+    ChevronUpIcon,
     MagnifyingGlassIcon,
     HashtagIcon,
     HomeIcon,
+    UserCircleIcon,
     XMarkIcon,
     DocumentTextIcon,
 } from '@heroicons/react/24/outline'
@@ -20,7 +23,7 @@ import { useAssetData } from '@/hooks/assets'
 import Dropdown from '@/components/Dropdown'
 import DropdownLink, { DropdownButton } from '@/components/DropdownLink'
 import { usePathname } from 'next/navigation'
-import { WalletIcon } from '@heroicons/react/24/solid'
+import { CharlyIcon } from '@/components/ApplicationLogo'
 import Link from 'next/link'
 
 function classNames(...classes) {
@@ -141,10 +144,11 @@ const LeftNavigation = ({ user }) => {
                                     </div>
                                 </TransitionChild>
                                 <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-slate-900 px-6 pb-2">
-                                    <div className="flex h-16 shrink-0 items-center">
-                                        <WalletIcon
-                                            className={'h-8 w-8 text-white'}
-                                        />
+                                    <div className="flex h-16 shrink-0 items-center gap-2.5">
+                                        <CharlyIcon className="h-8 w-8" />
+                                        <span className="text-xl font-bold text-white">
+                                            Charly
+                                        </span>
                                     </div>
                                     <nav className="flex flex-1 flex-col">
                                         <ul
@@ -238,9 +242,9 @@ const LeftNavigation = ({ user }) => {
 
             <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
                 <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-slate-900 px-6">
-                    <div className="flex h-16 shrink-0 items-center gap-2">
-                        <WalletIcon className={'h-8 w-8 text-white'} />
-                        <span className={'text-white font-bold text-xl'}>
+                    <div className="flex h-16 shrink-0 items-center gap-2.5">
+                        <CharlyIcon className="h-8 w-8" />
+                        <span className="text-xl font-bold text-white">
                             Charly
                         </span>
                     </div>
@@ -315,38 +319,33 @@ const LeftNavigation = ({ user }) => {
                                     })}
                                 </ul>
                             </li>
-                            <li className="-mx-6 mt-auto">
+                            <li className="mt-auto px-2 pb-4">
                                 <Dropdown
-                                    align="right"
-                                    width="48"
+                                    align="center"
+                                    width="full"
                                     openDirection="up"
+                                    contentClasses="py-1 bg-slate-800 !border-slate-700"
                                     trigger={
-                                        <button className="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-slate-300 hover:bg-slate-800 w-full ">
-                                            <span className="sr-only">
-                                                Votre profil
+                                        <button className="flex items-center gap-x-3 px-3 py-3 text-sm text-slate-300 hover:bg-slate-800 w-full rounded-lg transition-colors">
+                                            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-700 text-xs font-semibold text-white uppercase">
+                                                {user?.name?.charAt(0)}
                                             </span>
-                                            <span aria-hidden="true">
+                                            <span className="truncate font-medium">
                                                 {user?.name}
                                             </span>
-
-                                            <div className="ml-auto">
-                                                <svg
-                                                    className="fill-current h-4 w-4"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    viewBox="0 0 20 20">
-                                                    <path
-                                                        fillRule="evenodd"
-                                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                        clipRule="evenodd"
-                                                    />
-                                                </svg>
-                                            </div>
+                                            <ChevronUpIcon className="ml-auto h-4 w-4 text-slate-500" />
                                         </button>
                                     }>
-                                    <DropdownLink href={'/my-account'}>
+                                    <DropdownLink
+                                        href={'/my-account'}
+                                        className="flex items-center gap-2 px-4 py-2 text-sm text-slate-300 hover:bg-slate-700 hover:text-white transition-colors">
+                                        <UserCircleIcon className="h-4 w-4 text-slate-400" />
                                         Mon compte
                                     </DropdownLink>
-                                    <DropdownButton onClick={logout}>
+                                    <DropdownButton
+                                        onClick={logout}
+                                        className="flex items-center gap-2 px-4 py-2 text-sm text-slate-300 hover:bg-slate-700 hover:text-white transition-colors">
+                                        <ArrowRightOnRectangleIcon className="h-4 w-4 text-slate-400" />
                                         Déconnexion
                                     </DropdownButton>
                                 </Dropdown>

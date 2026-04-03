@@ -15,6 +15,9 @@ const Dropdown = ({
         case '48':
             width = 'w-48'
             break
+        case 'full':
+            width = 'w-full'
+            break
     }
 
     let directionClasses = ''
@@ -28,6 +31,11 @@ const Dropdown = ({
     switch (align) {
         case 'left':
             alignmentClasses = `origin-bottom-left left-0 ${
+                openDirection === 'up' ? 'bottom-full' : ''
+            }`
+            break
+        case 'center':
+            alignmentClasses = `origin-bottom left-0 right-0 ${
                 openDirection === 'up' ? 'bottom-full' : ''
             }`
             break
@@ -52,32 +60,16 @@ const Dropdown = ({
 
                     <Transition
                         show={open}
-                        enter={
-                            openDirection === 'down'
-                                ? 'transition ease-out duration-200'
-                                : ''
-                        }
-                        enterFrom={
-                            openDirection === 'down'
-                                ? 'transform opacity-0 scale-95'
-                                : ''
-                        }
-                        enterTo={
-                            openDirection === 'down'
-                                ? 'transform opacity-100 scale-100'
-                                : ''
-                        }
-                        leave={
-                            openDirection === 'down'
-                                ? 'transition ease-in duration-75'
-                                : ''
-                        }
+                        enter="transition ease-out duration-200"
+                        enterFrom="transform opacity-0 scale-95"
+                        enterTo="transform opacity-100 scale-100"
+                        leave="transition ease-in duration-75"
                         leaveFrom="transform opacity-100 scale-100"
                         leaveTo="transform opacity-0 scale-95">
                         <div
-                            className={`absolute z-50 ${directionClasses} ${width} rounded-md shadow-lg border border-slate-100 ${alignmentClasses}`}>
+                            className={`absolute z-50 ${directionClasses} ${width} rounded-lg shadow-lg ${alignmentClasses}`}>
                             <MenuItems
-                                className={`rounded-md focus:outline-none ring-1 ring-slate-200 ${contentClasses}`}
+                                className={`rounded-lg focus:outline-none border border-slate-200 ${contentClasses}`}
                                 static>
                                 {children}
                             </MenuItems>

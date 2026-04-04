@@ -12,21 +12,59 @@ import ProfitLossPrice from '@/components/ProfitLossPrice'
 import CardDescriptionList from '@/app/(app)/tax-report/_components/CardDescriptionList'
 import Table from '@/components/Table'
 import Loading from '@/app/(app)/Loading'
+import Button from '@/components/Button'
+import Tab from '@/components/Tab'
 import { formatDate, formatPrice } from '@/lib/utils'
+import CreateTransactionModal from '@/modals/Transaction/CreateTransactionModal'
+import { useTransactionData } from '@/hooks/transactions'
+import { useFeeData } from '@/hooks/fees'
+import { useMovementData } from '@/hooks/movements'
+import CryptoFlowChart from '@/app/(app)/assets/[code]/_components/CryptoFlowChart'
 
 const Page = ({ params }) => {
     const { user } = useAuth({ middleware: 'auth' })
     const { getAsset } = useAssetData()
+    const { createTransaction } = useTransactionData()
+    const { createFee } = useFeeData()
+    const { createMovement } = useMovementData()
 
     const [isLoading, setIsLoading] = useState(true)
     const [asset, setAsset] = useState(null)
+    const [
+        transactionCreateModalIsOpen,
+        setTransactionCreateModalIsOpen,
+    ] = useState(false)
+    const [activeTab, setActiveTab] = useState('transactions')
 
     useEffect(() => {
+        refreshAsset()
+    }, [params.code])
+
+    function refreshAsset() {
         getAsset(params.code).then(data => {
             setAsset(data)
             setIsLoading(false)
         })
-    }, [params.code])
+    }
+
+    function openOrCloseTransactionCreateModal() {
+        setTransactionCreateModalIsOpen(!transactionCreateModalIsOpen)
+    }
+
+    async function _createTransaction(data) {
+        let createdTransaction = await createTransaction(data.transaction)
+
+        for (const fee of data.fees) {
+            await createFee(createdTransaction.id, fee)
+        }
+
+        for (const movement of data.movements) {
+            await createMovement(createdTransaction.id, movement)
+        }
+
+        refreshAsset()
+        openOrCloseTransactionCreateModal()
+    }
 
     function formatTransactionRows() {
         if (!asset?.transactions?.length) {
@@ -186,45 +224,78 @@ const Page = ({ params }) => {
             </div>
 
             <div>
-                <h3 className={'font-semibold text-xl mb-2'}>Transactions</h3>
-                <Table
-                    header={
-                        <tr>
-                            <th
-                                scope="col"
-                                className="py-3.5 pl-5 pr-3 text-left text-sm font-semibold text-gray-900">
-                                Date
-                            </th>
-                            <th
-                                scope="col"
-                                className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                Type
-                            </th>
-                            <th
-                                scope="col"
-                                className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                Sortie
-                            </th>
-                            <th
-                                scope="col"
-                                className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                Entrée
-                            </th>
-                            <th
-                                scope="col"
-                                className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                Prix total
-                            </th>
-                            <th
-                                scope="col"
-                                className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                Prix unitaire
-                            </th>
-                        </tr>
-                    }
-                    content={formatTransactionRows()}
-                />
+                <div
+                    className={
+                        'flex flex-row items-center mb-4 justify-between'
+                    }>
+                    <div className="flex items-center gap-4">
+                        <Tab
+                            title="Transactions"
+                            isActive={activeTab === 'transactions'}
+                            setIsActive={() => setActiveTab('transactions')}
+                        />
+                        <Tab
+                            title="Flux"
+                            isActive={activeTab === 'flux'}
+                            setIsActive={() => setActiveTab('flux')}
+                        />
+                    </div>
+                    {activeTab === 'transactions' && (
+                        <Button onClick={openOrCloseTransactionCreateModal}>
+                            + Nouvelle transaction
+                        </Button>
+                    )}
+                </div>
+
+                {activeTab === 'transactions' ? (
+                    <Table
+                        header={
+                            <tr>
+                                <th
+                                    scope="col"
+                                    className="py-3.5 pl-5 pr-3 text-left text-sm font-semibold text-gray-900">
+                                    Date
+                                </th>
+                                <th
+                                    scope="col"
+                                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                    Type
+                                </th>
+                                <th
+                                    scope="col"
+                                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                    Sortie
+                                </th>
+                                <th
+                                    scope="col"
+                                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                    Entrée
+                                </th>
+                                <th
+                                    scope="col"
+                                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                    Prix total
+                                </th>
+                                <th
+                                    scope="col"
+                                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                    Prix unitaire
+                                </th>
+                            </tr>
+                        }
+                        content={formatTransactionRows()}
+                    />
+                ) : (
+                    <CryptoFlowChart code={params.code} />
+                )}
             </div>
+
+            <CreateTransactionModal
+                createTransaction={_createTransaction}
+                isOpen={transactionCreateModalIsOpen}
+                setIsOpen={openOrCloseTransactionCreateModal}
+                defaultLocation={asset.location}
+            />
         </>
     )
 }

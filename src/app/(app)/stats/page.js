@@ -3,147 +3,115 @@
 import Header from '@/app/(app)/Header'
 import { useEffect, useState } from 'react'
 import Loading from '@/app/(app)/Loading'
-import { useStatsData } from '@/hooks/stats'
+import { useDashboardData } from '@/hooks/dashboard'
 import { useAuth } from '@/hooks/auth'
 import { formatPrice } from '@/lib/utils'
 import SimpleCard from '@/components/SimpleCard'
 import ProfitLossPrice from '@/components/ProfitLossPrice'
 import PercentageBubble from '@/components/PercentageBubble'
-import TotalValueHistory from '@/app/(app)/dashboard/_components/stats/TotalValueHistory'
-import TreemapAllocation from '@/app/(app)/dashboard/_components/stats/TreemapAllocation'
+import PerformanceTable from '@/app/(app)/stats/_components/PerformanceTable'
+import AllocationDonutChart from '@/app/(app)/stats/_components/AllocationDonutChart'
 
-const Stats = () => {
+const Performance = () => {
     const { user } = useAuth({ middleware: 'auth' })
-    const { getStatsData } = useStatsData()
+    const { getDashboard } = useDashboardData()
 
-    const [cardStats, setCardStats] = useState([])
-    const [allocationStats, setAllocationStats] = useState([])
-    const [totalValueHistoryStats, setTotalValueHistoryStats] = useState([])
+    const [stats, setStats] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
-        refreshStats()
-    }, [])
-
-    function refreshStats() {
-        getStatsData().then(({ dashboard, history }) => {
-            if (dashboard) {
-                const ds = dashboard.stats
-
-                const cards = [
-                    {
-                        name: 'Total investi',
-                        value: formatPrice(
-                            ds.total_value_invested
-                                ?.value_per_fiat_currencies?.[
-                                user.currency_symbol
-                            ],
-                            user.currency_symbol,
-                        ),
-                    },
-                    {
-                        name: 'Valeur actuelle',
-                        value: formatPrice(
-                            ds.current_total_value?.value_per_fiat_currencies?.[
-                                user.currency_symbol
-                            ],
-                            user.currency_symbol,
-                        ),
-                    },
-                    {
-                        name: 'P/L non réalisé',
-                        value: (
-                            <ProfitLossPrice
-                                value={
-                                    ds.current_profit_loss
-                                        ?.value_per_fiat_currencies?.[
-                                        user.currency_symbol
-                                    ]
-                                }
-                                symbol={user.currency_symbol}
-                            />
-                        ),
-                    },
-                    {
-                        name: 'P/L non réalisé %',
-                        value: (
-                            <PercentageBubble
-                                className={''}
-                                withFont={false}
-                                value={ds.current_profit_loss_percentage?.value}
-                            />
-                        ),
-                    },
-                ]
-
-                if (history?.stats) {
-                    const hs = history.stats
-                    cards.splice(1, 0, {
-                        name: 'Total vendu',
-                        value: formatPrice(
-                            hs.total_sold_value?.value_per_fiat_currencies?.[
-                                user.currency_symbol
-                            ],
-                            user.currency_symbol,
-                        ),
-                    })
-                    cards.push({
-                        name: 'P/L réalisé',
-                        value: (
-                            <ProfitLossPrice
-                                value={
-                                    hs.realized_profit_loss
-                                        ?.value_per_fiat_currencies?.[
-                                        user.currency_symbol
-                                    ]
-                                }
-                                symbol={user.currency_symbol}
-                            />
-                        ),
-                    })
-                }
-
-                setCardStats(cards)
-                setAllocationStats(ds.allocation)
-                setTotalValueHistoryStats(ds.total_value_history)
+        getDashboard().then(data => {
+            if (data) {
+                setStats(data.stats)
                 setIsLoading(false)
             }
         })
-    }
+    }, [])
 
     if (isLoading) {
         return <Loading fullHeight={false} />
     }
 
+    const sym = user.currency_symbol
+
     return (
         <>
-            <Header title="Statistiques" className={'mb-4'} />
+            <Header title="Performance" className={'mb-4'} />
 
             <div className={'pb-6'}>
                 <div className={'flex flex-row flex-wrap gap-4 mb-4'}>
-                    {cardStats.map((cardStat, index) => (
-                        <SimpleCard
-                            key={index}
-                            className={'grow'}
-                            name={cardStat.name}>
-                            {cardStat.value}
-                        </SimpleCard>
-                    ))}
-                </div>
-                <div className={'grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4'}>
-                    <SimpleCard
-                        className={'col-span-1 lg:col-span-2'}
-                        childrenClass={'h-[300px]'}
-                        name={'Historique de la valeur totale'}>
-                        <TotalValueHistory
-                            totalValues={totalValueHistoryStats}
-                        />
+                    <SimpleCard className={'grow'} name={'Valeur totale'}>
+                        {formatPrice(
+                            stats.current_total_value
+                                ?.value_per_fiat_currencies?.[sym],
+                            sym,
+                        )}
+                    </SimpleCard>
+                    <SimpleCard className={'grow'} name={'Total investi'}>
+                        {formatPrice(
+                            stats.total_value_invested
+                                ?.value_per_fiat_currencies?.[sym],
+                            sym,
+                        )}
+                    </SimpleCard>
+                    <SimpleCard className={'grow'} name={'Total vendu'}>
+                        {formatPrice(
+                            stats.total_sold_value?.value_per_fiat_currencies?.[
+                                sym
+                            ],
+                            sym,
+                        )}
                     </SimpleCard>
                     <SimpleCard
-                        className={'col-span-1'}
-                        name={'Répartition par plateforme'}
-                        childrenClass={'h-[300px]'}>
-                        <TreemapAllocation allocations={allocationStats} />
+                        className={'grow'}
+                        name={'P/L non réalisé'}
+                        childrenClass={'flex flex-row items-baseline gap-2'}>
+                        <ProfitLossPrice
+                            value={
+                                stats.unrealized_profit_loss
+                                    ?.value_per_fiat_currencies?.[sym]
+                            }
+                            symbol={sym}
+                        />
+                        <span className="text-sm font-medium">
+                            <PercentageBubble
+                                withFont={true}
+                                value={
+                                    stats.unrealized_profit_loss_percentage
+                                        ?.value
+                                }
+                            />
+                        </span>
+                    </SimpleCard>
+                    <SimpleCard className={'grow'} name={'P/L réalisé'}>
+                        <ProfitLossPrice
+                            value={
+                                stats.realized_profit_loss
+                                    ?.value_per_fiat_currencies?.[sym]
+                            }
+                            symbol={sym}
+                        />
+                    </SimpleCard>
+                </div>
+
+                <div className={'grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6'}>
+                    <div className={'col-span-1 lg:col-span-2'}>
+                        <h3 className={'font-semibold text-xl mb-2'}>
+                            Performance par actif
+                        </h3>
+                        <PerformanceTable
+                            currencies={stats.allocation?.currencies}
+                            userCurrencySymbol={sym}
+                        />
+                    </div>
+                    <SimpleCard
+                        className={'col-span-1 h-fit'}
+                        name={'Répartition par actif'}
+                        childrenClass={'h-[400px]'}>
+                        <AllocationDonutChart
+                            currencies={stats.allocation?.currencies}
+                            userCurrencySymbol={sym}
+                        />
                     </SimpleCard>
                 </div>
             </div>
@@ -151,4 +119,4 @@ const Stats = () => {
     )
 }
 
-export default Stats
+export default Performance

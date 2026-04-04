@@ -10,11 +10,22 @@ import { useAuth } from '@/hooks/auth'
 import { formatPrice } from '@/lib/utils'
 import ProfitLossPrice from '@/components/ProfitLossPrice'
 import PercentageBubble from '@/components/PercentageBubble'
+import {
+    ResponsiveContainer,
+    BarChart,
+    Bar,
+    XAxis,
+    YAxis,
+    Tooltip,
+    CartesianGrid,
+} from 'recharts'
+import { ALLOCATION_COLORS } from '@/lib/allocationColors'
 
 const History = () => {
     const { user } = useAuth({ middleware: 'auth' })
     const [cardStats, setCardStats] = useState([])
     const [cryptocurrencies, setCryptocurrencies] = useState([])
+    const [chartData, setChartData] = useState([])
     const [isLoading, setIsLoading] = useState(true)
 
     const { getHistory } = useHistoryData()
@@ -75,9 +86,38 @@ const History = () => {
                         ),
                     },
                 ])
+
+                // Build bar chart data from cryptocurrencies
+                const barData = (data.cryptocurrencies || []).map(crypto => ({
+                    name: crypto.symbol,
+                    value:
+                        parseFloat(
+                            crypto.total_price_per_fiat_currencies?.[
+                                user.currency_symbol
+                            ],
+                        ) || 0,
+                }))
+                setChartData(barData)
+
                 setIsLoading(false)
             }
         })
+    }
+
+    const CustomTooltip = ({ active, payload, label }) => {
+        if (active && payload && payload.length) {
+            return (
+                <div className="rounded-lg border border-slate-200 bg-white px-3 py-2 shadow-sm">
+                    <p className="text-sm font-medium text-slate-900">
+                        {label}
+                    </p>
+                    <p className="text-sm text-slate-500">
+                        {formatPrice(payload[0].value, user.currency_symbol)}
+                    </p>
+                </div>
+            )
+        }
+        return null
     }
 
     if (isLoading) {
@@ -100,6 +140,42 @@ const History = () => {
                     ))}
                 </div>
             </div>
+
+            {chartData.length > 0 && (
+                <div className={'pb-6'}>
+                    <SimpleCard
+                        name={'Total vendu par crypto'}
+                        childrenClass={'h-[300px]'}>
+                        <ResponsiveContainer width="100%" height="100%">
+                            <BarChart data={chartData}>
+                                <CartesianGrid
+                                    strokeDasharray="3 3"
+                                    stroke="#e2e8f0"
+                                />
+                                <XAxis
+                                    dataKey="name"
+                                    tick={{
+                                        fontSize: 12,
+                                        fill: '#64748b',
+                                    }}
+                                />
+                                <YAxis
+                                    tick={{
+                                        fontSize: 12,
+                                        fill: '#64748b',
+                                    }}
+                                />
+                                <Tooltip content={<CustomTooltip />} />
+                                <Bar
+                                    dataKey="value"
+                                    radius={[4, 4, 0, 0]}
+                                    fill={ALLOCATION_COLORS[0]}
+                                />
+                            </BarChart>
+                        </ResponsiveContainer>
+                    </SimpleCard>
+                </div>
+            )}
 
             <div className={'pb-6'}>
                 <h3 className={'font-semibold text-xl mb-2'}>Cryptomonnaies</h3>

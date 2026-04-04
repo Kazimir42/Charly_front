@@ -83,7 +83,7 @@ const LeftNavigation = ({ user }) => {
             current: pathname.includes('/tax-report/'),
         },
         {
-            name: 'Statistiques',
+            name: 'Performance',
             href: '/stats',
             icon: ChartPieIcon,
             current: pathname === '/stats',

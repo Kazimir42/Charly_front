@@ -2,7 +2,7 @@
 
 import Header from '@/app/(app)/Header'
 import { useDashboardData } from '@/hooks/dashboard'
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState } from 'react'
 import Loading from '@/app/(app)/Loading'
 import Location from '@/app/(app)/dashboard/_components/Location'
 import SimpleCard from '@/components/SimpleCard'
@@ -22,6 +22,7 @@ import PercentageBubble from '@/components/PercentageBubble'
 import { useFeeData } from '@/hooks/fees'
 import { useMovementData } from '@/hooks/movements'
 import { getAllocationColor } from '@/lib/allocationColors'
+import OnboardingStepper from '@/app/(app)/dashboard/_components/OnboardingStepper'
 
 const Dashboard = () => {
     const { user } = useAuth({
@@ -53,6 +54,7 @@ const Dashboard = () => {
     const [totalValueHistoryStats, setTotalValueHistoryStats] = useState([])
     const [locationColorMap, setLocationColorMap] = useState({})
     const [isLoading, setIsLoading] = useState(true)
+    const [onboardingStep, setOnboardingStep] = useState(0)
 
     useEffect(() => {
         refreshDashboard()
@@ -61,8 +63,26 @@ const Dashboard = () => {
     function refreshDashboard() {
         getDashboard().then(data => {
             if (data) {
-                setLocations(data.locations || [])
-                // TODO
+                const locs = data.locations || []
+                setLocations(locs)
+
+                // Detect onboarding state
+                const hasLocations = locs.length > 0
+                const hasAssets = locs.some(
+                    loc => loc.assets && loc.assets.length > 0,
+                )
+                if (!hasLocations) {
+                    setOnboardingStep(1)
+                    setIsLoading(false)
+                    return
+                }
+                if (!hasAssets) {
+                    setOnboardingStep(2)
+                    setIsLoading(false)
+                    return
+                }
+                setOnboardingStep(0)
+
                 setCardStats([
                     {
                         name: 'Valeur totale actuelle',
@@ -78,6 +98,16 @@ const Dashboard = () => {
                         name: 'Total investi',
                         value: formatPrice(
                             data.stats.total_value_invested
+                                ?.value_per_fiat_currencies?.[
+                                user.currency_symbol
+                            ],
+                            user.currency_symbol,
+                        ),
+                    },
+                    {
+                        name: 'Total vendu',
+                        value: formatPrice(
+                            data.stats.total_sold_value
                                 ?.value_per_fiat_currencies?.[
                                 user.currency_symbol
                             ],
@@ -228,8 +258,39 @@ const Dashboard = () => {
         openOrCloseTransactionCreateModal()
     }
 
+    function handleOnboardingAction(step) {
+        if (step === 1) {
+            openOrCloseLocationCreateModal()
+        } else if (step === 2) {
+            openOrCloseTransactionCreateModal()
+        }
+    }
+
     if (isLoading) {
         return <Loading fullHeight={false} />
+    }
+
+    if (onboardingStep > 0) {
+        return (
+            <>
+                <Header title="Tableau de bord" className={'mb-4'} />
+                <OnboardingStepper
+                    currentStep={onboardingStep}
+                    onStepAction={handleOnboardingAction}
+                />
+                <CreateLocationModal
+                    createLocation={_createLocation}
+                    isOpen={locationCreateModalIsOpen}
+                    setIsOpen={openOrCloseLocationCreateModal}
+                />
+                <CreateTransactionModal
+                    createTransaction={_createTransaction}
+                    isOpen={transactionCreateModalIsOpen}
+                    setIsOpen={openOrCloseTransactionCreateModal}
+                    defaultLocation={selectedLocation}
+                />
+            </>
+        )
     }
 
     return (

@@ -26,5 +26,17 @@ export const useAssetData = () => {
             })
     }
 
-    return { getAssets, getAsset }
+    const getAssetFlow = async code => {
+        return axios
+            .get('/api/assets/' + code + '/flow')
+            .then(response => {
+                return response.data
+            })
+            .catch(error => {
+                toast.error(error.response.data.message)
+                if (error.response.status !== 422) throw error
+            })
+    }
+
+    return { getAssets, getAsset, getAssetFlow }
 }

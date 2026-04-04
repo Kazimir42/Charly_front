@@ -99,7 +99,7 @@ const CreateTransactionModal = ({
         if (
             fromQuantity &&
             fromCurrency &&
-            type === TransactionType.OUT &&
+            (type === TransactionType.OUT || type === TransactionType.SWAP) &&
             date &&
             activeTab === 'movements'
         ) {

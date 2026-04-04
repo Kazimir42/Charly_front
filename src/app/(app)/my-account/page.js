@@ -13,12 +13,13 @@ import { CurrencyType } from '@/enums/CurrencyType'
 import { useCurrencyData } from '@/hooks/currencies'
 import { Select } from '@/components/Select'
 import { useCountryData } from '@/hooks/countries'
+import Modal from '@/components/Modal'
 
 const MyAccount = () => {
-    const { user } = useAuth({
+    const { user, logout } = useAuth({
         middleware: 'auth',
     })
-    const { updateUser } = useUserData()
+    const { updateUser, changePassword, deleteUser } = useUserData()
     const { getCurrencies } = useCurrencyData()
     const { getCountries } = useCountryData()
     const router = useRouter()
@@ -27,6 +28,13 @@ const MyAccount = () => {
     const [email, setEmail] = useState('')
     const [currency, setCurrency] = useState(0)
     const [taxResidence, setTaxResidence] = useState(0)
+
+    const [currentPassword, setCurrentPassword] = useState('')
+    const [newPassword, setNewPassword] = useState('')
+    const [newPasswordConfirmation, setNewPasswordConfirmation] = useState('')
+
+    const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false)
+    const [deletePassword, setDeletePassword] = useState('')
 
     const [fiatCurrencies, setFiatCurrencies] = useState([])
     const [countries, setCountries] = useState([])
@@ -56,6 +64,33 @@ const MyAccount = () => {
         })
             .then(() => {
                 refreshAccount()
+            })
+            .catch(() => {})
+    }
+
+    function submitPasswordForm(event) {
+        event.preventDefault()
+
+        changePassword({
+            current_password: currentPassword,
+            password: newPassword,
+            password_confirmation: newPasswordConfirmation,
+        })
+            .then(() => {
+                setCurrentPassword('')
+                setNewPassword('')
+                setNewPasswordConfirmation('')
+            })
+            .catch(() => {})
+    }
+
+    function submitDeleteAccount(event) {
+        event.preventDefault()
+
+        deleteUser(user.id, { password: deletePassword })
+            .then(() => {
+                setDeleteModalIsOpen(false)
+                logout()
             })
             .catch(() => {})
     }
@@ -163,6 +198,117 @@ const MyAccount = () => {
                     </div>
                 </form>
             </div>
+
+            <div className={'pb-6 max-w-3xl'}>
+                <h3 className={'font-semibold text-xl mb-2'}>Sécurité</h3>
+
+                <form
+                    className={'flex flex-col gap-4'}
+                    onSubmit={submitPasswordForm}>
+                    <div>
+                        <Label htmlFor="current_password">
+                            Mot de passe actuel*
+                        </Label>
+                        <Input
+                            id="current_password"
+                            type="password"
+                            value={currentPassword}
+                            className="block mt-1 w-full"
+                            onChange={event =>
+                                setCurrentPassword(event.target.value)
+                            }
+                            required
+                        />
+                    </div>
+
+                    <div>
+                        <Label htmlFor="new_password">
+                            Nouveau mot de passe*
+                        </Label>
+                        <Input
+                            id="new_password"
+                            type="password"
+                            value={newPassword}
+                            className="block mt-1 w-full"
+                            onChange={event =>
+                                setNewPassword(event.target.value)
+                            }
+                            required
+                        />
+                    </div>
+
+                    <div>
+                        <Label htmlFor="new_password_confirmation">
+                            Confirmer le nouveau mot de passe*
+                        </Label>
+                        <Input
+                            id="new_password_confirmation"
+                            type="password"
+                            value={newPasswordConfirmation}
+                            className="block mt-1 w-full"
+                            onChange={event =>
+                                setNewPasswordConfirmation(event.target.value)
+                            }
+                            required
+                        />
+                    </div>
+
+                    <div className={'flex flex-row justify-end'}>
+                        <Button type="submit">Changer le mot de passe</Button>
+                    </div>
+                </form>
+            </div>
+
+            <div className={'pb-6 max-w-3xl'}>
+                <h3 className={'font-semibold text-xl mb-2 text-red-600'}>
+                    Zone dangereuse
+                </h3>
+                <p className={'text-sm text-slate-500 mb-4'}>
+                    La suppression de votre compte est irréversible. Toutes vos
+                    données seront définitivement supprimées.
+                </p>
+                <Button
+                    type="button"
+                    className={'bg-red-500 hover:bg-red-600'}
+                    onClick={() => setDeleteModalIsOpen(true)}>
+                    Supprimer mon compte
+                </Button>
+            </div>
+
+            <Modal
+                title={'Supprimer votre compte'}
+                setIsOpen={() => setDeleteModalIsOpen(false)}
+                isOpen={deleteModalIsOpen}>
+                <form
+                    className={'flex flex-col gap-4'}
+                    onSubmit={submitDeleteAccount}>
+                    <p className={'text-sm text-slate-600'}>
+                        Cette action est irréversible. Veuillez saisir votre mot
+                        de passe pour confirmer.
+                    </p>
+                    <div>
+                        <Label htmlFor="delete_password">Mot de passe*</Label>
+                        <Input
+                            id="delete_password"
+                            type="password"
+                            value={deletePassword}
+                            className="block mt-1 w-full"
+                            onChange={event =>
+                                setDeletePassword(event.target.value)
+                            }
+                            required
+                            autoFocus
+                        />
+                    </div>
+                    <div className={'flex flex-row justify-end'}>
+                        <Button
+                            type="submit"
+                            className={'bg-red-500 hover:bg-red-600'}>
+                            Confirmer la suppression
+                        </Button>
+                    </div>
+                </form>
+            </Modal>
         </>
     )
 }

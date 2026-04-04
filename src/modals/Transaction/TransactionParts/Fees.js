@@ -1,8 +1,7 @@
 import React from 'react'
 import Input from '@/components/Input'
 import SelectCombobox from '@/components/SelectCombobox'
-import { TrashIcon } from '@heroicons/react/24/outline'
-import Button from '@/components/Button'
+import { TrashIcon, PlusIcon } from '@heroicons/react/24/outline'
 
 const Fees = ({ fees, setFees, currencies }) => {
     function addBlankFee() {
@@ -17,132 +16,143 @@ const Fees = ({ fees, setFees, currencies }) => {
         ])
     }
 
-    // Possibility to delete by tempId for fees not saved on database
     function removeFee(id, isTempId = false) {
-        let newFees = []
-
-        // Fee not add on database, we can remove it from array
         if (isTempId) {
-            newFees = fees.reduce((acc, cur) => {
-                if (cur.temp_id !== id) {
-                    acc.push(cur)
-                }
-                return acc
-            }, [])
+            setFees(fees.filter(f => f.temp_id !== id))
         } else {
-            // Fee is on database, pass is_deleted to true
-            newFees = fees.map(fee => {
-                if (fee.id === id) {
-                    return { ...fee, is_deleted: true }
-                }
-                return fee
-            })
+            setFees(
+                fees.map(f => (f.id === id ? { ...f, is_deleted: true } : f)),
+            )
         }
-
-        setFees(newFees)
     }
 
-    // Possibility to update by tempId for fees not saved on database
     function updateFee(id, newFee, isTempId = false) {
-        const newFees = fees.map(fee => {
-            if ((isTempId ? fee.temp_id : fee.id) === id) {
-                return { ...fee, ...newFee }
-            }
-            return fee
-        })
-
-        setFees(newFees)
-    }
-
-    function Fee(fee) {
-        fee = fee.fee
-        return (
-            <div className={'grid grid-cols-11 gap-2'}>
-                <Input
-                    id="quantity"
-                    name="quantity"
-                    type="number"
-                    step={'0.01'}
-                    min={'0'}
-                    placeholder={'Quantité'}
-                    value={fee?.quantity ?? 0}
-                    onChange={event =>
-                        updateFee(
-                            fee.id ?? fee.temp_id,
-                            { quantity: event.target.value },
-                            !!fee.temp_id,
-                        )
-                    }
-                    className="block col-span-3"
-                />
-                <div className={'col-span-7'}>
-                    <SelectCombobox
-                        id="from_currency"
-                        name="from_currency"
-                        placeholder={'Actif'}
-                        selectedItem={fee?.currency_id ?? 0}
-                        setSelectedItem={currency_id =>
-                            updateFee(
-                                fee.id ?? fee.temp_id,
-                                { currency_id: currency_id },
-                                !!fee.temp_id,
-                            )
-                        }
-                        items={[
-                            [{ id: 0, name: '' }],
-                            ...currencies.reduce((acc, currency) => {
-                                acc.push({
-                                    id: currency.id,
-                                    name: currency.symbol + ' ' + currency.name,
-                                    showedName: (
-                                        <div
-                                            className={
-                                                'flex flex-row justify-between gap-1.5'
-                                            }>
-                                            <span>{currency.name}</span>
-                                            <span className={'text-gray-400'}>
-                                                {currency.symbol}
-                                            </span>
-                                        </div>
-                                    ),
-                                    imageUrl:
-                                        process.env.NEXT_PUBLIC_BACKEND_URL +
-                                        '/currencies/logo/' +
-                                        currency.symbol +
-                                        '.svg',
-                                })
-                                return acc
-                            }, []),
-                        ]}
-                    />
-                </div>
-                <button
-                    type={'button'}
-                    className="hover:text-gray-700 p-1 duration-100 transition text-gray-500 text-right"
-                    onClick={() =>
-                        removeFee(fee.id ?? fee.temp_id, !!fee.temp_id)
-                    }>
-                    <TrashIcon className="h-5 w-5" />
-                </button>
-            </div>
+        setFees(
+            fees.map(f =>
+                (isTempId ? f.temp_id : f.id) === id ? { ...f, ...newFee } : f,
+            ),
         )
     }
 
+    const visibleFees = (fees || []).filter(f => !f.is_deleted)
+
     return (
-        <div className={'flex flex-col gap-2'}>
-            {fees
-                ? fees.map((fee, i) => {
-                      if (!fee.is_deleted) {
-                          return <Fee key={i} fee={fee} />
-                      }
-                  })
-                : null}
-            <Button
-                type={'button'}
-                onClick={() => addBlankFee()}
-                className={'w-fit'}>
-                + Ajouter des frais
-            </Button>
+        <div className="flex flex-col gap-3">
+            {visibleFees.length === 0 ? (
+                <div className="flex flex-col items-center py-6 text-center">
+                    <p className="text-sm text-slate-400 mb-3">
+                        Aucun frais ajouté pour cette transaction.
+                    </p>
+                </div>
+            ) : (
+                <>
+                    <div className="grid grid-cols-11 gap-2 px-1">
+                        <span className="col-span-3 text-xs font-medium uppercase tracking-wider text-slate-400">
+                            Quantité
+                        </span>
+                        <span className="col-span-7 text-xs font-medium uppercase tracking-wider text-slate-400">
+                            Devise
+                        </span>
+                        <span className="col-span-1" />
+                    </div>
+                    {visibleFees.map(fee => {
+                        const key = fee.id ?? fee.temp_id
+                        const isTempId = !!fee.temp_id && !fee.id
+                        return (
+                            <div
+                                key={key}
+                                className={
+                                    'grid grid-cols-11 gap-2 items-center rounded-lg p-2 -mx-2 ' +
+                                    (isTempId
+                                        ? 'bg-blue-50/50 border border-dashed border-blue-200'
+                                        : 'hover:bg-slate-50')
+                                }>
+                                <Input
+                                    id={'fee_qty_' + key}
+                                    name={'fee_qty_' + key}
+                                    type="number"
+                                    step="0.00000001"
+                                    min="0"
+                                    placeholder="0.00"
+                                    value={fee?.quantity ?? 0}
+                                    onChange={event =>
+                                        updateFee(
+                                            key,
+                                            { quantity: event.target.value },
+                                            isTempId,
+                                        )
+                                    }
+                                    className="block col-span-3"
+                                />
+                                <div className="col-span-7">
+                                    <SelectCombobox
+                                        id={'fee_currency_' + key}
+                                        name={'fee_currency_' + key}
+                                        placeholder="Choisir une devise"
+                                        selectedItem={fee?.currency_id ?? 0}
+                                        setSelectedItem={currency_id =>
+                                            updateFee(
+                                                key,
+                                                { currency_id },
+                                                isTempId,
+                                            )
+                                        }
+                                        items={[
+                                            [{ id: 0, name: '' }],
+                                            ...currencies.reduce(
+                                                (acc, currency) => {
+                                                    acc.push({
+                                                        id: currency.id,
+                                                        name:
+                                                            currency.symbol +
+                                                            ' ' +
+                                                            currency.name,
+                                                        showedName: (
+                                                            <div className="flex flex-row justify-between gap-1.5">
+                                                                <span>
+                                                                    {
+                                                                        currency.name
+                                                                    }
+                                                                </span>
+                                                                <span className="text-slate-400">
+                                                                    {
+                                                                        currency.symbol
+                                                                    }
+                                                                </span>
+                                                            </div>
+                                                        ),
+                                                        imageUrl:
+                                                            process.env
+                                                                .NEXT_PUBLIC_BACKEND_URL +
+                                                            '/currencies/logo/' +
+                                                            currency.symbol.toLowerCase() +
+                                                            '.svg',
+                                                    })
+                                                    return acc
+                                                },
+                                                [],
+                                            ),
+                                        ]}
+                                    />
+                                </div>
+                                <button
+                                    type="button"
+                                    className="col-span-1 flex items-center justify-center rounded-lg p-1.5 text-slate-400 hover:text-red-500 hover:bg-red-50 transition-colors"
+                                    onClick={() => removeFee(key, isTempId)}>
+                                    <TrashIcon className="h-4 w-4" />
+                                </button>
+                            </div>
+                        )
+                    })}
+                </>
+            )}
+            <button
+                type="button"
+                onClick={addBlankFee}
+                className="flex items-center gap-1.5 self-start rounded-lg border border-dashed border-slate-300 px-3 py-1.5 text-sm text-slate-500 hover:border-slate-400 hover:text-slate-700 hover:bg-slate-50 transition-colors">
+                <PlusIcon className="h-4 w-4" />
+                Ajouter des frais
+            </button>
         </div>
     )
 }

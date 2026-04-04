@@ -14,6 +14,7 @@ import DocumentCard from '@/components/DocumentCard'
 import Document3916bis from '@/app/(app)/tax-report/_components/taxReportDocuments/FR/Document3916bis'
 import { formatPrice } from '@/lib/utils'
 import ProfitLossPrice from '@/components/ProfitLossPrice'
+import { ArrowDownTrayIcon } from '@heroicons/react/24/outline'
 
 const Page = ({ params }) => {
     const { user } = useAuth({ middleware: 'auth' })
@@ -22,7 +23,12 @@ const Page = ({ params }) => {
     const [taxReport, setTaxReport] = useState(null)
     const [cardStats, setCardStats] = useState([])
 
-    const { getTaxReport, createTaxReport } = useTaxReportData()
+    const {
+        getTaxReport,
+        createTaxReport,
+        exportPdf,
+        exportCsv,
+    } = useTaxReportData()
 
     useEffect(() => {
         refreshTaxReport()
@@ -36,46 +42,51 @@ const Page = ({ params }) => {
     }
 
     function refreshTaxReport() {
-        getTaxReport(params.year).then(result => {
-            if (result.id) {
-                setTaxReport(result)
-                setCardStats([
-                    {
-                        name: 'Total vendu',
-                        value: formatPrice(
-                            result.total_sold_value_per_fiat_currencies[
-                                user.currency_symbol
-                            ],
-                            user.currency_symbol,
-                        ),
-                    },
-                    {
-                        name: 'Profit / Perte total',
-                        value: (
-                            <ProfitLossPrice
-                                value={
-                                    result
-                                        .total_profit_loss_per_fiat_currencies?.[
-                                        user.currency_symbol
-                                    ]
-                                }
-                                symbol={user.currency_symbol}
-                            />
-                        ),
-                    },
-                    {
-                        name: 'Valeur fiscale (PFU 30%)',
-                        value: formatPrice(
-                            result.total_tax_value_per_fiat_currencies?.[
-                                user.currency_symbol
-                            ],
-                            user.currency_symbol,
-                        ),
-                    },
-                ])
-            }
-            setIsLoading(false)
-        })
+        getTaxReport(params.year)
+            .then(result => {
+                if (result.id) {
+                    setTaxReport(result)
+                    setCardStats([
+                        {
+                            name: 'Total vendu',
+                            value: formatPrice(
+                                result.total_sold_value_per_fiat_currencies[
+                                    user.currency_symbol
+                                ],
+                                user.currency_symbol,
+                            ),
+                        },
+                        {
+                            name: 'Profit / Perte total',
+                            value: (
+                                <ProfitLossPrice
+                                    value={
+                                        result
+                                            .total_profit_loss_per_fiat_currencies?.[
+                                            user.currency_symbol
+                                        ]
+                                    }
+                                    symbol={user.currency_symbol}
+                                />
+                            ),
+                        },
+                        {
+                            name: 'Valeur fiscale (PFU 30%)',
+                            value: formatPrice(
+                                result.total_tax_value_per_fiat_currencies?.[
+                                    user.currency_symbol
+                                ],
+                                user.currency_symbol,
+                            ),
+                        },
+                    ])
+                }
+                setIsLoading(false)
+            })
+            .catch(error => {
+                console.error('refreshTaxReport error:', error)
+                setIsLoading(false)
+            })
     }
 
     return (
@@ -157,9 +168,32 @@ const Page = ({ params }) => {
                         </div>
                     </div>
                     <div className={''}>
-                        <h3 className={'font-semibold text-xl mb-2'}>
-                            Documents
-                        </h3>
+                        <div
+                            className={
+                                'flex flex-row items-center justify-between mb-2'
+                            }>
+                            <h3 className={'font-semibold text-xl'}>
+                                Documents
+                            </h3>
+                            <div className={'flex flex-row gap-2'}>
+                                <button
+                                    onClick={() => exportPdf(params.year)}
+                                    className={
+                                        'inline-flex items-center gap-1.5 rounded-lg bg-blue-500 px-3 py-1.5 text-sm font-medium text-white hover:bg-blue-600 transition-colors'
+                                    }>
+                                    <ArrowDownTrayIcon className={'h-4 w-4'} />
+                                    Export PDF
+                                </button>
+                                <button
+                                    onClick={() => exportCsv(params.year)}
+                                    className={
+                                        'inline-flex items-center gap-1.5 rounded-lg border border-blue-500 px-3 py-1.5 text-sm font-medium text-blue-500 hover:bg-blue-50 transition-colors'
+                                    }>
+                                    <ArrowDownTrayIcon className={'h-4 w-4'} />
+                                    Export CSV
+                                </button>
+                            </div>
+                        </div>
                         {taxReport.country.iso_code === 'FR' ? (
                             <div className={'flex flex-col gap-4'}>
                                 <DocumentCard
@@ -182,7 +216,7 @@ const Page = ({ params }) => {
                 </>
             ) : (
                 <div className={'pb-6 max-w-xl mt-16'}>
-                    <CreateTaxReportForm onSubmit={submitCreateForm} />
+                    <CreateTaxReportForm submitCreateForm={submitCreateForm} />
                 </div>
             )}
         </>

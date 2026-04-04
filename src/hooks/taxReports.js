@@ -53,5 +53,58 @@ export const useTaxReportData = () => {
             })
     }
 
-    return { getTaxReport, createTaxReport, updateTaxReport, deleteTaxReport }
+    const exportPdf = async year => {
+        return axios
+            .get('/api/tax-reports/' + year + '/export-pdf', {
+                responseType: 'blob',
+            })
+            .then(response => {
+                const url = window.URL.createObjectURL(
+                    new Blob([response.data]),
+                )
+                const link = document.createElement('a')
+                link.href = url
+                link.setAttribute('download', 'rapport-fiscal-' + year + '.pdf')
+                document.body.appendChild(link)
+                link.click()
+                link.remove()
+                window.URL.revokeObjectURL(url)
+            })
+            .catch(error => {
+                toast.error('Erreur lors du téléchargement du PDF')
+                throw error
+            })
+    }
+
+    const exportCsv = async year => {
+        return axios
+            .get('/api/tax-reports/' + year + '/export-csv', {
+                responseType: 'blob',
+            })
+            .then(response => {
+                const url = window.URL.createObjectURL(
+                    new Blob([response.data]),
+                )
+                const link = document.createElement('a')
+                link.href = url
+                link.setAttribute('download', 'rapport-fiscal-' + year + '.csv')
+                document.body.appendChild(link)
+                link.click()
+                link.remove()
+                window.URL.revokeObjectURL(url)
+            })
+            .catch(error => {
+                toast.error('Erreur lors du téléchargement du CSV')
+                throw error
+            })
+    }
+
+    return {
+        getTaxReport,
+        createTaxReport,
+        updateTaxReport,
+        deleteTaxReport,
+        exportPdf,
+        exportCsv,
+    }
 }

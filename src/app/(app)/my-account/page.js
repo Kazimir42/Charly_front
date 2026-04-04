@@ -132,9 +132,7 @@ const MyAccount = () => {
                             value={email}
                             disabled={true}
                             className="block mt-1 w-full"
-                            onChange={event => setName(event.target.value)}
                             required
-                            autoFocus
                         />
                     </div>
 

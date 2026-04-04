@@ -18,7 +18,7 @@ export const useMovementData = () => {
         return axios
             .post('/api/transactions/' + transactionId + '/movements', data)
             .then(response => {
-                toast.success('Movement created successfully!')
+                toast.success('Mouvement créé avec succès !')
                 return response.data
             })
             .catch(error => {
@@ -34,7 +34,7 @@ export const useMovementData = () => {
                 data,
             )
             .then(response => {
-                toast.success('Movement updated successfully!')
+                toast.success('Mouvement mis à jour avec succès !')
                 return response.data
             })
             .catch(error => {
@@ -47,7 +47,7 @@ export const useMovementData = () => {
         return axios
             .delete('/api/transactions/' + transactionId + '/movements/' + id)
             .then(response => {
-                toast.success('Movement deleted successfully!')
+                toast.success('Mouvement supprimé avec succès !')
                 return response.data
             })
             .catch(error => {

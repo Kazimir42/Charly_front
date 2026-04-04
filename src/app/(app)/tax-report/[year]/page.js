@@ -83,8 +83,7 @@ const Page = ({ params }) => {
                 }
                 setIsLoading(false)
             })
-            .catch(error => {
-                console.error('refreshTaxReport error:', error)
+            .catch(() => {
                 setIsLoading(false)
             })
     }

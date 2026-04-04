@@ -18,7 +18,7 @@ export const useFeeData = () => {
         return axios
             .post('/api/transactions/' + transactionId + '/fees', data)
             .then(response => {
-                toast.success('Fee created successfully!')
+                toast.success('Frais créé avec succès !')
                 return response.data
             })
             .catch(error => {
@@ -31,7 +31,7 @@ export const useFeeData = () => {
         return axios
             .put('/api/transactions/' + transactionId + '/fees/' + id, data)
             .then(response => {
-                toast.success('Fee updated successfully!')
+                toast.success('Frais mis à jour avec succès !')
                 return response.data
             })
             .catch(error => {
@@ -44,7 +44,7 @@ export const useFeeData = () => {
         return axios
             .delete('/api/transactions/' + transactionId + '/fees/' + id)
             .then(response => {
-                toast.success('Fee deleted successfully!')
+                toast.success('Frais supprimé avec succès !')
                 return response.data
             })
             .catch(error => {

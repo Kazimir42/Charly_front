@@ -492,7 +492,7 @@ const Transactions = () => {
                 <Header title="Transactions" />
                 <div className={'flex flex-row gap-2'}>
                     <Button onClick={openOrCloseTransactionCsvModal}>
-                        Import CSV
+                        Importer CSV
                     </Button>
                     <Button onClick={openOrCloseTransactionCreateModal}>
                         + Ajouter

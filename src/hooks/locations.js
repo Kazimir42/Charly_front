@@ -18,7 +18,7 @@ export const useLocationData = () => {
         return axios
             .post('/api/locations', data)
             .then(response => {
-                toast.success('Location created successfully!')
+                toast.success('Compte créé avec succès !')
                 return response.data
             })
             .catch(error => {
@@ -31,7 +31,7 @@ export const useLocationData = () => {
         return axios
             .put('/api/locations/' + id, data)
             .then(response => {
-                toast.success('Location updated successfully!')
+                toast.success('Compte mis à jour avec succès !')
                 return response.data
             })
             .catch(error => {
@@ -44,7 +44,7 @@ export const useLocationData = () => {
         return axios
             .delete('/api/locations/' + id)
             .then(response => {
-                toast.success('Location deleted successfully!')
+                toast.success('Compte supprimé avec succès !')
                 return response.data
             })
             .catch(error => {

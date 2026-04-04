@@ -39,7 +39,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         axios
             .post('/login', props)
             .then(() => {
-                toast.success('gm')
+                toast.success('Bienvenue !')
                 mutate()
             })
             .catch(error => {

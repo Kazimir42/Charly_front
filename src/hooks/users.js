@@ -6,7 +6,7 @@ export const useUserData = () => {
         return axios
             .put('/api/users/' + id, data)
             .then(response => {
-                toast.success('User updated successfully!')
+                toast.success('Profil mis à jour avec succès !')
                 return response.data
             })
             .catch(error => {

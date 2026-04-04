@@ -50,7 +50,7 @@ export const useTransactionData = () => {
         return axios
             .post('/api/transactions', data)
             .then(response => {
-                toast.success('Transaction created successfully!')
+                toast.success('Transaction créée avec succès !')
                 return response.data
             })
             .catch(error => {
@@ -63,7 +63,7 @@ export const useTransactionData = () => {
         return axios
             .put('/api/transactions/' + id, data)
             .then(response => {
-                toast.success('Transaction updated successfully!')
+                toast.success('Transaction mise à jour avec succès !')
                 return response.data
             })
             .catch(error => {
@@ -76,7 +76,7 @@ export const useTransactionData = () => {
         return axios
             .delete('/api/transactions/' + id)
             .then(response => {
-                toast.success('Transaction deleted successfully!')
+                toast.success('Transaction supprimée avec succès !')
                 return response.data
             })
             .catch(error => {
@@ -89,7 +89,7 @@ export const useTransactionData = () => {
         return axios
             .post('/api/transactions/simulate-import', data)
             .then(response => {
-                toast.success('Simulation OK!')
+                toast.success('Simulation réussie !')
                 return response.data
             })
             .catch(error => {
@@ -102,7 +102,7 @@ export const useTransactionData = () => {
         return axios
             .post('/api/transactions/import', data)
             .then(response => {
-                toast.success('Import OK!')
+                toast.success('Import réussi !')
                 return response.data
             })
             .catch(error => {

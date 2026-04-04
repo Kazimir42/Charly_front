@@ -20,7 +20,7 @@ const Location = ({
 
     let formattedAssets = []
 
-    location.assets.map(asset => {
+    ;(location.assets ?? []).map(asset => {
         formattedAssets.push([
             <div key={asset.currency.name} className="inline-block w-[19%]">
                 <CurrencyBubble

@@ -3,9 +3,9 @@ import { toast } from 'react-toastify'
 
 const CustomToast = ({ closeToast }) => (
     <div style={{ backgroundColor: 'blue', padding: '20px' }}>
-        <h4 style={{ color: 'white' }}>Success!</h4>
-        <p style={{ color: 'white' }}>Location updated successfully!</p>
-        <button onClick={closeToast}>Close</button>
+        <h4 style={{ color: 'white' }}>Succès !</h4>
+        <p style={{ color: 'white' }}>Compte mis à jour avec succès !</p>
+        <button onClick={closeToast}>Fermer</button>
     </div>
 )
 

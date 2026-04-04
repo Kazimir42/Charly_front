@@ -9,7 +9,6 @@ export const useTaxReportData = () => {
                 return response.data
             })
             .catch(error => {
-                //toast.error(error.response.data.message)
                 throw error
             })
     }
@@ -18,7 +17,7 @@ export const useTaxReportData = () => {
         return axios
             .post('/api/tax-reports', data)
             .then(response => {
-                toast.success('Tax report created successfully!')
+                toast.success('Rapport fiscal créé avec succès !')
                 return response.data
             })
             .catch(error => {
@@ -31,7 +30,7 @@ export const useTaxReportData = () => {
         return axios
             .put('/api/tax-reports/' + year, data)
             .then(response => {
-                toast.success('Tax report updated successfully!')
+                toast.success('Rapport fiscal mis à jour avec succès !')
                 return response.data
             })
             .catch(error => {
@@ -44,7 +43,7 @@ export const useTaxReportData = () => {
         return axios
             .delete('/api/tax-reports/' + year)
             .then(response => {
-                toast.success('Tax report deleted successfully!')
+                toast.success('Rapport fiscal supprimé avec succès !')
                 return response.data
             })
             .catch(error => {

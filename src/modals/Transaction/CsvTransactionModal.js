@@ -52,7 +52,7 @@ const CsvTransactionModal = ({ sendCsv, setIsOpen, isOpen, isSimulation }) => {
 
     return (
         <Modal
-            title={'Import CSV'}
+            title={'Importer CSV'}
             setIsOpen={openOrClose}
             isOpen={isOpen}
             className={''}>

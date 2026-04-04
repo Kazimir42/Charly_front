@@ -4,8 +4,8 @@ const Document2086 = ({ data }) => {
     return (
         <div>
             <p className={'text-sm text-gray-700 mb-4'}>
-                You can base your calculations on the table below and enter the
-                values in the tax form.
+                Vous pouvez vous baser sur le tableau ci-dessous pour remplir
+                votre déclaration fiscale.
             </p>
 
             <table className={'mb-4'}>
@@ -18,7 +18,7 @@ const Document2086 = ({ data }) => {
                                     'bg-gray-100 px-4 w-32 py-2 text-center font-semibold text-sm border border-gray-300'
                                 }
                                 key={index}>
-                                Transfer {index}
+                                Cession {index}
                             </th>
                         ))}
                     </tr>

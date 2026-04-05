@@ -1,5 +1,6 @@
 import axios from '@/lib/axios'
 import { toast } from 'react-toastify'
+import { getErrorMessage } from '@/lib/utils'
 
 export const useTransactionData = () => {
     const getTransaction = async id => {
@@ -9,7 +10,7 @@ export const useTransactionData = () => {
                 return response.data
             })
             .catch(error => {
-                toast.error(error.response.data.message)
+                toast.error(getErrorMessage(error))
                 throw error
             })
     }
@@ -21,7 +22,7 @@ export const useTransactionData = () => {
                 return response.data
             })
             .catch(error => {
-                toast.error(error.response.data.message)
+                toast.error(getErrorMessage(error))
                 throw error
             })
     }
@@ -41,7 +42,7 @@ export const useTransactionData = () => {
                 return response.data
             })
             .catch(error => {
-                toast.error(error.response.data.message)
+                toast.error(getErrorMessage(error))
                 throw error
             })
     }
@@ -54,7 +55,7 @@ export const useTransactionData = () => {
                 return response.data
             })
             .catch(error => {
-                toast.error(error.response.data.message)
+                toast.error(getErrorMessage(error))
                 throw error
             })
     }
@@ -67,7 +68,7 @@ export const useTransactionData = () => {
                 return response.data
             })
             .catch(error => {
-                toast.error(error.response.data.message)
+                toast.error(getErrorMessage(error))
                 throw error
             })
     }
@@ -80,7 +81,7 @@ export const useTransactionData = () => {
                 return response.data
             })
             .catch(error => {
-                toast.error(error.response.data.message)
+                toast.error(getErrorMessage(error))
                 throw error
             })
     }
@@ -93,7 +94,7 @@ export const useTransactionData = () => {
                 return response.data
             })
             .catch(error => {
-                toast.error(error.response.data.message)
+                toast.error(getErrorMessage(error))
                 throw error
             })
     }
@@ -106,7 +107,7 @@ export const useTransactionData = () => {
                 return response.data
             })
             .catch(error => {
-                toast.error(error.response.data.message)
+                toast.error(getErrorMessage(error))
                 throw error
             })
     }

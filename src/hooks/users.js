@@ -1,5 +1,6 @@
 import axios from '@/lib/axios'
 import { toast } from 'react-toastify'
+import { getErrorMessage } from '@/lib/utils'
 
 export const useUserData = () => {
     const updateUser = async (id, data) => {
@@ -10,7 +11,7 @@ export const useUserData = () => {
                 return response.data
             })
             .catch(error => {
-                toast.error(error.response.data.message)
+                toast.error(getErrorMessage(error))
                 throw error
             })
     }
@@ -23,7 +24,7 @@ export const useUserData = () => {
                 return response.data
             })
             .catch(error => {
-                toast.error(error.response.data.message)
+                toast.error(getErrorMessage(error))
                 throw error
             })
     }
@@ -36,7 +37,7 @@ export const useUserData = () => {
                 return response.data
             })
             .catch(error => {
-                toast.error(error.response.data.message)
+                toast.error(getErrorMessage(error))
                 throw error
             })
     }

@@ -1,5 +1,6 @@
 import axios from '@/lib/axios'
 import { toast } from 'react-toastify'
+import { getErrorMessage } from '@/lib/utils'
 
 export const useMovementData = () => {
     const getMovements = async transactionId => {
@@ -9,7 +10,7 @@ export const useMovementData = () => {
                 return response.data
             })
             .catch(error => {
-                toast.error(error.response.data.message)
+                toast.error(getErrorMessage(error))
                 if (error.response.status !== 422) throw error
             })
     }
@@ -22,7 +23,7 @@ export const useMovementData = () => {
                 return response.data
             })
             .catch(error => {
-                toast.error(error.response.data.message)
+                toast.error(getErrorMessage(error))
                 throw error
             })
     }
@@ -38,7 +39,7 @@ export const useMovementData = () => {
                 return response.data
             })
             .catch(error => {
-                toast.error(error.response.data.message)
+                toast.error(getErrorMessage(error))
                 throw error
             })
     }
@@ -51,7 +52,7 @@ export const useMovementData = () => {
                 return response.data
             })
             .catch(error => {
-                toast.error(error.response.data.message)
+                toast.error(getErrorMessage(error))
                 throw error
             })
     }

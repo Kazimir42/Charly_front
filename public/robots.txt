@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard
+Disallow: /transactions
+Disallow: /my-account
+Disallow: /tax-report
+Disallow: /history
+Disallow: /stats
+Disallow: /assets

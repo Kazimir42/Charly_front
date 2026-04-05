@@ -218,11 +218,13 @@ const Transactions = () => {
                     ''
                 ),
                 formatPrice(
-                    line.total_price_per_fiat_currencies[user.currency_symbol],
+                    line.total_price_per_fiat_currencies?.[
+                        user.currency_symbol
+                    ],
                     user.currency_symbol,
                 ),
                 formatPrice(
-                    line.unit_price_per_fiat_currencies[user.currency_symbol],
+                    line.unit_price_per_fiat_currencies?.[user.currency_symbol],
                     user.currency_symbol,
                 ),
                 line.location?.name ?? '',
@@ -254,7 +256,10 @@ const Transactions = () => {
         if (!transactions.length) {
             formattedData = [
                 [
-                    'Aucune transaction trouvée :(',
+                    <span key="empty" className="text-slate-400 italic">
+                        Aucune transaction trouvée. Cliquez sur &quot;+
+                        Ajouter&quot; pour en créer une.
+                    </span>,
                     '',
                     '',
                     '',
@@ -339,7 +344,9 @@ const Transactions = () => {
                 refreshTransactions()
                 openOrCloseTransactionDeleteModal()
             })
-            .catch(() => {})
+            .catch(() => {
+                // Erreur déjà affichée via toast dans le hook
+            })
     }
 
     async function _createTransaction(data) {
@@ -364,8 +371,10 @@ const Transactions = () => {
                     setCsvIsSimulation(false)
                 })
                 .catch(error => {
-                    setCsvErrors(error.response.data)
-                    openOrCloseTransactionCsvErrorsModal()
+                    if (error?.response?.data) {
+                        setCsvErrors(error.response.data)
+                        openOrCloseTransactionCsvErrorsModal()
+                    }
                 })
         } else {
             await realImport(data)

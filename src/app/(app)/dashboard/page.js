@@ -222,7 +222,9 @@ const Dashboard = () => {
                 refreshDashboard()
                 openOrCloseLocationEditModal()
             })
-            .catch(() => {})
+            .catch(() => {
+                // Erreur déjà affichée via toast dans le hook
+            })
     }
 
     function _deleteLocation(id) {
@@ -231,7 +233,9 @@ const Dashboard = () => {
                 refreshDashboard()
                 openOrCloseLocationDeleteModal()
             })
-            .catch(() => {})
+            .catch(() => {
+                // Erreur déjà affichée via toast dans le hook
+            })
     }
 
     function _createLocation(data) {
@@ -240,7 +244,9 @@ const Dashboard = () => {
                 refreshDashboard()
                 openOrCloseLocationCreateModal()
             })
-            .catch(() => {})
+            .catch(() => {
+                // Erreur déjà affichée via toast dans le hook
+            })
     }
 
     async function _createTransaction(data) {

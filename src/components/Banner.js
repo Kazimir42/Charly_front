@@ -8,12 +8,11 @@ const Banner = ({ className }) => {
                 className
             }>
             <p className="text-sm leading-6 text-amber-950">
-                <a href="#">
-                    <strong className="font-semibold">Version alpha</strong>
-                    <span className="ml-1">
-                        — Certaines fonctionnalités peuvent évoluer.
-                    </span>
-                </a>
+                <strong className="font-semibold">POC — Démonstration</strong>
+                <span className="ml-1">
+                    — Ce projet est une démonstration technique. Les données
+                    affichées sont fictives.
+                </span>
             </p>
             <div className="flex flex-1 justify-end" />
         </div>

@@ -3,6 +3,7 @@ import axios from '@/lib/axios'
 import { useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { toast } from 'react-toastify'
+import { getErrorMessage } from '@/lib/utils'
 
 export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
     const router = useRouter()
@@ -28,7 +29,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             .post('/register', props)
             .then(() => mutate())
             .catch(error => {
-                toast.error(error.response.data.message)
+                toast.error(getErrorMessage(error))
                 throw error
             })
     }
@@ -43,7 +44,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
                 mutate()
             })
             .catch(error => {
-                toast.error(error.response.data.message)
+                toast.error(getErrorMessage(error))
                 throw error
             })
     }
@@ -58,7 +59,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
                 return response.data
             })
             .catch(error => {
-                toast.error(error.response.data.message)
+                toast.error(getErrorMessage(error))
                 throw error
             })
     }
@@ -72,16 +73,21 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
                 router.push('/login?reset=' + btoa(response.data.status)),
             )
             .catch(error => {
-                toast.error(error.response.data.message)
+                toast.error(getErrorMessage(error))
                 throw error
             })
     }
 
     const resendEmailVerification = () => {
-        axios.post('/email/verification-notification').then(response => {
-            toast.success(response.data.status)
-            return response.data
-        })
+        axios
+            .post('/email/verification-notification')
+            .then(response => {
+                toast.success(response.data.status)
+                return response.data
+            })
+            .catch(error => {
+                toast.error(getErrorMessage(error))
+            })
     }
 
     const logout = async () => {

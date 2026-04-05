@@ -1,3 +1,10 @@
+export function getErrorMessage(error) {
+    return (
+        error?.response?.data?.message ||
+        'Une erreur est survenue. Veuillez réessayer.'
+    )
+}
+
 export function formatPercentage(value, decimalPlaces = 2) {
     // Transform value for using NumberFormat
     value = value / 100

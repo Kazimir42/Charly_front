@@ -1,5 +1,6 @@
 import axios from '@/lib/axios'
 import { toast } from 'react-toastify'
+import { getErrorMessage } from '@/lib/utils'
 
 export const useHistoryData = () => {
     const getHistory = async () => {
@@ -9,7 +10,7 @@ export const useHistoryData = () => {
                 return response.data
             })
             .catch(error => {
-                toast.error(error.response.data.message)
+                toast.error(getErrorMessage(error))
                 throw error
             })
     }

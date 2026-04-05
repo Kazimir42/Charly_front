@@ -1,5 +1,6 @@
 import axios from '@/lib/axios'
 import { toast } from 'react-toastify'
+import { getErrorMessage } from '@/lib/utils'
 
 export const useAssetData = () => {
     const getAssets = async () => {
@@ -9,7 +10,7 @@ export const useAssetData = () => {
                 return response.data
             })
             .catch(error => {
-                toast.error(error.response.data.message)
+                toast.error(getErrorMessage(error))
                 if (error.response.status !== 422) throw error
             })
     }
@@ -21,7 +22,7 @@ export const useAssetData = () => {
                 return response.data
             })
             .catch(error => {
-                toast.error(error.response.data.message)
+                toast.error(getErrorMessage(error))
                 if (error.response.status !== 422) throw error
             })
     }
@@ -33,7 +34,7 @@ export const useAssetData = () => {
                 return response.data
             })
             .catch(error => {
-                toast.error(error.response.data.message)
+                toast.error(getErrorMessage(error))
                 if (error.response.status !== 422) throw error
             })
     }
